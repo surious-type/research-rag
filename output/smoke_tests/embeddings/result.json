@@ -1,0 +1,17 @@
+{
+  "model": "multilingual-e5-large",
+  "dimension": 1024,
+  "vector_norm": 1.0,
+  "contains_nan": false,
+  "contains_inf": false,
+  "has_nonzero_values": true,
+  "stable_repeated_request": true,
+  "two_item_batch_count": 2,
+  "health_http_status": 200,
+  "embedding_http_status": 200,
+  "latency_seconds": 0.208,
+  "config_max_input_tokens": 512,
+  "status": "PASS",
+  "warnings": [],
+  "errors": []
+}

@@ -1,0 +1,19 @@
+{
+  "compose_file_exists": true,
+  "container_name": "qwen35-llamacpp",
+  "health_http_status": 200,
+  "models_http_status": 200,
+  "chat_http_status": 200,
+  "model_id": "/models/Qwen3.5-35B-A3B-Q4_K_M.gguf",
+  "context_size": 32768,
+  "chat_content": "ГОТОВО",
+  "chat_finish_reason": "stop",
+  "latency_seconds": {
+    "health": 0.006,
+    "models": 0.001,
+    "chat": 1.197
+  },
+  "status": "PASS",
+  "warnings": [],
+  "errors": []
+}

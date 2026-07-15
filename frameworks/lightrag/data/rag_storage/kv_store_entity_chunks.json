@@ -1,0 +1,6120 @@
+{
+  "Автосохранение документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Автосохранение документов"
+  },
+  "Файл": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 3,
+    "update_time": 1783956582,
+    "_id": "Файл"
+  },
+  "Кнопка Х": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Х"
+  },
+  "Меню Файл": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 7,
+    "update_time": 1783956582,
+    "_id": "Меню Файл"
+  },
+  "Регенерация модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Регенерация модели"
+  },
+  "Иерархическая структура зависимостей": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Иерархическая структура зависимостей"
+  },
+  "Окно Зависимости": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Зависимости"
+  },
+  "Родительские объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Родительские объекты"
+  },
+  "Дочерние объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Дочерние объекты"
+  },
+  "Пиктограмма зависимостей": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма зависимостей"
+  },
+  "Дерево зависимостей": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Дерево зависимостей"
+  },
+  "Контекстное меню": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 20,
+    "update_time": 1783956582,
+    "_id": "Контекстное меню"
+  },
+  "Функция Пересчёт": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Функция Пересчёт"
+  },
+  "Панель рабочего окна Вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель рабочего окна Вид"
+  },
+  "Опция Пересчитать": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Опция Пересчитать"
+  },
+  "Опция Полный пересчёт": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Опция Полный пересчёт"
+  },
+  "Программный модуль CAD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016",
+      "doc-b668a440ae9857e1b9828e69e555b2fa-chunk-000"
+    ],
+    "count": 11,
+    "update_time": 1784054156,
+    "_id": "Программный модуль CAD"
+  },
+  "Пиктограмма пересчета": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма пересчета"
+  },
+  "Диалог пересчёта": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-034"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог пересчёта"
+  },
+  "Динамическая панель кнопок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Динамическая панель кнопок"
+  },
+  "Прозрачная контекстная панель кнопок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Прозрачная контекстная панель кнопок"
+  },
+  "Интерфейс": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Интерфейс"
+  },
+  "Тема интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тема интерфейса"
+  },
+  "Лента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 9,
+    "update_time": 1783956582,
+    "_id": "Лента"
+  },
+  "Размер иконок панели Лента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер иконок панели Лента"
+  },
+  "Размер мелких иконок панели Лента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер мелких иконок панели Лента"
+  },
+  "Манипуляторы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Манипуляторы"
+  },
+  "Длина оси манипулятора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Длина оси манипулятора"
+  },
+  "Толщина оси манипулятора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Толщина оси манипулятора"
+  },
+  "Размер точки манипулятора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер точки манипулятора"
+  },
+  "Сохранение": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сохранение"
+  },
+  "Цвета состояний объекта": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвета состояний объекта"
+  },
+  "Эскиз": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Эскиз"
+  },
+  "Автоматический подбор угла в плоскости эскиза": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Автоматический подбор угла в плоскости эскиза"
+  },
+  "Автоматический разворот активной плоскости эскиза": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Автоматический разворот активной плоскости эскиза"
+  },
+  "CAD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 12,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "CAD"
+  },
+  "Параметр включения режима автосохранения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметр включения режима автосохранения"
+  },
+  "Интервал автосохранения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-032"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Интервал автосохранения"
+  },
+  "Главное окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Главное окно"
+  },
+  "Вкладка Вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 4,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка Вид"
+  },
+  "Команда Новое главное окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Новое главное окно"
+  },
+  "Рабочее графическое окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рабочее графическое окно"
+  },
+  "3Dвид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "3Dвид"
+  },
+  "2Dвид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 3,
+    "update_time": 1783956581,
+    "_id": "2Dвид"
+  },
+  "КЭ-сетка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "КЭ-сетка"
+  },
+  "Монитор задач": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Монитор задач"
+  },
+  "Редактор графиков": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Редактор графиков"
+  },
+  "Редактор конфигураций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Редактор конфигураций"
+  },
+  "Редактор таблиц": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Редактор таблиц"
+  },
+  "Редактор переменных": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Редактор переменных"
+  },
+  "Многодокументный интерфейс": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Многодокументный интерфейс"
+  },
+  "Синхронизация изменений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Синхронизация изменений"
+  },
+  "Группа Окна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа Окна"
+  },
+  "Область заголовка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Область заголовка"
+  },
+  "Квадратные скобки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Квадратные скобки"
+  },
+  "Рабочие окна документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рабочие окна документов"
+  },
+  "Объекты модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 3,
+    "update_time": 1783956581,
+    "_id": "Объекты модели"
+  },
+  "Бизнес-процессы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Бизнес-процессы"
+  },
+  "Графические зависимости": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Графические зависимости"
+  },
+  "Переменные": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-013",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "Переменные"
+  },
+  "Окно Настройка Интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Настройка Интерфейса"
+  },
+  "Выпадающее меню опций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выпадающее меню опций"
+  },
+  "Панель Лента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 8,
+    "update_time": 1783956582,
+    "_id": "Панель Лента"
+  },
+  "Категория": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Категория"
+  },
+  "Фильтр": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Фильтр"
+  },
+  "Список команд": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Список команд"
+  },
+  "Информация о команде": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Информация о команде"
+  },
+  "Диалог Комбинации клавиш": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог Комбинации клавиш"
+  },
+  "Кнопка Комбинации клавиш": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Комбинации клавиш"
+  },
+  "Основная клавиша": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Основная клавиша"
+  },
+  "Клавиши-модификаторы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Клавиши-модификаторы"
+  },
+  "Буквенно-цифровые клавиши": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Буквенно-цифровые клавиши"
+  },
+  "Клавиши цифровой клавиатуры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "Клавиши цифровой клавиатуры"
+  },
+  "Рисунок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 5,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рисунок"
+  },
+  "Комбинация клавиш": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Комбинация клавиш"
+  },
+  "Диагностика": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диагностика"
+  },
+  "Вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 5,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вид"
+  },
+  "Инструменты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Инструменты"
+  },
+  "Опции": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 4,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Опции"
+  },
+  "Сообщения пользователю": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сообщения пользователю"
+  },
+  "Предупреждающие сообщения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Предупреждающие сообщения"
+  },
+  "Информационные сообщения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Информационные сообщения"
+  },
+  "Состояние": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Состояние"
+  },
+  "Структура модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Структура модели"
+  },
+  "Топология тела": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Топология тела"
+  },
+  "Ошибка пересчёта родительского элемента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ошибка пересчёта родительского элемента"
+  },
+  "Не определены значения родительских переменных": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Не определены значения родительских переменных"
+  },
+  "Тип переменной и возвращаемого значения не совпадают": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тип переменной и возвращаемого значения не совпадают"
+  },
+  "Деление на ноль": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Деление на ноль"
+  },
+  "Всплывающие окна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Всплывающие окна"
+  },
+  "Таблица": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Таблица"
+  },
+  "Окно справочной системы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно справочной системы"
+  },
+  "Вкладка «Содержание»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка «Содержание»"
+  },
+  "Вкладка «Указатель»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка «Указатель»"
+  },
+  "Вкладка «Поиск»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка «Поиск»"
+  },
+  "Кнопка навигации": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка навигации"
+  },
+  "Возврат к начальной странице": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Возврат к начальной странице"
+  },
+  "Поиск текущего раздела в содержании": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поиск текущего раздела в содержании"
+  },
+  "Переход к предыдущему разделу": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Переход к предыдущему разделу"
+  },
+  "Переход к следующему разделу": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Переход к следующему разделу"
+  },
+  "Диалог параметров активной команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог параметров активной команды"
+  },
+  "Клавиша <F1>": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Клавиша <F1>"
+  },
+  "Окно установок интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно установок интерфейса"
+  },
+  "Модули технологической платформы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Модули технологической платформы"
+  },
+  "Каталог файлов справки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-010"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Каталог файлов справки"
+  },
+  "Пользовательский интерфейс": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пользовательский интерфейс"
+  },
+  "Окно Установки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Установки"
+  },
+  "Группа Настройки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа Настройки"
+  },
+  "Глава Настройка интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Глава Настройка интерфейса"
+  },
+  "Временный файл XML": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Временный файл XML"
+  },
+  "Настроечный файл INI": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Настроечный файл INI"
+  },
+  "Профиль настроек": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Профиль настроек"
+  },
+  "Многодокументный многооконный интерфейс": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Многодокументный многооконный интерфейс"
+  },
+  "Главные окна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Главные окна"
+  },
+  "Сеанс работы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сеанс работы"
+  },
+  "Вспомогательные окна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 4,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вспомогательные окна"
+  },
+  "Статусная строка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 4,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Статусная строка"
+  },
+  "Выпадающее меню настроек": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-012"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выпадающее меню настроек"
+  },
+  "Навигатор модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 10,
+    "update_time": 1783956582,
+    "_id": "Навигатор модели"
+  },
+  "Тела": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тела"
+  },
+  "Вспомогательные объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вспомогательные объекты"
+  },
+  "Сцены": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сцены"
+  },
+  "Страницы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Страницы"
+  },
+  "Стили": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стили"
+  },
+  "Материалы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Материалы"
+  },
+  "Сборка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сборка"
+  },
+  "История операций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 3,
+    "update_time": 1783956582,
+    "_id": "История операций"
+  },
+  "Цифровая модель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цифровая модель"
+  },
+  "Прототип документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Прототип документа"
+  },
+  "Открыть в отдельной вкладке": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Открыть в отдельной вкладке"
+  },
+  "Иконки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-037"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Иконки"
+  },
+  "Видимый": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Видимый"
+  },
+  "Управляющий параметр": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Управляющий параметр"
+  },
+  "Вспомогательный": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вспомогательный"
+  },
+  "Параметры сетки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры сетки"
+  },
+  "Визуальные свойства": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Визуальные свойства"
+  },
+  "Материал": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Материал"
+  },
+  "Масса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Масса"
+  },
+  "Запрет на удаление": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Запрет на удаление"
+  },
+  "Рабочие плоскости": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рабочие плоскости"
+  },
+  "Цвет образованных граней": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет образованных граней"
+  },
+  "Пиктограмма": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма"
+  },
+  "Древовидная структура": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Древовидная структура"
+  },
+  "Навигатор слоёв": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 4,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Навигатор слоёв"
+  },
+  "Окно свойств": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "Окно свойств"
+  },
+  "Порядок объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Порядок объектов"
+  },
+  "На передний/задний план": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "На передний/задний план"
+  },
+  "Переместить вперёд/назад": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Переместить вперёд/назад"
+  },
+  "Приоритет": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Приоритет"
+  },
+  "Очерёдность отображения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Очерёдность отображения"
+  },
+  "Окно зависимостей": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно зависимостей"
+  },
+  "Рисунок 5.1.9": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рисунок 5.1.9"
+  },
+  "RGK": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "RGK"
+  },
+  "Технологическая платформа RPLM-Application": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Технологическая платформа RPLM-Application"
+  },
+  "Microsoft Windows": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Microsoft Windows"
+  },
+  "Astra Linux": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Astra Linux"
+  },
+  "Intel Core i3": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Intel Core i3"
+  },
+  "NVIDIA": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "NVIDIA"
+  },
+  "AMD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "AMD"
+  },
+  "ЕСКД": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "ЕСКД"
+  },
+  "PMI": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "PMI"
+  },
+  "Стартовая страница Приветствие": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Стартовая страница Приветствие"
+  },
+  "ОЗУ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "ОЗУ"
+  },
+  "Жесткий диск": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Жесткий диск"
+  },
+  "Коэффициент скрытия иконок ограничений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Коэффициент скрытия иконок ограничений"
+  },
+  "Размер иконок навигатора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер иконок навигатора"
+  },
+  "Откат модели при редактировании операции": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Откат модели при редактировании операции"
+  },
+  "Куб навигации": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Куб навигации"
+  },
+  "СК куба навигации": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "СК куба навигации"
+  },
+  "Радиус привязки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Радиус привязки"
+  },
+  "Количество предыдущих файлов для хранения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Количество предыдущих файлов для хранения"
+  },
+  "Отрисовка внутренних ребер треугольников тел": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Отрисовка внутренних ребер треугольников тел"
+  },
+  "Глобальная СК": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Глобальная СК"
+  },
+  "Рабочая СК": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рабочая СК"
+  },
+  "Активная СК": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активная СК"
+  },
+  "Режим объектной привязки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Режим объектной привязки"
+  },
+  "Сохранить": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сохранить"
+  },
+  "Отмена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Отмена"
+  },
+  "Повтор": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Повтор"
+  },
+  "Поле поиска команд": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поле поиска команд"
+  },
+  "Минимизировать Ленту": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Минимизировать Ленту"
+  },
+  "Смысловые группы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Смысловые группы"
+  },
+  "Активный документ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активный документ"
+  },
+  "Активный объект": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активный объект"
+  },
+  "Активный программный модуль": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активный программный модуль"
+  },
+  "Коэффициент скорости вращения камеры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Коэффициент скорости вращения камеры"
+  },
+  "Область предварительного просмотра": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Область предварительного просмотра"
+  },
+  "Время на плавный поворот камеры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Время на плавный поворот камеры"
+  },
+  "Процент масштабирования": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Процент масштабирования"
+  },
+  "Группа Графика": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа Графика"
+  },
+  "Обратное направление колеса мыши": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Обратное направление колеса мыши"
+  },
+  "Показывать статистику 3Dграфики": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Показывать статистику 3Dграфики"
+  },
+  "Группа Динамическая подсветка объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа Динамическая подсветка объектов"
+  },
+  "Максимальное число объектов в списке выбора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Максимальное число объектов в списке выбора"
+  },
+  "Временная задержка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Временная задержка"
+  },
+  "Размер зоны поиска": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер зоны поиска"
+  },
+  "Использовать контекстную панель кнопок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Использовать контекстную панель кнопок"
+  },
+  "Использовать динамическую панель кнопок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Использовать динамическую панель кнопок"
+  },
+  "Модель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 4,
+    "update_time": 1783956582,
+    "_id": "Модель"
+  },
+  "Документ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Документ"
+  },
+  "Курсор": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 4,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Курсор"
+  },
+  "Список объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Список объектов"
+  },
+  "Окно Информация": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Информация"
+  },
+  "Группа Инструменты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа Инструменты"
+  },
+  "Окно Слои": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Слои"
+  },
+  "Слой": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Слой"
+  },
+  "Звёздочка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Звёздочка"
+  },
+  "ЛКМ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 6,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "ЛКМ"
+  },
+  "Назад": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Назад"
+  },
+  "Пользовательский прототип": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пользовательский прототип"
+  },
+  "Диалог выбора прототипа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог выбора прототипа"
+  },
+  "Команда Открыть": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Открыть"
+  },
+  "Окно команды Открыть": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно команды Открыть"
+  },
+  "Установки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Установки"
+  },
+  "Показать область предварительного просмотра": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Показать область предварительного просмотра"
+  },
+  "Диалог области предварительного просмотра": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог области предварительного просмотра"
+  },
+  "3D-модель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "3D-модель"
+  },
+  "Мышь": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Мышь"
+  },
+  "Видовой куб": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Видовой куб"
+  },
+  "RGP": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "RGP"
+  },
+  "Панель быстрого доступа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 7,
+    "update_time": 1783956582,
+    "_id": "Панель быстрого доступа"
+  },
+  "Drag-and-Drop": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Drag-and-Drop"
+  },
+  "Операционная система": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Операционная система"
+  },
+  "Изображение прошлого сеанса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Изображение прошлого сеанса"
+  },
+  "3D-изображение": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "3D-изображение"
+  },
+  "Интегрированные модули": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Интегрированные модули"
+  },
+  "Процесс чтения файла": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Процесс чтения файла"
+  },
+  "Полное обновление объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Полное обновление объектов"
+  },
+  "Обновление сеток": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Обновление сеток"
+  },
+  "Пересчёт задач": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пересчёт задач"
+  },
+  "Автоматический пересчёт": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Автоматический пересчёт"
+  },
+  "Удаление объектов модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Удаление объектов модели"
+  },
+  "Также удалить зависимые объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Также удалить зависимые объекты"
+  },
+  "Диагностика состояния": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диагностика состояния"
+  },
+  "Окно Диагностика": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Диагностика"
+  },
+  "Компонент": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Компонент"
+  },
+  "Сетка КЭ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сетка КЭ"
+  },
+  "Диалог удаления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог удаления"
+  },
+  "Клавиша Delete": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Клавиша Delete"
+  },
+  "ПКМ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "ПКМ"
+  },
+  "Диалог Создать стиль": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Диалог Создать стиль"
+  },
+  "Тип объекта модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тип объекта модели"
+  },
+  "Стиль линии": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль линии"
+  },
+  "Стиль заполнения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль заполнения"
+  },
+  "Стиль 2Dточки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль 2Dточки"
+  },
+  "Стиль 3Dточки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль 3Dточки"
+  },
+  "Стиль ЛСК": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль ЛСК"
+  },
+  "Стиль РП": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль РП"
+  },
+  "Стиль текста": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стиль текста"
+  },
+  "Базовый стиль": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Базовый стиль"
+  },
+  "Свойства": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 3,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Свойства"
+  },
+  "Продолжить создание": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Продолжить создание"
+  },
+  "Ок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ок"
+  },
+  "Справочная система": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Справочная система"
+  },
+  "Окно справки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно справки"
+  },
+  "Всплывающие подсказки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Всплывающие подсказки"
+  },
+  "Главное окно системы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-009"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Главное окно системы"
+  },
+  "Окно Свойства": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Свойства"
+  },
+  "3Dсцена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 4,
+    "update_time": 1783956582,
+    "_id": "3Dсцена"
+  },
+  "Имя": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Имя"
+  },
+  "Прозрачность": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Прозрачность"
+  },
+  "Цвет": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет"
+  },
+  "Системные свойства": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Системные свойства"
+  },
+  "Показывать в корне Навигатора модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Показывать в корне Навигатора модели"
+  },
+  "Тело": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тело"
+  },
+  "Грань": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Грань"
+  },
+  "Ребро": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ребро"
+  },
+  "Вершина": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вершина"
+  },
+  "Открыть в отдельном окне": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Открыть в отдельном окне"
+  },
+  "Пользователь": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-042",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пользователь"
+  },
+  "Добавить новый слой": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Добавить новый слой"
+  },
+  "Установить текущий слой": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Установить текущий слой"
+  },
+  "Удалить слой/группу слоёв": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Удалить слой/группу слоёв"
+  },
+  "Перенести объекты на слой": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Перенести объекты на слой"
+  },
+  "Добавить стиль слоя": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Добавить стиль слоя"
+  },
+  "Удалить стиль слоя": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Удалить стиль слоя"
+  },
+  "Зависимости": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Зависимости"
+  },
+  "Редактировать": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Редактировать"
+  },
+  "Удалить": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Удалить"
+  },
+  "Зависимые объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-045"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Зависимые объекты"
+  },
+  "Технологическая платформа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 4,
+    "update_time": 1783956582,
+    "_id": "Технологическая платформа"
+  },
+  "Модуль CAD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Модуль CAD"
+  },
+  "Окно Приложения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Приложения"
+  },
+  "Кнопка Удалить": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 4,
+    "update_time": 1783956582,
+    "_id": "Кнопка Удалить"
+  },
+  "Автозапуск": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Автозапуск"
+  },
+  "Новый документ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Новый документ"
+  },
+  "Выбор прототипа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выбор прототипа"
+  },
+  "Пустой документ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пустой документ"
+  },
+  "Prototypes.ini": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Prototypes.ini"
+  },
+  "C:\\Program Files\\RPLM\\Program\\Prototypes": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "C:\\Program Files\\RPLM\\Program\\Prototypes"
+  },
+  "Чертеж": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Чертеж"
+  },
+  "2D": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "2D"
+  },
+  "3D": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "3D"
+  },
+  "Стандартные виды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стандартные виды"
+  },
+  "Стили новых объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "Стили новых объектов"
+  },
+  "Атрибуты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Атрибуты"
+  },
+  "Сцена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сцена"
+  },
+  "Раскрыть все элементы навигатора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Раскрыть все элементы навигатора"
+  },
+  "Настройка вложенности элементов навигатора": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Настройка вложенности элементов навигатора"
+  },
+  "Максимум": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Максимум"
+  },
+  "Красная звёздочка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Красная звёздочка"
+  },
+  "Диалог поиска": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог поиска"
+  },
+  "Пиктограммы переключения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограммы переключения"
+  },
+  "Колонка видимости": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка видимости"
+  },
+  "Иконка скрытия": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Иконка скрытия"
+  },
+  "Колонка подавления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка подавления"
+  },
+  "Подавленный объект": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-039"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Подавленный объект"
+  },
+  "Колонка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка"
+  },
+  "Дерево модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Дерево модели"
+  },
+  "Операция": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "Операция"
+  },
+  "Объект": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Объект"
+  },
+  "Окно диагностики": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно диагностики"
+  },
+  "Вкладка историй операций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка историй операций"
+  },
+  "3D-сцена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 4,
+    "update_time": 1783956582,
+    "_id": "3D-сцена"
+  },
+  "Диалог команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Диалог команды"
+  },
+  "Левая кнопка мыши": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-040",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Левая кнопка мыши"
+  },
+  "Режим Переместить Вперёд/Назад": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Режим Переместить Вперёд/Назад"
+  },
+  "Навигатор Модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Навигатор Модели"
+  },
+  "Диалог Команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог Команды"
+  },
+  "Команда Создать Сцену": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Создать Сцену"
+  },
+  "Диалоговое Окно Создания Сцены": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалоговое Окно Создания Сцены"
+  },
+  "Базовая Сцена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Базовая Сцена"
+  },
+  "Исключаемые Объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Исключаемые Объекты"
+  },
+  "Добавляемые Объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Добавляемые Объекты"
+  },
+  "Модифицируемые Объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Модифицируемые Объекты"
+  },
+  "Рабочее Окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рабочее Окно"
+  },
+  "Список Объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Список Объектов"
+  },
+  "Целевой Объект": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Целевой Объект"
+  },
+  "Пиктограмма Команды Трансформации": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма Команды Трансформации"
+  },
+  "Окно управления приложениями": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно управления приложениями"
+  },
+  "Кнопка Добавить": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Кнопка Добавить"
+  },
+  "Диалог Открыть": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог Открыть"
+  },
+  "Блок Стартовая страница": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Блок Стартовая страница"
+  },
+  "Блок Избранное": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Блок Избранное"
+  },
+  "Блок Создать документ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Блок Создать документ"
+  },
+  "Блок Недавние файлы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Блок Недавние файлы"
+  },
+  "Кнопка открытия документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка открытия документа"
+  },
+  "Кнопка выбора каталога": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка выбора каталога"
+  },
+  "Идентификатор модуля": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Идентификатор модуля"
+  },
+  "Тип модуля": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тип модуля"
+  },
+  "Состояние модуля": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-001"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Состояние модуля"
+  },
+  "Динамическая панель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Динамическая панель"
+  },
+  "Контекстная панель кнопок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Контекстная панель кнопок"
+  },
+  "Рабочее окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-029",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 9,
+    "update_time": 1783956582,
+    "_id": "Рабочее окно"
+  },
+  "Панель фильтров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель фильтров"
+  },
+  "Окно Настройка интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Настройка интерфейса"
+  },
+  "Комбинации клавиш": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Комбинации клавиш"
+  },
+  "Зона поиска объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Зона поиска объектов"
+  },
+  "Размер зоны поиска объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-020"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер зоны поиска объектов"
+  },
+  "Пользовательская рабочая плоскость": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пользовательская рабочая плоскость"
+  },
+  "Окружность": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окружность"
+  },
+  "Линия окружности": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Линия окружности"
+  },
+  "Центр": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Центр"
+  },
+  "Радиус": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Радиус"
+  },
+  "Команда Скрыть": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Скрыть"
+  },
+  "Команда Показать": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Показать"
+  },
+  "Команда Показать всё": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Показать всё"
+  },
+  "Команда Сгруппировать в папку": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Сгруппировать в папку"
+  },
+  "Команда Переименовать": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Переименовать"
+  },
+  "Команда Разгруппировать папку": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Разгруппировать папку"
+  },
+  "Вкладка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка"
+  },
+  "Объектная модель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Объектная модель"
+  },
+  "Новое окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-014"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Новое окно"
+  },
+  "Панель поиска команд": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель поиска команд"
+  },
+  "Настроить панель быстрого доступа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Настроить панель быстрого доступа"
+  },
+  "Панель опций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель опций"
+  },
+  "Специальная панель видов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Специальная панель видов"
+  },
+  "Выпадающий список": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выпадающий список"
+  },
+  "Контекстная справка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Контекстная справка"
+  },
+  "Сведения о программном модуле CAD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сведения о программном модуле CAD"
+  },
+  "Сервер": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сервер"
+  },
+  "Визуализация модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Визуализация модели"
+  },
+  "Выбор объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-018"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выбор объектов"
+  },
+  "Свойства слоя/группы слоёв": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Свойства слоя/группы слоёв"
+  },
+  "Цвет пометки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет пометки"
+  },
+  "Создать группу слоёв": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Создать группу слоёв"
+  },
+  "Настройка атрибутов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Настройка атрибутов"
+  },
+  "Замороженный": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Замороженный"
+  },
+  "Экранный": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Экранный"
+  },
+  "Невидимый при вставке в сборку": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Невидимый при вставке в сборку"
+  },
+  "Видимый только при вставке в сборку": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Видимый только при вставке в сборку"
+  },
+  "Стили слоя": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Стили слоя"
+  },
+  "Добавить новый стиль в текущий слой": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Добавить новый стиль в текущий слой"
+  },
+  "Shift": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Shift"
+  },
+  "Ctrl": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ctrl"
+  },
+  "Сервисные функции": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Сервисные функции"
+  },
+  "Переключатели режимов команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Переключатели режимов команды"
+  },
+  "Параметры команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры команды"
+  },
+  "Переключатели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Переключатели"
+  },
+  "Поля выбора объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поля выбора объектов"
+  },
+  "Поля ввода значений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поля ввода значений"
+  },
+  "Кнопки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопки"
+  },
+  "Флаговые кнопки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Флаговые кнопки"
+  },
+  "Ползунки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ползунки"
+  },
+  "Подсказки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Подсказки"
+  },
+  "Активное поле": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активное поле"
+  },
+  "Кнопка удаления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка удаления"
+  },
+  "Кнопки редактирования": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопки редактирования"
+  },
+  "Кнопки вызова команд": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопки вызова команд"
+  },
+  "Диалог параметров команд": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-025",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Диалог параметров команд"
+  },
+  "Масштабирование шрифта и стрелок 3Dразмеров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Масштабирование шрифта и стрелок 3Dразмеров"
+  },
+  "Выбор РП по всей поверхности": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выбор РП по всей поверхности"
+  },
+  "Показывать расширенные подсказки к объектам": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Показывать расширенные подсказки к объектам"
+  },
+  "Использовать закладки документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Использовать закладки документов"
+  },
+  "Ограничение времени на построение сетки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ограничение времени на построение сетки"
+  },
+  "Цвет фона 3Dокна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет фона 3Dокна"
+  },
+  "Фон 3Dокна из темы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Фон 3Dокна из темы"
+  },
+  "Текстура фона 3Dокна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Текстура фона 3Dокна"
+  },
+  "Размер иконок панели Вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер иконок панели Вид"
+  },
+  "РП": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "РП"
+  },
+  "Панель Вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель Вид"
+  },
+  "Системный журнал событий": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Системный журнал событий"
+  },
+  "Конечно-элементная сетка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Конечно-элементная сетка"
+  },
+  "Значение 24": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Значение 24"
+  },
+  "Пиктограмма точки отката": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма точки отката"
+  },
+  "SpaceMouse": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "SpaceMouse"
+  },
+  "Пиктограмма базового положения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма базового положения"
+  },
+  "Пиктограммы поворота": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограммы поворота"
+  },
+  "Пиктограммы масштабирования": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограммы масштабирования"
+  },
+  "Модуль управления 3D-сценой": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-050"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Модуль управления 3D-сценой"
+  },
+  "Окно атрибутов документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно атрибутов документа"
+  },
+  "Атрибут": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Атрибут"
+  },
+  "Системная переменная": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Системная переменная"
+  },
+  "Команда Добавить": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Добавить"
+  },
+  "Команда Удалить": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Удалить"
+  },
+  "Команда Копировать в буфер": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Копировать в буфер"
+  },
+  "Команда Вставить из буфера": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Вставить из буфера"
+  },
+  "Команда Сохранить в Файл": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Сохранить в Файл"
+  },
+  "Команда Считать из файла": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Считать из файла"
+  },
+  "XML-файл": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "XML-файл"
+  },
+  "Проводник операционной системы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Проводник операционной системы"
+  },
+  "История документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 3,
+    "update_time": 1783956582,
+    "_id": "История документа"
+  },
+  "Колонка Наименование": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка Наименование"
+  },
+  "Колонка Значение": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка Значение"
+  },
+  "Колонка Выражение": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка Выражение"
+  },
+  "Колонка Переменная": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-007"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Колонка Переменная"
+  },
+  "Система": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Система"
+  },
+  "Сессия": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сессия"
+  },
+  "Дата создания": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Дата создания"
+  },
+  "Дата последнего сохранения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Дата последнего сохранения"
+  },
+  "RPLM.Application.exe": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "RPLM.Application.exe"
+  },
+  "РГП": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "РГП"
+  },
+  "Командная строка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Командная строка"
+  },
+  "Сохранить как": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сохранить как"
+  },
+  "Автосохранение": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Автосохранение"
+  },
+  "Параметры автосохранения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры автосохранения"
+  },
+  "Флаг Автосохранение документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Флаг Автосохранение документов"
+  },
+  "Интервал сохранения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 2,
+    "update_time": 1783956581,
+    "_id": "Интервал сохранения"
+  },
+  "Параллельная работа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параллельная работа"
+  },
+  "Рисунок 3.3.3": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рисунок 3.3.3"
+  },
+  "Диалог предыдущих документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Диалог предыдущих документов"
+  },
+  "Инструментальная панель Вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Инструментальная панель Вид"
+  },
+  "Окно установок программного модуля CAD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно установок программного модуля CAD"
+  },
+  "Команда Редактировать": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда Редактировать"
+  },
+  "Клавиша Esc": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Клавиша Esc"
+  },
+  "Настройка интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Настройка интерфейса"
+  },
+  "Группа объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа объектов"
+  },
+  "Набор команд": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Набор команд"
+  },
+  "Текущая комбинация": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Текущая комбинация"
+  },
+  "Исходное состояние": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Исходное состояние"
+  },
+  "Кнопка Сброс": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Сброс"
+  },
+  "Сервисные функции команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сервисные функции команды"
+  },
+  "Основной блок параметров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Основной блок параметров"
+  },
+  "Блоки дополнительных параметров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Блоки дополнительных параметров"
+  },
+  "Блок вспомогательных опций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Блок вспомогательных опций"
+  },
+  "Кнопка Справка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Справка"
+  },
+  "Кнопка Опции": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Опции"
+  },
+  "Кнопка Отмена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Отмена"
+  },
+  "Кнопка Ок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Ок"
+  },
+  "Флаг Продолжить создание": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Флаг Продолжить создание"
+  },
+  "Область заголовка диалога": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Область заголовка диалога"
+  },
+  "Создавать эскиз при черчении на РП": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Создавать эскиз при черчении на РП"
+  },
+  "Применять установки без перезапуска": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Применять установки без перезапуска"
+  },
+  "Рабочая плоскость": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-033"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Рабочая плоскость"
+  },
+  "Окно параметров команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно параметров команды"
+  },
+  "Опция показать все элементы управления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Опция показать все элементы управления"
+  },
+  "Опция прокрутка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Опция прокрутка"
+  },
+  "Окно установок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно установок"
+  },
+  "Панель лента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель лента"
+  },
+  "Вкладка вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка вид"
+  },
+  "Группа настройки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа настройки"
+  },
+  "Цвет рамки активного вида": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет рамки активного вида"
+  },
+  "Цвет для вспомогательных объектов команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет для вспомогательных объектов команды"
+  },
+  "Поля ввода информации": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-027",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поля ввода информации"
+  },
+  "Меню настроек": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Меню настроек"
+  },
+  "Панель вкладок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель вкладок"
+  },
+  "Подсказка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Подсказка"
+  },
+  "Горячие клавиши": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-011"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Горячие клавиши"
+  },
+  "Параметры Физических Свойств": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры Физических Свойств"
+  },
+  "Параметры Точности Моделирования": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры Точности Моделирования"
+  },
+  "Параметры Качества Отображения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры Качества Отображения"
+  },
+  "Группа Настройки Качества Твердых Тел": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа Настройки Качества Твердых Тел"
+  },
+  "Флаговая Кнопка Масс-Инерционных Характеристик": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Флаговая Кнопка Масс-Инерционных Характеристик"
+  },
+  "Атрибуты Документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Атрибуты Документа"
+  },
+  "Метаданные Документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Метаданные Документа"
+  },
+  "Электронная Структура Изделия": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Электронная Структура Изделия"
+  },
+  "Прототипы Документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Прототипы Документов"
+  },
+  "Окно Атрибутов Документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Окно Атрибутов Документа"
+  },
+  "Единица Измерения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Единица Измерения"
+  },
+  "Варианты Качества": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Варианты Качества"
+  },
+  "Текстовые Переменные": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Текстовые Переменные"
+  },
+  "Вещественные Переменные": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вещественные Переменные"
+  },
+  "Параметры Объектов ЭСИ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Параметры Объектов ЭСИ"
+  },
+  "Размер иконок в диалогах": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер иконок в диалогах"
+  },
+  "Шаблон имени компонентов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Шаблон имени компонентов"
+  },
+  "Цвет фона управляющих размеров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет фона управляющих размеров"
+  },
+  "Цвет фона активных элементов управления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет фона активных элементов управления"
+  },
+  "Цвет фона активных элементов управления, обязательных к заданию": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет фона активных элементов управления, обязательных к заданию"
+  },
+  "Цвет фона элементов управления, обязательных к заданию": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Цвет фона элементов управления, обязательных к заданию"
+  },
+  "Размер иконок панели фильтров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Размер иконок панели фильтров"
+  },
+  "Использовать сглаживание линий в 2Dграфике": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Использовать сглаживание линий в 2Dграфике"
+  },
+  "Папка для справки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Папка для справки"
+  },
+  "Скрыть панель фильтров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Скрыть панель фильтров"
+  },
+  "Скрыть панель «Вид»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Скрыть панель «Вид»"
+  },
+  "Имя папки иконок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Имя папки иконок"
+  },
+  "сборка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "сборка"
+  },
+  "Активный вид": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активный вид"
+  },
+  "Команда «Заменить вид»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда «Заменить вид»"
+  },
+  "Команда «Перенести в другое окно»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Команда «Перенести в другое окно»"
+  },
+  "Панель «Лента»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 2,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Панель «Лента»"
+  },
+  "Вкладка «Вид»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вкладка «Вид»"
+  },
+  "Группа «Инструменты»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Группа «Инструменты»"
+  },
+  "Меню настроек программного модуля CAD": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-015"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Меню настроек программного модуля CAD"
+  },
+  "Вспомогательное окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вспомогательное окно"
+  },
+  "Групповое окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Групповое окно"
+  },
+  "Фоновая подсветка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Фоновая подсветка"
+  },
+  "Кнопка закрытия": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка закрытия"
+  },
+  "Кнопка превращения в плавающее окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка превращения в плавающее окно"
+  },
+  "Инструментальные панели рабочего окна": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Инструментальные панели рабочего окна"
+  },
+  "Панель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Панель"
+  },
+  "Команда": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Команда"
+  },
+  "Раздел": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Раздел"
+  },
+  "Группа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Группа"
+  },
+  "Контекстная панель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Контекстная панель"
+  },
+  "Тип объекта": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-019"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Тип объекта"
+  },
+  "Любой объект": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Любой объект"
+  },
+  "Кнопка Добавить раздел": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Добавить раздел"
+  },
+  "Кнопка Добавить группу": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Добавить группу"
+  },
+  "Кнопка Переименовать": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Переименовать"
+  },
+  "Кнопка Импорт/Экспорт": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка Импорт/Экспорт"
+  },
+  "XML": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "XML"
+  },
+  "Флаг": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Флаг"
+  },
+  "Список слева": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Список слева"
+  },
+  "Правый список": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Правый список"
+  },
+  "Кнопка добавления (общая)": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка добавления (общая)"
+  },
+  "Поле Тип объекта": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поле Тип объекта"
+  },
+  "Кнопка добавления (контекстная)": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка добавления (контекстная)"
+  },
+  "Условия применимости": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Условия применимости"
+  },
+  "Кнопка отображения в левом списке": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка отображения в левом списке"
+  },
+  "Кнопка отображения на Ленте": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-023"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Кнопка отображения на Ленте"
+  },
+  "Модифицируемые объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Модифицируемые объекты"
+  },
+  "Активировать сцену": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Активировать сцену"
+  },
+  "Управление представлениями": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Управление представлениями"
+  },
+  "Вращение 3Dпредставления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вращение 3Dпредставления"
+  },
+  "Перемещение представления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Перемещение представления"
+  },
+  "Масштабирование представления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Масштабирование представления"
+  },
+  "СКМ": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "СКМ"
+  },
+  "Компоненты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Компоненты"
+  },
+  "Пиктограмма команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Пиктограмма команды"
+  },
+  "Геометрический объект": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Геометрический объект"
+  },
+  "Луч": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Луч"
+  },
+  "Центр сцены": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Центр сцены"
+  },
+  "Списки значений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Списки значений"
+  },
+  "Закрытие документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Закрытие документа"
+  },
+  "Сохранять каждую копию в отдельный файл": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Сохранять каждую копию в отдельный файл"
+  },
+  "Имя файла": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Имя файла"
+  },
+  "Свойства документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005",
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 2,
+    "update_time": 1783956582,
+    "_id": "Свойства документа"
+  },
+  "Формат файла": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Формат файла"
+  },
+  "Настройки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Настройки"
+  },
+  "Тип документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Тип документа"
+  },
+  "Система единиц измерения": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Система единиц измерения"
+  },
+  "Физические свойства материалов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Физические свойства материалов"
+  },
+  "Точность моделирования": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-005"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Точность моделирования"
+  },
+  "Структура панели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-021"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Структура панели"
+  },
+  "Изменение родительского элемента": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Изменение родительского элемента"
+  },
+  "Использование не существующего имени переменной": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Использование не существующего имени переменной"
+  },
+  "Ввод текстовой переменной в поле вещественной": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Ввод текстовой переменной в поле вещественной"
+  },
+  "Выражение с нулевым знаменателем": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-036"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Выражение с нулевым знаменателем"
+  },
+  "Моделирование": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Моделирование"
+  },
+  "Физическое вещество": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Физическое вещество"
+  },
+  "Геометрический объем": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Геометрический объем"
+  },
+  "Плотность материала": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Плотность материала"
+  },
+  "Грани": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Грани"
+  },
+  "Системная библиотека цветов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Системная библиотека цветов"
+  },
+  "Поля": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Поля"
+  },
+  "Вложенные параметры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-043"
+    ],
+    "count": 1,
+    "create_time": 1783956581,
+    "update_time": 1783956581,
+    "_id": "Вложенные параметры"
+  },
+  "Управление приоритетом объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-047"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Управление приоритетом объектов"
+  },
+  "Закладка": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-017"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Закладка"
+  },
+  "Экран": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-031"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Экран"
+  },
+  "Параметр": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Параметр"
+  },
+  "Ссылка объекта": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Ссылка объекта"
+  },
+  "Перечень объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-044"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Перечень объектов"
+  },
+  "Окно документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-003"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Окно документа"
+  },
+  "Обновление внешних ссылок": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Обновление внешних ссылок"
+  },
+  "Объекты и связи": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Объекты и связи"
+  },
+  "Некорректные параметры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Некорректные параметры"
+  },
+  "Пересчёт взаимосвязей": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-035"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Пересчёт взаимосвязей"
+  },
+  "Кнопка Закрыть": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Кнопка Закрыть"
+  },
+  "Пользовательские прототипы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-002"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Пользовательские прототипы"
+  },
+  "Режим Перед/За Объектом": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-048"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Режим Перед/За Объектом"
+  },
+  "Папка История операций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-038"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Папка История операций"
+  },
+  "Слои": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-046"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Слои"
+  },
+  "Сохранять системный лог": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-030"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Сохранять системный лог"
+  },
+  "Точка отката": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Точка отката"
+  },
+  "Режим отката": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Режим отката"
+  },
+  "Буфер обмена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Буфер обмена"
+  },
+  "Твёрдые тела": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Твёрдые тела"
+  },
+  "Поверхностные тела": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Поверхностные тела"
+  },
+  "Кривые": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Кривые"
+  },
+  "Точки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Точки"
+  },
+  "Операции": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Операции"
+  },
+  "Абсолютная СК документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-041"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Абсолютная СК документа"
+  },
+  "Окно История документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Окно История документа"
+  },
+  "Кнопка Показать созданные объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Кнопка Показать созданные объекты"
+  },
+  "Команда Создать стиль": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Команда Создать стиль"
+  },
+  "Кнопка Показать отредактированные объекты": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Кнопка Показать отредактированные объекты"
+  },
+  "Стили объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Стили объектов"
+  },
+  "Вкладка Модель": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Вкладка Модель"
+  },
+  "Вкладка Чертёж": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Вкладка Чертёж"
+  },
+  "Группа Дополнительно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Группа Дополнительно"
+  },
+  "Тип стиля": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-008"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Тип стиля"
+  },
+  "Открытие документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Открытие документа"
+  },
+  "Импорт документа": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Импорт документа"
+  },
+  "Сохранение документов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-004"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Сохранение документов"
+  },
+  "Функциональные клавиши": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Функциональные клавиши"
+  },
+  "Клавиши управления курсором": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Клавиши управления курсором"
+  },
+  "Диалог назначения комбинации": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Диалог назначения комбинации"
+  },
+  "Кнопка Сброс комбинаций": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Кнопка Сброс комбинаций"
+  },
+  "Иерархическая структура": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Иерархическая структура"
+  },
+  "Дерево объектов": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Дерево объектов"
+  },
+  "Редактирование структуры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-022"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Редактирование структуры"
+  },
+  "Наименование команды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-024"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Наименование команды"
+  },
+  "Масс-Инерционные Характеристики": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-006"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Масс-Инерционные Характеристики"
+  },
+  "Тип камеры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Тип камеры"
+  },
+  "иконки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "иконки"
+  },
+  "Навигатором модели": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Навигатором модели"
+  },
+  "2Dвиды": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "2Dвиды"
+  },
+  "файл справки": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "файл справки"
+  },
+  "панель фильтров": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "панель фильтров"
+  },
+  "панель «Вид»": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "панель «Вид»"
+  },
+  "иконки интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "иконки интерфейса"
+  },
+  "иконки ограничений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "иконки ограничений"
+  },
+  "элементы управления": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-028"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "элементы управления"
+  },
+  "Плавающее окно": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-016"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Плавающее окно"
+  },
+  "Трансформация": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Трансформация"
+  },
+  "Визуализация": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Визуализация"
+  },
+  "Параметры": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Параметры"
+  },
+  "Созданная сцена": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-049"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Созданная сцена"
+  },
+  "Пиктограммы": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Пиктограммы"
+  },
+  "Команда Измерение": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Команда Измерение"
+  },
+  "Поля числовых значений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Поля числовых значений"
+  },
+  "Конструктор выражений": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Конструктор выражений"
+  },
+  "Профиль настроек интерфейса": {
+    "chunk_ids": [
+      "doc-b430a0e1bfb4f4afd1e462c83fa3654c-chunk-026"
+    ],
+    "count": 1,
+    "create_time": 1783956582,
+    "update_time": 1783956582,
+    "_id": "Профиль настроек интерфейса"
+  },
+  "Панель «История»": {
+    "chunk_ids": [
+      "doc-b668a440ae9857e1b9828e69e555b2fa-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1784054156,
+    "update_time": 1784054156,
+    "_id": "Панель «История»"
+  },
+  "Трёхмерные геометрические модели": {
+    "chunk_ids": [
+      "doc-b668a440ae9857e1b9828e69e555b2fa-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1784054156,
+    "update_time": 1784054156,
+    "_id": "Трёхмерные геометрические модели"
+  },
+  "Операции построения": {
+    "chunk_ids": [
+      "doc-b668a440ae9857e1b9828e69e555b2fa-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1784054156,
+    "update_time": 1784054156,
+    "_id": "Операции построения"
+  },
+  "Зависимые объекты модели": {
+    "chunk_ids": [
+      "doc-b668a440ae9857e1b9828e69e555b2fa-chunk-000"
+    ],
+    "count": 1,
+    "create_time": 1784054156,
+    "update_time": 1784054156,
+    "_id": "Зависимые объекты модели"
+  }
+}

@@ -1,0 +1,961 @@
+2026-07-10 12:04:41.0813 - INFO - graphrag.index.validate_config - LLM Config Params Validated
+2026-07-10 12:04:42.0051 - INFO - graphrag.index.validate_config - Embedding LLM Config Params Validated
+2026-07-10 12:04:42.0051 - WARNING - graphrag.index.validate_config - Embedding model produces 1024-dimensional vectors but vector_size is configured as 3072. Overriding vector_size to match the model.
+2026-07-10 12:04:42.0052 - INFO - graphrag.cli.index - Starting pipeline run. False
+2026-07-10 12:04:42.0053 - INFO - graphrag.cli.index - Using default configuration: {
+    "completion_models": {
+        "default_completion_model": {
+            "type": "litellm",
+            "model_provider": "openai",
+            "model": "/models/Qwen3.5-35B-A3B-Q4_K_M.gguf",
+            "call_args": {},
+            "api_base": "http://127.0.0.1:8080/v1",
+            "api_version": null,
+            "api_key": "==== REDACTED ====",
+            "auth_method": "api_key",
+            "azure_deployment_name": null,
+            "retry": {
+                "type": "exponential_backoff",
+                "max_retries": null,
+                "base_delay": null,
+                "jitter": null,
+                "max_delay": null
+            },
+            "rate_limit": null,
+            "metrics": {
+                "type": "default",
+                "store": "memory",
+                "writer": "log",
+                "log_level": null,
+                "base_dir": null
+            },
+            "mock_responses": []
+        }
+    },
+    "embedding_models": {
+        "default_embedding_model": {
+            "type": "litellm",
+            "model_provider": "openai",
+            "model": "multilingual-e5-large",
+            "call_args": {},
+            "api_base": "http://127.0.0.1:8010/v1",
+            "api_version": null,
+            "api_key": "==== REDACTED ====",
+            "auth_method": "api_key",
+            "azure_deployment_name": null,
+            "retry": {
+                "type": "exponential_backoff",
+                "max_retries": null,
+                "base_delay": null,
+                "jitter": null,
+                "max_delay": null
+            },
+            "rate_limit": null,
+            "metrics": {
+                "type": "default",
+                "store": "memory",
+                "writer": "log",
+                "log_level": null,
+                "base_dir": null
+            },
+            "mock_responses": []
+        }
+    },
+    "concurrent_requests": 25,
+    "async_mode": "threaded",
+    "input": {
+        "type": "text",
+        "encoding": null,
+        "file_pattern": null,
+        "id_column": null,
+        "title_column": null,
+        "text_column": null
+    },
+    "input_storage": {
+        "type": "file",
+        "encoding": null,
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/input",
+        "account_url": null,
+        "database_name": null
+    },
+    "chunking": {
+        "type": "tokens",
+        "encoding_model": "o200k_base",
+        "size": 300,
+        "overlap": 50,
+        "prepend_metadata": null
+    },
+    "output_storage": {
+        "type": "file",
+        "encoding": null,
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/output",
+        "account_url": null,
+        "database_name": null
+    },
+    "update_output_storage": {
+        "type": "file",
+        "encoding": null,
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/update_output",
+        "account_url": null,
+        "database_name": null
+    },
+    "table_provider": {
+        "type": "parquet",
+        "legacy_container": null,
+        "batch_size": 50
+    },
+    "cache": {
+        "type": "json",
+        "storage": {
+            "type": "file",
+            "encoding": null,
+            "base_dir": "cache",
+            "account_url": null,
+            "database_name": null
+        }
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/logs",
+        "account_url": null
+    },
+    "vector_store": {
+        "type": "lancedb",
+        "db_uri": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/output/lancedb",
+        "url": null,
+        "audience": null,
+        "database_name": null,
+        "vector_size": 1024,
+        "index_schema": {
+            "entity_description": {
+                "index_name": "entity_description",
+                "id_field": "id",
+                "vector_field": "vector",
+                "vector_size": 1024,
+                "fields": {}
+            },
+            "community_full_content": {
+                "index_name": "community_full_content",
+                "id_field": "id",
+                "vector_field": "vector",
+                "vector_size": 1024,
+                "fields": {}
+            },
+            "text_unit_text": {
+                "index_name": "text_unit_text",
+                "id_field": "id",
+                "vector_field": "vector",
+                "vector_size": 1024,
+                "fields": {}
+            }
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "embedding_model_id": "default_embedding_model",
+        "model_instance_name": "text_embedding",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "names": [
+            "entity_description",
+            "community_full_content",
+            "text_unit_text"
+        ]
+    },
+    "extract_graph": {
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "extract_graph",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "system",
+            "module",
+            "storage",
+            "date"
+        ],
+        "max_gleanings": 1
+    },
+    "summarize_descriptions": {
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "summarize_descriptions",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25,
+        "async_mode": "threaded"
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "extract_claims",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1
+    },
+    "community_reports": {
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "community_reporting",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 1200,
+        "max_input_length": 4000
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_reduce_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+2026-07-10 12:04:42.0053 - INFO - graphrag.api.index - Initializing indexing pipeline...
+2026-07-10 12:04:42.0054 - INFO - graphrag.index.workflows.factory - Creating pipeline with workflows: ['load_input_documents', 'create_base_text_units', 'create_final_documents', 'extract_graph', 'finalize_graph', 'extract_covariates', 'create_communities', 'create_final_text_units', 'create_community_reports', 'generate_text_embeddings']
+2026-07-10 12:04:42.0057 - INFO - graphrag.index.run.run_pipeline - Running standard indexing.
+2026-07-10 12:04:42.0059 - INFO - graphrag.index.run.run_pipeline - Executing pipeline...
+2026-07-10 12:04:42.0066 - INFO - graphrag.index.workflows.load_input_documents - Final # of rows loaded: 1
+2026-07-10 12:04:42.0150 - INFO - graphrag.api.index - Workflow load_input_documents completed successfully
+2026-07-10 12:04:42.0153 - DEBUG - graphrag.api.index -                                                   id  ... human_readable_id
+0  44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c48...  ...                 0
+
+[1 rows x 6 columns]
+2026-07-10 12:04:42.0153 - INFO - graphrag.index.workflows.create_base_text_units - Workflow started: create_base_text_units
+2026-07-10 12:04:42.0854 - INFO - graphrag.index.workflows.create_base_text_units - Starting chunking process for 1 documents
+2026-07-10 12:04:42.0858 - INFO - graphrag.index.workflows.create_base_text_units - chunker progress:  1/1
+2026-07-10 12:04:42.0861 - INFO - graphrag.index.workflows.create_base_text_units - Workflow completed: create_base_text_units
+2026-07-10 12:04:42.0876 - INFO - graphrag.api.index - Workflow create_base_text_units completed successfully
+2026-07-10 12:04:42.0876 - DEBUG - graphrag.api.index - [{'id': '26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268', 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'text': 'Проект "Орион-128" разработан исследовательской лабораторией "Северный Контур" для управления распределенной сетью технического мониторинга на удаленных промышленных площадках. Система предназначена для сбора телеметрии, анализа состояния оборудования и выпуска регламентных отчетов для инженерных смен.\n\nГлавный модуль проекта называется "Атлас". Именно "Атлас" координирует обмен данными между компонентами системы, назначает задания обработчикам и формирует итоговую карту состояния объектов. Внутри проекта модуль "Атлас" использует хранилище "Вектор-7" для доступа к техническим документам, инструкциям и архиву журналов обслуживания.\n\nХранилище "Вектор-7" содержит 48 технических документов, из которых 12 относятся к аварийным регламентам, 18 описывают штатные процедуры диагностики, а еще 18 содержат схемы подключения датчиков. Средний размер одного документа составляет 26 страниц. В марте 2025 года в хранилище были добавлены 6 новых инструкции по калибровке.\n\nРуководителем проекта является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года', 'n_tokens': 300}, {'id': '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca', 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'text': ' является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года, а в июне 2025 года команда завершила стендовые испытания на объекте "Полюс-3".\n\nКроме "Атласа", в составе системы работают модуль "Маяк" и аналитический контур "Гранит". Модуль "Маяк" принимает сигналы от датчиков температуры, вибрации и давления, после чего передает их в "Атлас" пакетами по 64 записи. Контур "Гранит" использует результаты, подготовленные модулем "Атлас", чтобы вычислять индекс риска оборудования по шкале от 0 до 100.\n\nДля объекта "Полюс-3" система зафиксировала три ключевых показателя. Во время контрольного запуска 14 июня 2025 года средняя температура насосного узла составила 73 градуса, уровень вибрации достиг 4,2 миллиметра в секунду, а итоговый индекс риска был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7', 'n_tokens': 300}, {'id': '273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1', 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'text': ' был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7".\n\nВнутренний отчет версии RPT-2025-06 указывает, что "Атлас" сформировал предупреждение за 18 секунд, а "Гранит" завершил пересчет риска за 5 секунд. В том же отчете сказано, что лаборатория "Северный Контур" планирует расширить архив "Вектор-7" до 60 документов к октябрю 2025 года.\n', 'n_tokens': 140}]
+2026-07-10 12:04:42.0876 - INFO - graphrag.index.workflows.create_final_documents - Workflow started: create_final_documents
+2026-07-10 12:04:42.0887 - INFO - graphrag.index.workflows.create_final_documents - Workflow completed: create_final_documents
+2026-07-10 12:04:42.0888 - INFO - graphrag.api.index - Workflow create_final_documents completed successfully
+2026-07-10 12:04:42.0888 - DEBUG - graphrag.api.index - [{'id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'human_readable_id': 0, 'title': 'smoke_document.txt', 'text': 'Проект "Орион-128" разработан исследовательской лабораторией "Северный Контур" для управления распределенной сетью технического мониторинга на удаленных промышленных площадках. Система предназначена для сбора телеметрии, анализа состояния оборудования и выпуска регламентных отчетов для инженерных смен.\n\nГлавный модуль проекта называется "Атлас". Именно "Атлас" координирует обмен данными между компонентами системы, назначает задания обработчикам и формирует итоговую карту состояния объектов. Внутри проекта модуль "Атлас" использует хранилище "Вектор-7" для доступа к техническим документам, инструкциям и архиву журналов обслуживания.\n\nХранилище "Вектор-7" содержит 48 технических документов, из которых 12 относятся к аварийным регламентам, 18 описывают штатные процедуры диагностики, а еще 18 содержат схемы подключения датчиков. Средний размер одного документа составляет 26 страниц. В марте 2025 года в хранилище были добавлены 6 новых инструкции по калибровке.\n\nРуководителем проекта является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года, а в июне 2025 года команда завершила стендовые испытания на объекте "Полюс-3".\n\nКроме "Атласа", в составе системы работают модуль "Маяк" и аналитический контур "Гранит". Модуль "Маяк" принимает сигналы от датчиков температуры, вибрации и давления, после чего передает их в "Атлас" пакетами по 64 записи. Контур "Гранит" использует результаты, подготовленные модулем "Атлас", чтобы вычислять индекс риска оборудования по шкале от 0 до 100.\n\nДля объекта "Полюс-3" система зафиксировала три ключевых показателя. Во время контрольного запуска 14 июня 2025 года средняя температура насосного узла составила 73 градуса, уровень вибрации достиг 4,2 миллиметра в секунду, а итоговый индекс риска был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7".\n\nВнутренний отчет версии RPT-2025-06 указывает, что "Атлас" сформировал предупреждение за 18 секунд, а "Гранит" завершил пересчет риска за 5 секунд. В том же отчете сказано, что лаборатория "Северный Контур" планирует расширить архив "Вектор-7" до 60 документов к октябрю 2025 года.\n', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268', '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca', '273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1'], 'creation_date': '2026-07-10 12:04:26 +0300', 'raw_data': None}]
+2026-07-10 12:04:42.0888 - INFO - graphrag.index.workflows.extract_graph - Workflow started: extract_graph
+2026-07-10 12:12:40.0451 - INFO - graphrag.index.validate_config - LLM Config Params Validated
+2026-07-10 12:12:40.0609 - INFO - graphrag.index.validate_config - Embedding LLM Config Params Validated
+2026-07-10 12:12:40.0609 - WARNING - graphrag.index.validate_config - Embedding model produces 1024-dimensional vectors but vector_size is configured as 3072. Overriding vector_size to match the model.
+2026-07-10 12:12:40.0609 - INFO - graphrag.cli.index - Starting pipeline run. False
+2026-07-10 12:12:40.0609 - INFO - graphrag.cli.index - Using default configuration: {
+    "completion_models": {
+        "default_completion_model": {
+            "type": "litellm",
+            "model_provider": "openai",
+            "model": "/models/Qwen3.5-35B-A3B-Q4_K_M.gguf",
+            "call_args": {},
+            "api_base": "http://127.0.0.1:8080/v1",
+            "api_version": null,
+            "api_key": "==== REDACTED ====",
+            "auth_method": "api_key",
+            "azure_deployment_name": null,
+            "retry": {
+                "type": "exponential_backoff",
+                "max_retries": null,
+                "base_delay": null,
+                "jitter": null,
+                "max_delay": null
+            },
+            "rate_limit": null,
+            "metrics": {
+                "type": "default",
+                "store": "memory",
+                "writer": "log",
+                "log_level": null,
+                "base_dir": null
+            },
+            "mock_responses": []
+        }
+    },
+    "embedding_models": {
+        "default_embedding_model": {
+            "type": "litellm",
+            "model_provider": "openai",
+            "model": "multilingual-e5-large",
+            "call_args": {},
+            "api_base": "http://127.0.0.1:8010/v1",
+            "api_version": null,
+            "api_key": "==== REDACTED ====",
+            "auth_method": "api_key",
+            "azure_deployment_name": null,
+            "retry": {
+                "type": "exponential_backoff",
+                "max_retries": null,
+                "base_delay": null,
+                "jitter": null,
+                "max_delay": null
+            },
+            "rate_limit": null,
+            "metrics": {
+                "type": "default",
+                "store": "memory",
+                "writer": "log",
+                "log_level": null,
+                "base_dir": null
+            },
+            "mock_responses": []
+        }
+    },
+    "concurrent_requests": 25,
+    "async_mode": "threaded",
+    "input": {
+        "type": "text",
+        "encoding": null,
+        "file_pattern": null,
+        "id_column": null,
+        "title_column": null,
+        "text_column": null
+    },
+    "input_storage": {
+        "type": "file",
+        "encoding": null,
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/input",
+        "account_url": null,
+        "database_name": null
+    },
+    "chunking": {
+        "type": "tokens",
+        "encoding_model": "o200k_base",
+        "size": 300,
+        "overlap": 50,
+        "prepend_metadata": null
+    },
+    "output_storage": {
+        "type": "file",
+        "encoding": null,
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/output",
+        "account_url": null,
+        "database_name": null
+    },
+    "update_output_storage": {
+        "type": "file",
+        "encoding": null,
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/update_output",
+        "account_url": null,
+        "database_name": null
+    },
+    "table_provider": {
+        "type": "parquet",
+        "legacy_container": null,
+        "batch_size": 50
+    },
+    "cache": {
+        "type": "json",
+        "storage": {
+            "type": "file",
+            "encoding": null,
+            "base_dir": "cache",
+            "account_url": null,
+            "database_name": null
+        }
+    },
+    "reporting": {
+        "type": "file",
+        "base_dir": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/logs",
+        "account_url": null
+    },
+    "vector_store": {
+        "type": "lancedb",
+        "db_uri": "/home/surious-type/projects/research-rag/output/smoke_tests/msgraphrag/project/output/lancedb",
+        "url": null,
+        "audience": null,
+        "database_name": null,
+        "vector_size": 1024,
+        "index_schema": {
+            "entity_description": {
+                "index_name": "entity_description",
+                "id_field": "id",
+                "vector_field": "vector",
+                "vector_size": 1024,
+                "fields": {}
+            },
+            "community_full_content": {
+                "index_name": "community_full_content",
+                "id_field": "id",
+                "vector_field": "vector",
+                "vector_size": 1024,
+                "fields": {}
+            },
+            "text_unit_text": {
+                "index_name": "text_unit_text",
+                "id_field": "id",
+                "vector_field": "vector",
+                "vector_size": 1024,
+                "fields": {}
+            }
+        }
+    },
+    "workflows": null,
+    "embed_text": {
+        "embedding_model_id": "default_embedding_model",
+        "model_instance_name": "text_embedding",
+        "batch_size": 16,
+        "batch_max_tokens": 8191,
+        "names": [
+            "entity_description",
+            "community_full_content",
+            "text_unit_text"
+        ]
+    },
+    "extract_graph": {
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "extract_graph",
+        "prompt": "prompts/extract_graph.txt",
+        "entity_types": [
+            "organization",
+            "person",
+            "system",
+            "module",
+            "storage",
+            "date"
+        ],
+        "max_gleanings": 1
+    },
+    "summarize_descriptions": {
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "summarize_descriptions",
+        "prompt": "prompts/summarize_descriptions.txt",
+        "max_length": 500,
+        "max_input_tokens": 4000
+    },
+    "extract_graph_nlp": {
+        "normalize_edge_weights": true,
+        "text_analyzer": {
+            "extractor_type": "regex_english",
+            "model_name": "en_core_web_md",
+            "max_word_length": 15,
+            "word_delimiter": " ",
+            "include_named_entities": true,
+            "exclude_nouns": [
+                "stuff",
+                "thing",
+                "things",
+                "bunch",
+                "bit",
+                "bits",
+                "people",
+                "person",
+                "okay",
+                "hey",
+                "hi",
+                "hello",
+                "laughter",
+                "oh"
+            ],
+            "exclude_entity_tags": [
+                "DATE"
+            ],
+            "exclude_pos_tags": [
+                "DET",
+                "PRON",
+                "INTJ",
+                "X"
+            ],
+            "noun_phrase_tags": [
+                "PROPN",
+                "NOUNS"
+            ],
+            "noun_phrase_grammars": {
+                "PROPN,PROPN": "PROPN",
+                "NOUN,NOUN": "NOUNS",
+                "NOUNS,NOUN": "NOUNS",
+                "ADJ,ADJ": "ADJ",
+                "ADJ,NOUN": "NOUNS"
+            }
+        },
+        "concurrent_requests": 25,
+        "async_mode": "threaded"
+    },
+    "prune_graph": {
+        "min_node_freq": 2,
+        "max_node_freq_std": null,
+        "min_node_degree": 1,
+        "max_node_degree_std": null,
+        "min_edge_weight_pct": 40.0,
+        "remove_ego_nodes": true,
+        "lcc_only": false
+    },
+    "cluster_graph": {
+        "max_cluster_size": 10,
+        "use_lcc": true,
+        "seed": 3735928559
+    },
+    "extract_claims": {
+        "enabled": false,
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "extract_claims",
+        "prompt": "prompts/extract_claims.txt",
+        "description": "Any claims or facts that could be relevant to information discovery.",
+        "max_gleanings": 1
+    },
+    "community_reports": {
+        "completion_model_id": "default_completion_model",
+        "model_instance_name": "community_reporting",
+        "graph_prompt": "prompts/community_report_graph.txt",
+        "text_prompt": "prompts/community_report_text.txt",
+        "max_length": 1200,
+        "max_input_length": 4000
+    },
+    "snapshots": {
+        "embeddings": false,
+        "graphml": false,
+        "raw_graph": false
+    },
+    "local_search": {
+        "prompt": "prompts/local_search_system_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "embedding_model_id": "default_embedding_model",
+        "text_unit_prop": 0.5,
+        "community_prop": 0.15,
+        "conversation_history_max_turns": 5,
+        "top_k_entities": 10,
+        "top_k_relationships": 10,
+        "max_context_tokens": 12000
+    },
+    "global_search": {
+        "map_prompt": "prompts/global_search_map_system_prompt.txt",
+        "reduce_prompt": "prompts/global_search_reduce_system_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "knowledge_prompt": "prompts/global_search_knowledge_system_prompt.txt",
+        "max_context_tokens": 12000,
+        "data_max_tokens": 12000,
+        "map_max_length": 1000,
+        "reduce_max_length": 2000,
+        "dynamic_search_threshold": 1,
+        "dynamic_search_keep_parent": false,
+        "dynamic_search_num_repeats": 1,
+        "dynamic_search_use_summary": false,
+        "dynamic_search_max_level": 2
+    },
+    "drift_search": {
+        "prompt": "prompts/drift_search_system_prompt.txt",
+        "reduce_prompt": "prompts/drift_reduce_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "embedding_model_id": "default_embedding_model",
+        "data_max_tokens": 12000,
+        "reduce_max_tokens": null,
+        "reduce_temperature": 0,
+        "reduce_max_completion_tokens": null,
+        "concurrency": 32,
+        "drift_k_followups": 20,
+        "primer_folds": 5,
+        "primer_llm_max_tokens": 12000,
+        "n_depth": 3,
+        "local_search_text_unit_prop": 0.9,
+        "local_search_community_prop": 0.1,
+        "local_search_top_k_mapped_entities": 10,
+        "local_search_top_k_relationships": 10,
+        "local_search_max_data_tokens": 12000,
+        "local_search_temperature": 0,
+        "local_search_top_p": 1,
+        "local_search_n": 1,
+        "local_search_llm_max_gen_tokens": null,
+        "local_search_llm_max_gen_completion_tokens": null
+    },
+    "basic_search": {
+        "prompt": "prompts/basic_search_system_prompt.txt",
+        "completion_model_id": "default_completion_model",
+        "embedding_model_id": "default_embedding_model",
+        "k": 10,
+        "max_context_tokens": 12000
+    }
+}
+2026-07-10 12:12:40.0610 - INFO - graphrag.api.index - Initializing indexing pipeline...
+2026-07-10 12:12:40.0610 - INFO - graphrag.index.workflows.factory - Creating pipeline with workflows: ['load_input_documents', 'create_base_text_units', 'create_final_documents', 'extract_graph', 'finalize_graph', 'extract_covariates', 'create_communities', 'create_final_text_units', 'create_community_reports', 'generate_text_embeddings']
+2026-07-10 12:12:40.0612 - INFO - graphrag.index.run.run_pipeline - Running standard indexing.
+2026-07-10 12:12:40.0613 - INFO - graphrag.index.run.run_pipeline - Executing pipeline...
+2026-07-10 12:12:40.0617 - INFO - graphrag.index.workflows.load_input_documents - Final # of rows loaded: 1
+2026-07-10 12:12:40.0649 - INFO - graphrag.api.index - Workflow load_input_documents completed successfully
+2026-07-10 12:12:40.0651 - DEBUG - graphrag.api.index -                                                   id  ... human_readable_id
+0  44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c48...  ...                 0
+
+[1 rows x 6 columns]
+2026-07-10 12:12:40.0652 - INFO - graphrag.index.workflows.create_base_text_units - Workflow started: create_base_text_units
+2026-07-10 12:12:41.0335 - INFO - graphrag.index.workflows.create_base_text_units - Starting chunking process for 1 documents
+2026-07-10 12:12:41.0339 - INFO - graphrag.index.workflows.create_base_text_units - chunker progress:  1/1
+2026-07-10 12:12:41.0341 - INFO - graphrag.index.workflows.create_base_text_units - Workflow completed: create_base_text_units
+2026-07-10 12:12:41.0356 - INFO - graphrag.api.index - Workflow create_base_text_units completed successfully
+2026-07-10 12:12:41.0356 - DEBUG - graphrag.api.index - [{'id': '26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268', 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'text': 'Проект "Орион-128" разработан исследовательской лабораторией "Северный Контур" для управления распределенной сетью технического мониторинга на удаленных промышленных площадках. Система предназначена для сбора телеметрии, анализа состояния оборудования и выпуска регламентных отчетов для инженерных смен.\n\nГлавный модуль проекта называется "Атлас". Именно "Атлас" координирует обмен данными между компонентами системы, назначает задания обработчикам и формирует итоговую карту состояния объектов. Внутри проекта модуль "Атлас" использует хранилище "Вектор-7" для доступа к техническим документам, инструкциям и архиву журналов обслуживания.\n\nХранилище "Вектор-7" содержит 48 технических документов, из которых 12 относятся к аварийным регламентам, 18 описывают штатные процедуры диагностики, а еще 18 содержат схемы подключения датчиков. Средний размер одного документа составляет 26 страниц. В марте 2025 года в хранилище были добавлены 6 новых инструкции по калибровке.\n\nРуководителем проекта является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года', 'n_tokens': 300}, {'id': '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca', 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'text': ' является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года, а в июне 2025 года команда завершила стендовые испытания на объекте "Полюс-3".\n\nКроме "Атласа", в составе системы работают модуль "Маяк" и аналитический контур "Гранит". Модуль "Маяк" принимает сигналы от датчиков температуры, вибрации и давления, после чего передает их в "Атлас" пакетами по 64 записи. Контур "Гранит" использует результаты, подготовленные модулем "Атлас", чтобы вычислять индекс риска оборудования по шкале от 0 до 100.\n\nДля объекта "Полюс-3" система зафиксировала три ключевых показателя. Во время контрольного запуска 14 июня 2025 года средняя температура насосного узла составила 73 градуса, уровень вибрации достиг 4,2 миллиметра в секунду, а итоговый индекс риска был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7', 'n_tokens': 300}, {'id': '273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1', 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'text': ' был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7".\n\nВнутренний отчет версии RPT-2025-06 указывает, что "Атлас" сформировал предупреждение за 18 секунд, а "Гранит" завершил пересчет риска за 5 секунд. В том же отчете сказано, что лаборатория "Северный Контур" планирует расширить архив "Вектор-7" до 60 документов к октябрю 2025 года.\n', 'n_tokens': 140}]
+2026-07-10 12:12:41.0356 - INFO - graphrag.index.workflows.create_final_documents - Workflow started: create_final_documents
+2026-07-10 12:12:41.0367 - INFO - graphrag.index.workflows.create_final_documents - Workflow completed: create_final_documents
+2026-07-10 12:12:41.0367 - INFO - graphrag.api.index - Workflow create_final_documents completed successfully
+2026-07-10 12:12:41.0367 - DEBUG - graphrag.api.index - [{'id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'human_readable_id': 0, 'title': 'smoke_document.txt', 'text': 'Проект "Орион-128" разработан исследовательской лабораторией "Северный Контур" для управления распределенной сетью технического мониторинга на удаленных промышленных площадках. Система предназначена для сбора телеметрии, анализа состояния оборудования и выпуска регламентных отчетов для инженерных смен.\n\nГлавный модуль проекта называется "Атлас". Именно "Атлас" координирует обмен данными между компонентами системы, назначает задания обработчикам и формирует итоговую карту состояния объектов. Внутри проекта модуль "Атлас" использует хранилище "Вектор-7" для доступа к техническим документам, инструкциям и архиву журналов обслуживания.\n\nХранилище "Вектор-7" содержит 48 технических документов, из которых 12 относятся к аварийным регламентам, 18 описывают штатные процедуры диагностики, а еще 18 содержат схемы подключения датчиков. Средний размер одного документа составляет 26 страниц. В марте 2025 года в хранилище были добавлены 6 новых инструкции по калибровке.\n\nРуководителем проекта является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года, а в июне 2025 года команда завершила стендовые испытания на объекте "Полюс-3".\n\nКроме "Атласа", в составе системы работают модуль "Маяк" и аналитический контур "Гранит". Модуль "Маяк" принимает сигналы от датчиков температуры, вибрации и давления, после чего передает их в "Атлас" пакетами по 64 записи. Контур "Гранит" использует результаты, подготовленные модулем "Атлас", чтобы вычислять индекс риска оборудования по шкале от 0 до 100.\n\nДля объекта "Полюс-3" система зафиксировала три ключевых показателя. Во время контрольного запуска 14 июня 2025 года средняя температура насосного узла составила 73 градуса, уровень вибрации достиг 4,2 миллиметра в секунду, а итоговый индекс риска был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7".\n\nВнутренний отчет версии RPT-2025-06 указывает, что "Атлас" сформировал предупреждение за 18 секунд, а "Гранит" завершил пересчет риска за 5 секунд. В том же отчете сказано, что лаборатория "Северный Контур" планирует расширить архив "Вектор-7" до 60 документов к октябрю 2025 года.\n', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268', '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca', '273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1'], 'creation_date': '2026-07-10 12:04:26 +0300', 'raw_data': None}]
+2026-07-10 12:12:41.0368 - INFO - graphrag.index.workflows.extract_graph - Workflow started: extract_graph
+2026-07-10 12:13:52.0085 - INFO - graphrag.logger.progress - extract graph progress: 1/3
+2026-07-10 12:15:03.0381 - INFO - graphrag.logger.progress - extract graph progress: 2/3
+2026-07-10 12:17:10.0597 - INFO - graphrag.logger.progress - extract graph progress: 3/3
+2026-07-10 12:17:10.0634 - WARNING - graphrag.index.operations.extract_graph.utils - Dropped 2 relationship(s) referencing non-existent entities.
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 1/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 2/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 3/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 4/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 5/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 6/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 7/136
+2026-07-10 12:17:10.0637 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 8/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 9/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 10/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 11/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 12/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 13/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 14/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 15/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 16/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 17/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 18/136
+2026-07-10 12:17:10.0638 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 19/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 20/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 21/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 22/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 23/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 24/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 25/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 26/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 27/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 28/136
+2026-07-10 12:17:10.0639 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 29/136
+2026-07-10 12:17:10.0661 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 30/136
+2026-07-10 12:17:10.0661 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 31/136
+2026-07-10 12:17:10.0661 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 32/136
+2026-07-10 12:17:10.0661 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 33/136
+2026-07-10 12:17:10.0661 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 34/136
+2026-07-10 12:17:10.0682 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 35/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 36/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 37/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 38/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 39/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 40/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 41/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 42/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 43/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 44/136
+2026-07-10 12:17:10.0683 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 45/136
+2026-07-10 12:17:10.0684 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 46/136
+2026-07-10 12:17:10.0704 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 47/136
+2026-07-10 12:17:10.0704 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 48/136
+2026-07-10 12:17:10.0704 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 49/136
+2026-07-10 12:17:10.0704 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 50/136
+2026-07-10 12:17:10.0704 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 51/136
+2026-07-10 12:17:10.0724 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 52/136
+2026-07-10 12:17:10.0724 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 53/136
+2026-07-10 12:17:10.0744 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 54/136
+2026-07-10 12:17:10.0763 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 55/136
+2026-07-10 12:17:10.0782 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 56/136
+2026-07-10 12:17:10.0782 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 57/136
+2026-07-10 12:17:10.0782 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 58/136
+2026-07-10 12:17:10.0782 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 59/136
+2026-07-10 12:17:10.0782 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 60/136
+2026-07-10 12:17:10.0782 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 61/136
+2026-07-10 12:17:10.0783 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 62/136
+2026-07-10 12:17:18.0740 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 63/136
+2026-07-10 12:17:25.0891 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 64/136
+2026-07-10 12:17:30.0519 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 65/136
+2026-07-10 12:17:35.0577 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 66/136
+2026-07-10 12:17:38.0970 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 67/136
+2026-07-10 12:17:49.0216 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 68/136
+2026-07-10 12:17:55.0237 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 69/136
+2026-07-10 12:17:55.0240 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 70/136
+2026-07-10 12:17:55.0240 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 71/136
+2026-07-10 12:17:55.0241 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 72/136
+2026-07-10 12:17:55.0241 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 73/136
+2026-07-10 12:17:55.0241 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 74/136
+2026-07-10 12:17:55.0241 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 75/136
+2026-07-10 12:17:55.0241 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 76/136
+2026-07-10 12:17:55.0241 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 77/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 78/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 79/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 80/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 81/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 82/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 83/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 84/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 85/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 86/136
+2026-07-10 12:17:55.0242 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 87/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 88/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 89/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 90/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 91/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 92/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 93/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 94/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 95/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 96/136
+2026-07-10 12:17:55.0243 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 97/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 98/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 99/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 100/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 101/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 102/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 103/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 104/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 105/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 106/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 107/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 108/136
+2026-07-10 12:17:55.0244 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 109/136
+2026-07-10 12:17:55.0245 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 110/136
+2026-07-10 12:17:55.0245 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 111/136
+2026-07-10 12:17:55.0245 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 112/136
+2026-07-10 12:17:55.0265 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 113/136
+2026-07-10 12:17:55.0265 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 114/136
+2026-07-10 12:17:55.0284 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 115/136
+2026-07-10 12:17:55.0284 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 116/136
+2026-07-10 12:17:55.0284 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 117/136
+2026-07-10 12:17:55.0284 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 118/136
+2026-07-10 12:17:55.0284 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 119/136
+2026-07-10 12:17:55.0284 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 120/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 121/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 122/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 123/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 124/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 125/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 126/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 127/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 128/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 129/136
+2026-07-10 12:17:55.0285 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 130/136
+2026-07-10 12:17:55.0286 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 131/136
+2026-07-10 12:17:55.0286 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 132/136
+2026-07-10 12:17:55.0286 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 133/136
+2026-07-10 12:17:55.0286 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 134/136
+2026-07-10 12:17:59.0669 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 135/136
+2026-07-10 12:18:05.0597 - INFO - graphrag.logger.progress - Summarize entity/relationship description progress: 136/136
+2026-07-10 12:18:05.0617 - INFO - graphrag.index.workflows.extract_graph - Workflow completed: extract_graph
+2026-07-10 12:18:05.0625 - INFO - graphrag.api.index - Workflow extract_graph completed successfully
+2026-07-10 12:18:05.0631 - DEBUG - graphrag.api.index - {'entities':                  title  ...                                        description
+0     ПРОЕКТ ОРИОН-128  ...  Система управления распределенной сетью технич...
+1      СЕВЕРНЫЙ КОНТУР  ...  Исследовательская лаборатория, разработавшая п...
+2                АТЛАС  ...  Центральный программный компонент проекта, коо...
+3                АТЛАС  ...  Ключевой модуль системы, принимающий данные от...
+4             ВЕКТОР-7  ...  Компонент системы "Атлас", предназначенный для...
+..                 ...  ...                                                ...
+78           МАТЕРИАЛЫ  ...  Документы или данные, содержащиеся в системе "...
+79      ПЕРЕСЧЕТ РИСКА  ...  Процесс пересчета, выполняемый модулем "Гранит...
+80   РАСШИРЕНИЕ АРХИВА  ...  Планируемое действие по увеличению объема архи...
+81  ВРЕМЯ ФОРМИРОВАНИЯ  ...  Временной интервал (18 секунд), затраченный на...
+82    ВРЕМЯ ЗАВЕРШЕНИЯ  ...  Временной интервал (5 секунд), затраченный мод...
+
+[83 rows x 5 columns], 'relationships':                source  ...                                        description
+0    ПРОЕКТ ОРИОН-128  ...  Лаборатория "Северный Контур" является разрабо...
+1    ПРОЕКТ ОРИОН-128  ...  Модуль "Атлас" является главным компонентом си...
+2               АТЛАС  ...  Модуль "Атлас" использует хранилище "Вектор-7"...
+3            ВЕКТОР-7  ...  Хранилище "Вектор-7" содержит в себе 48 технич...
+4            ВЕКТОР-7  ...  Архив журналов является частью содержимого хра...
+..                ...  ...                                                ...
+62  РАСШИРЕНИЕ АРХИВА  ...  Операция расширения направлена на достижение о...
+63     ПРЕДУПРЕЖДЕНИЕ  ...  Предупреждение имеет параметр времени формиров...
+64       МОДУЛЬ АТЛАС  ...  Модуль "Атлас" выполнил действие за указанное ...
+65     ПЕРЕСЧЕТ РИСКА  ...  Операция пересчета имеет параметр времени заве...
+66      МОДУЛЬ ГРАНИТ  ...  Модуль "Гранит" завершил работу за указанное в...
+
+[67 rows x 5 columns]}
+2026-07-10 12:18:05.0632 - INFO - graphrag.index.workflows.finalize_graph - Workflow started: finalize_graph
+2026-07-10 12:18:05.0669 - INFO - graphrag.index.workflows.finalize_graph - Workflow completed: finalize_graph
+2026-07-10 12:18:05.0669 - INFO - graphrag.api.index - Workflow finalize_graph completed successfully
+2026-07-10 12:18:05.0669 - DEBUG - graphrag.api.index - {'entities': [{'id': '766ac5ee-389e-4954-b385-fed5d5d3e389', 'human_readable_id': 0, 'title': 'ПРОЕКТ ОРИОН-128', 'type': 'МОДЕЛЬ', 'description': 'Система управления распределенной сетью технического мониторинга, разработанная для промышленных площадок и предназначенная для сбора телеметрии, анализа состояния оборудования и формирования отчетов', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268'], 'frequency': 1, 'degree': 8}, {'id': '6c88e2c0-6777-4dfa-8d8b-1c30654289ba', 'human_readable_id': 1, 'title': 'СЕВЕРНЫЙ КОНТУР', 'type': 'ОРГАНИЗАЦИЯ', 'description': 'Исследовательская лаборатория, разработавшая проект "Орион-128"', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268'], 'frequency': 1, 'degree': 1}, {'id': '751d19b0-f46d-4f68-af27-c29f484b756a', 'human_readable_id': 2, 'title': 'АТЛАС', 'type': 'ГЛАВНЫЙ МОДУЛЬ', 'description': 'Центральный программный компонент проекта, координирующий обмен данными, назначающий задания и формирующий карту состояния объектов', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268'], 'frequency': 1, 'degree': 6}, {'id': 'fde96347-de66-4730-941c-749cd179f074', 'human_readable_id': 3, 'title': 'ВЕКТОР-7', 'type': 'ХРАНИЛИЩЕ ДАННЫХ', 'description': 'Компонент системы "Атлас", предназначенный для хранения и предоставления доступа к техническим документам, инструкциям и архивам журналов обслуживания', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268'], 'frequency': 1, 'degree': 6}, {'id': '017e86c5-aac0-432d-8999-e20ba028c8ad', 'human_readable_id': 4, 'title': 'ТЕХНИЧЕСКИЕ ДОКУМЕНТЫ', 'type': 'ДОКУМЕНТ', 'description': 'Совокупность файлов в хранилище "Вектор-7", включающая регламенты, инструкции по диагностике и схемы подключения датчиков', 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268'], 'frequency': 1, 'degree': 5}], 'relationships': [{'id': 'a9ba4071-8252-43d8-936a-680f8ab3bb55', 'human_readable_id': 0, 'source': 'ПРОЕКТ ОРИОН-128', 'target': 'СЕВЕРНЫЙ КОНТУР', 'description': 'Лаборатория "Северный Контур" является разработчиком проекта "Орион-128"', 'weight': 10.0, 'combined_degree': 9, 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268']}, {'id': 'd5549d90-dc46-4543-a898-00c6a8a930fa', 'human_readable_id': 1, 'source': 'ПРОЕКТ ОРИОН-128', 'target': 'АТЛАС', 'description': 'Модуль "Атлас" является главным компонентом системы, обеспечивающим её функциональность', 'weight': 10.0, 'combined_degree': 14, 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268']}, {'id': '19389427-8bef-4462-adae-f28f1619e7ff', 'human_readable_id': 2, 'source': 'АТЛАС', 'target': 'ВЕКТОР-7', 'description': 'Модуль "Атлас" использует хранилище "Вектор-7" для доступа к данным и документам', 'weight': 9.0, 'combined_degree': 12, 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268']}, {'id': '69b0069c-9ca4-4ea5-a097-81ae663576cd', 'human_readable_id': 3, 'source': 'ВЕКТОР-7', 'target': 'ТЕХНИЧЕСКИЕ ДОКУМЕНТЫ', 'description': 'Хранилище "Вектор-7" содержит в себе 48 технических документов различных типов', 'weight': 10.0, 'combined_degree': 11, 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268']}, {'id': 'b4b79800-30c7-449a-aafe-36cb1d3b746b', 'human_readable_id': 4, 'source': 'ВЕКТОР-7', 'target': 'АРХИВ ЖУРНАЛОВ ОБСЛУЖИВАНИЯ', 'description': 'Архив журналов является частью содержимого хранилища "Вектор-7"', 'weight': 9.0, 'combined_degree': 8, 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268']}]}
+2026-07-10 12:18:05.0669 - INFO - graphrag.index.workflows.extract_covariates - Workflow started: extract_covariates
+2026-07-10 12:18:05.0669 - INFO - graphrag.index.workflows.extract_covariates - Workflow completed: extract_covariates
+2026-07-10 12:18:05.0669 - INFO - graphrag.api.index - Workflow extract_covariates completed successfully
+2026-07-10 12:18:05.0669 - DEBUG - graphrag.api.index - None
+2026-07-10 12:18:05.0670 - INFO - graphrag.index.workflows.create_communities - Workflow started: create_communities
+2026-07-10 12:18:05.0757 - INFO - graphrag.index.workflows.create_communities - Workflow completed: create_communities
+2026-07-10 12:18:05.0757 - INFO - graphrag.api.index - Workflow create_communities completed successfully
+2026-07-10 12:18:05.0757 - DEBUG - graphrag.api.index - [{'id': '5a0e9f04-b017-4f88-9835-de2c08505fab', 'human_readable_id': 0, 'community': 0, 'level': 0, 'parent': -1, 'children': [], 'title': 'Community 0', 'entity_ids': ['6fa24412-fc2c-4b34-a23e-970335ce8bf0', '479ead86-d041-4abe-89d5-69e62e655f2b', '017e86c5-aac0-432d-8999-e20ba028c8ad', 'eb218b5d-43a4-4bf8-a669-3f566189ea35', 'fde96347-de66-4730-941c-749cd179f074', '5245dd8e-d2f1-40dd-ba50-9a43c3edd54d', '0a4dde5a-223b-4168-a676-41257d26add7'], 'relationship_ids': ['64a9009a-2854-465a-8386-45e3373f81e9', '69b0069c-9ca4-4ea5-a097-81ae663576cd', '917f0548-a7e0-431d-ad4c-80ddc6448c4d', 'b4b79800-30c7-449a-aafe-36cb1d3b746b', 'c757c614-f968-4002-a3b1-60b099e324b5', 'd7acb911-1e84-4e05-83b5-3b224006d264', 'e072d5e3-5010-4147-8625-9f1f1fa9acd7', 'eba3d5c3-26cc-4af1-9dbd-49b5304378f5'], 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268'], 'period': '2026-07-10', 'size': 7}, {'id': 'e48746aa-a77f-4ceb-9c6c-7f034d175e6e', 'human_readable_id': 1, 'community': 1, 'level': 0, 'parent': -1, 'children': [], 'title': 'Community 1', 'entity_ids': ['bb0bccbe-0ffd-4172-a1fb-303a82def6d3', '1f3a780b-0d15-46d5-8cb3-12195ddf402b', '03468e70-a337-4c40-b3b3-3adfb016468e', 'f7449e03-f955-427e-8ca7-242416975181', 'b187066b-edf2-4ecf-8b6c-24ecdb074cd5', '69db5468-4789-4d48-bbe6-195980132cd5'], 'relationship_ids': ['09f971e4-6c99-47a6-90b7-de2947caaa1a', '54c7d869-fdb9-4b0f-a88a-aeccff01866e', '5566848c-0c11-4dfc-834f-87ddfe1a19fd', '6f7c5a34-0923-468e-af82-f2a4f1ff422d', 'b0e8a487-72f2-42d3-8b13-4bbce08d37f4', 'c108b5e0-12c7-4d02-852f-1fa9ab22b7c4'], 'text_unit_ids': ['273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1', '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca'], 'period': '2026-07-10', 'size': 6}, {'id': 'ded8e1bb-f9b1-4ecb-8cee-3e03b8e7786c', 'human_readable_id': 2, 'community': 2, 'level': 0, 'parent': -1, 'children': [], 'title': 'Community 2', 'entity_ids': ['751d19b0-f46d-4f68-af27-c29f484b756a', '80f83e33-72f6-491a-ad34-2aa30d4f4ba1', '71c28aea-a205-40fd-aeae-9f20861a75c7', 'fe55a70b-987d-47fb-8412-c257439335c2', '27047aea-3d21-4d9f-9937-3e933036033d'], 'relationship_ids': ['2a7ecee0-fa31-4d6c-81b3-28749bddef63', '38e05d29-4244-4d92-ad80-7a7a1f91912e', '4a2ac014-434e-4a6a-ab45-7363498fd480', '7b350dba-66ce-4d79-b9a8-983ad763bd8f'], 'text_unit_ids': ['26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268', '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca'], 'period': '2026-07-10', 'size': 5}, {'id': '8bf4cde3-c8ff-4ecc-a488-df1432a3ab01', 'human_readable_id': 3, 'community': 3, 'level': 0, 'parent': -1, 'children': [], 'title': 'Community 3', 'entity_ids': ['fac1a7c6-afab-4404-b864-febacaea7c2e', 'a7173e90-cef0-4485-a853-8add54d83567', '3a2e7846-12b5-42a3-b947-15d9e3f7d4ce', 'e346893e-5188-41aa-8ddd-cbca78158750', 'bdc1d108-d107-45d9-bc82-8c8da92cc1df', '2ed0aa39-0766-4c51-9ace-bd8ddec93ee5', '9656aaeb-b00e-4e36-a746-66a13d4ce269', '281965e3-28de-45f6-84ed-53b5ab4a5f66', '09aeebed-acf0-443f-8596-57ccfb9cec57'], 'relationship_ids': ['1d88d067-db8f-42fb-a64f-6795a2c0d712', '26f5e372-2759-449d-a47a-05a9adcbe061', '57ea20e5-5b03-4a93-99ed-f581514c38ce', '757f4f9d-d3af-42a7-a793-250f7f841cc4', '8c5fcef8-0da9-4e67-b8fb-7ff4d8981449', 'a392607b-9677-4192-9642-524d3ce7b7e0', 'cb61f814-f2a8-4dc6-a4e0-9700fa221d53', 'ccf693b1-a455-4531-84f4-d5af98ffa4f3', 'da1685e0-41a5-42a0-a674-6da667c22d09', 'dc5e5edb-3886-46aa-be3a-154e455d9c96', 'f00961e6-fa07-40bb-9a79-3b8542da2ac8'], 'text_unit_ids': ['273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1'], 'period': '2026-07-10', 'size': 9}, {'id': 'a85349c5-1bdc-4dab-bfed-cc1da954176f', 'human_readable_id': 4, 'community': 4, 'level': 0, 'parent': -1, 'children': [], 'title': 'Community 4', 'entity_ids': ['c67c094f-fd02-4495-b198-036771c5b041', 'a3dffb67-6cd4-40be-8508-2a8ad676ec00', '8fa97935-1d58-4dac-aa7a-5755d273b1f0', '10aa7374-cc2b-4780-a5c4-2ede0fd608f6'], 'relationship_ids': ['02bed5e2-949d-45e0-9150-e08a1fd02c43', '94e66074-430f-43d4-b938-1fd40f906c52', 'b30bf763-884c-4883-8dbe-8285bef30413', 'e0be17ac-3dce-4fe9-8eb9-b4635f422f57', 'fab02d2c-a7a8-4196-a879-7bd92858a727'], 'text_unit_ids': ['273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1'], 'period': '2026-07-10', 'size': 4}]
+2026-07-10 12:18:05.0758 - INFO - graphrag.index.workflows.create_final_text_units - Workflow started: create_final_text_units
+2026-07-10 12:18:05.0785 - INFO - graphrag.index.workflows.create_final_text_units - Workflow completed: create_final_text_units
+2026-07-10 12:18:05.0785 - INFO - graphrag.api.index - Workflow create_final_text_units completed successfully
+2026-07-10 12:18:05.0785 - DEBUG - graphrag.api.index - [{'id': '26bb53aa346c1efd5dfa56abfbdd3d24d5ff6eb1e2ecc283a73fbec865ff2ff80e252ee1c64fb9c7e3c8e898e81c6482d5a073887e10e5808750c8a9e5627268', 'human_readable_id': 0, 'text': 'Проект "Орион-128" разработан исследовательской лабораторией "Северный Контур" для управления распределенной сетью технического мониторинга на удаленных промышленных площадках. Система предназначена для сбора телеметрии, анализа состояния оборудования и выпуска регламентных отчетов для инженерных смен.\n\nГлавный модуль проекта называется "Атлас". Именно "Атлас" координирует обмен данными между компонентами системы, назначает задания обработчикам и формирует итоговую карту состояния объектов. Внутри проекта модуль "Атлас" использует хранилище "Вектор-7" для доступа к техническим документам, инструкциям и архиву журналов обслуживания.\n\nХранилище "Вектор-7" содержит 48 технических документов, из которых 12 относятся к аварийным регламентам, 18 описывают штатные процедуры диагностики, а еще 18 содержат схемы подключения датчиков. Средний размер одного документа составляет 26 страниц. В марте 2025 года в хранилище были добавлены 6 новых инструкции по калибровке.\n\nРуководителем проекта является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года', 'n_tokens': 300, 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'entity_ids': ['766ac5ee-389e-4954-b385-fed5d5d3e389', '6c88e2c0-6777-4dfa-8d8b-1c30654289ba', '751d19b0-f46d-4f68-af27-c29f484b756a', 'fde96347-de66-4730-941c-749cd179f074', '017e86c5-aac0-432d-8999-e20ba028c8ad', 'eb218b5d-43a4-4bf8-a669-3f566189ea35', '479ead86-d041-4abe-89d5-69e62e655f2b', 'd8dbadc8-7707-4e20-a595-36a66f886083', '0560bfd7-7a78-4c90-857f-e17e07ab4b5b', '6909885f-0f6c-4ac6-b1b8-e0246b191dfe', '9c7046f4-a9e0-45fb-bdcb-aed4ad4712f7', '71c28aea-a205-40fd-aeae-9f20861a75c7', 'd8007364-c87b-4241-ba43-cf3a8b92d6c2', '6610b276-7878-4c6b-8e38-44d429bc35ab', '6fa24412-fc2c-4b34-a23e-970335ce8bf0', '0a4dde5a-223b-4168-a676-41257d26add7', '5245dd8e-d2f1-40dd-ba50-9a43c3edd54d'], 'relationship_ids': ['a9ba4071-8252-43d8-936a-680f8ab3bb55', 'd5549d90-dc46-4543-a898-00c6a8a930fa', '19389427-8bef-4462-adae-f28f1619e7ff', '69b0069c-9ca4-4ea5-a097-81ae663576cd', 'b4b79800-30c7-449a-aafe-36cb1d3b746b', 'eba3d5c3-26cc-4af1-9dbd-49b5304378f5', '0cc9fefd-c11f-4a54-8a4a-67c4a290e2c4', 'f3a0cc66-799b-4320-a54a-1f3041364797', '351f7dfb-a9f0-4f7b-a5ef-3eac56ed412d', 'a243fa7e-d66a-42b0-a792-e583572bfc04', '64a9009a-2854-465a-8386-45e3373f81e9', '4a2ac014-434e-4a6a-ab45-7363498fd480', '63b7fbdb-8878-445c-8b00-1904ccc5079b', 'b695d004-216c-4246-a829-c6e35f5f2c7d', 'c757c614-f968-4002-a3b1-60b099e324b5', 'd7acb911-1e84-4e05-83b5-3b224006d264', 'e072d5e3-5010-4147-8625-9f1f1fa9acd7', 'c07bb8af-b47a-442b-94a9-fe767363d408', '848ae8fc-2b39-4ed5-8fd6-239afc9c6723', '5276a431-3647-4f4f-83e4-3dde9cab4047', 'b7998be3-5fac-4448-b9c1-996346d77477', '917f0548-a7e0-431d-ad4c-80ddc6448c4d'], 'covariate_ids': []}, {'id': '396fd07a34b345259a41d0724962b31d70355035117a8ae59f05dde4c30865c43eb9915ff2eec19ede007a91491eecad1468d6514da5ad099adb63fc45c6c7ca', 'human_readable_id': 1, 'text': ' является Алексей Ветров. За программную архитектуру отвечает Марина Лебедева, а за испытания на полигоне отвечает инженер Игорь Соколов. Первый прототип системы был собран в марте 2025 года, а в июне 2025 года команда завершила стендовые испытания на объекте "Полюс-3".\n\nКроме "Атласа", в составе системы работают модуль "Маяк" и аналитический контур "Гранит". Модуль "Маяк" принимает сигналы от датчиков температуры, вибрации и давления, после чего передает их в "Атлас" пакетами по 64 записи. Контур "Гранит" использует результаты, подготовленные модулем "Атлас", чтобы вычислять индекс риска оборудования по шкале от 0 до 100.\n\nДля объекта "Полюс-3" система зафиксировала три ключевых показателя. Во время контрольного запуска 14 июня 2025 года средняя температура насосного узла составила 73 градуса, уровень вибрации достиг 4,2 миллиметра в секунду, а итоговый индекс риска был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7', 'n_tokens': 300, 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'entity_ids': ['fe55a70b-987d-47fb-8412-c257439335c2', '80f83e33-72f6-491a-ad34-2aa30d4f4ba1', '679f8fb0-6903-4831-91b6-cb981ce8d60e', '5395f486-5e20-4b57-80fd-9f309dbf0a22', 'f7c0aa97-c1d4-4724-9756-47de22c46ebd', '27047aea-3d21-4d9f-9937-3e933036033d', '09aeebed-acf0-443f-8596-57ccfb9cec57', 'a7173e90-cef0-4485-a853-8add54d83567', '2ed0aa39-0766-4c51-9ace-bd8ddec93ee5', 'c06c8508-fdc6-4417-a717-d2a83c2a6f1b', '8c07871e-298c-4cde-9f68-a890ca6989c4', 'f824fd7f-aabd-48d0-aab8-8cf3db3f923f', '4c22d972-28cd-44ac-860d-315edc44ad2e', '83c90dcb-4ecb-4812-925a-62252cd054af', '83c90dcb-4ecb-4812-925a-62252cd054af', '309020d6-1d64-4825-9b3a-84a8816f0afe', '7575ab5c-230a-4c7a-b8a7-5b58fa3d076b', 'a75650e3-17e7-4b71-a04a-f57cf1ea3bfc', 'fa2bd955-370a-4c51-bb72-800ef149e572', '4414eab4-fde0-4d5a-a5cd-a072ae5210c2', '430de697-7340-4e3e-8887-a0824a14112b', '52cc2654-ef10-4d80-a980-3179a726d286', '6d1eba6d-60a2-417b-8316-494dea20bdcb', '9b64dbe2-da9a-4289-ac3d-fa48273f3a32', '3515fdcb-c315-4fb5-9cbe-1f0beba6815f', '36250cc5-12f2-42b6-a7fc-6858bcf9e163', '920a84fe-6749-4877-aef8-09489e8dc7d4', 'b187066b-edf2-4ecf-8b6c-24ecdb074cd5', '69db5468-4789-4d48-bbe6-195980132cd5', '9846e0c5-49ba-4875-8680-8677248b10b0', 'd5fcf456-4b12-4b1a-a508-5a4957785a24', '1ffa3181-1253-455e-a3a6-a7f0e5057a3b'], 'relationship_ids': ['2d6cfb2a-f27a-4b6a-958d-db7b5e4ffcdd', '560d6fa8-b43c-4fbe-a32a-2cfbe848aecd', '2a7ecee0-fa31-4d6c-81b3-28749bddef63', '7b350dba-66ce-4d79-b9a8-983ad763bd8f', '38e05d29-4244-4d92-ad80-7a7a1f91912e', '8e4b33cc-b499-4ba6-8a56-37f50139c950', 'be242881-194d-4cf7-8c86-ff2767a392f6', 'aca52404-8fa7-4477-8eb7-60a7e46631b2', '6a970467-103b-4a2d-baa4-c659876b8189', 'b47000fd-7bc0-4f59-9245-b5a2d541770a', '894f424e-0aef-435a-bb73-15dd9ca30f96', 'a9ef9d81-f5a8-42f2-9895-d5d65cd45fd4', '8d8b4e3c-9b6c-468a-88d1-66134163c0bb', '6f7c5a34-0923-468e-af82-f2a4f1ff422d', 'ffa77639-cc77-498d-87bb-9acf701954bd', '3d73cce1-aa43-4cf8-901d-7f15cd08eac2', 'bebcbb8c-6e61-425c-a9f1-e918e5598a52', 'afefd5ca-07d6-47a5-b772-691470a951a6', 'd988feaf-a220-4651-83ab-5e0d0e7081f1', 'dd130875-2c3f-4716-807e-8020aeae9821', 'd2a661b9-7c22-4103-9153-63b8ebc32a8c'], 'covariate_ids': []}, {'id': '273589a6863b043730ef8244ff867bd0c4a01b4f8b6a08fd1df6fbfed83eb8f8279795eedd730158fcf34f1bd64394f9ac044a16c98f05e90ac64580a79824b1', 'human_readable_id': 2, 'text': ' был рассчитан на уровне 67 баллов. При превышении порога 65 баллов модуль "Атлас" обязан сформировать предупреждение для дежурной смены и сослаться на материалы из "Вектор-7".\n\nВнутренний отчет версии RPT-2025-06 указывает, что "Атлас" сформировал предупреждение за 18 секунд, а "Гранит" завершил пересчет риска за 5 секунд. В том же отчете сказано, что лаборатория "Северный Контур" планирует расширить архив "Вектор-7" до 60 документов к октябрю 2025 года.\n', 'n_tokens': 140, 'document_id': '44e6bd4ccb37786324ff3562d72fdb051cff63cf4e3c4892c4d77e05c189ebadebc8a3643e5cb9a70fd6c978f4e639606579adeda4acbbdc45719e2056ae0d60', 'entity_ids': ['a7173e90-cef0-4485-a853-8add54d83567', 'b187066b-edf2-4ecf-8b6c-24ecdb074cd5', 'e346893e-5188-41aa-8ddd-cbca78158750', '3a2e7846-12b5-42a3-b947-15d9e3f7d4ce', '3a2e7846-12b5-42a3-b947-15d9e3f7d4ce', '281965e3-28de-45f6-84ed-53b5ab4a5f66', 'fac1a7c6-afab-4404-b864-febacaea7c2e', '10aa7374-cc2b-4780-a5c4-2ede0fd608f6', '10aa7374-cc2b-4780-a5c4-2ede0fd608f6', 'a3dffb67-6cd4-40be-8508-2a8ad676ec00', '03468e70-a337-4c40-b3b3-3adfb016468e', '03468e70-a337-4c40-b3b3-3adfb016468e', 'bb0bccbe-0ffd-4172-a1fb-303a82def6d3', '1f3a780b-0d15-46d5-8cb3-12195ddf402b', '9656aaeb-b00e-4e36-a746-66a13d4ce269', '8fa97935-1d58-4dac-aa7a-5755d273b1f0', 'f7449e03-f955-427e-8ca7-242416975181', 'bdc1d108-d107-45d9-bc82-8c8da92cc1df', 'c67c094f-fd02-4495-b198-036771c5b041'], 'relationship_ids': ['26f5e372-2759-449d-a47a-05a9adcbe061', '26f5e372-2759-449d-a47a-05a9adcbe061', 'da1685e0-41a5-42a0-a674-6da667c22d09', 'f00961e6-fa07-40bb-9a79-3b8542da2ac8', '8c5fcef8-0da9-4e67-b8fb-7ff4d8981449', '8c5fcef8-0da9-4e67-b8fb-7ff4d8981449', '757f4f9d-d3af-42a7-a793-250f7f841cc4', 'be834e9f-f8ee-4b0f-83db-78a0c8e07e54', 'cb61f814-f2a8-4dc6-a4e0-9700fa221d53', 'e0be17ac-3dce-4fe9-8eb9-b4635f422f57', '54c7d869-fdb9-4b0f-a88a-aeccff01866e', '5566848c-0c11-4dfc-834f-87ddfe1a19fd', '45fd9adb-6015-43bd-b8e4-0dc5808ee797', 'c8ba803b-8891-4498-9121-9df571829aeb', '1d88d067-db8f-42fb-a64f-6795a2c0d712', 'dc5e5edb-3886-46aa-be3a-154e455d9c96', '57ea20e5-5b03-4a93-99ed-f581514c38ce', 'b30bf763-884c-4883-8dbe-8285bef30413', 'fab02d2c-a7a8-4196-a879-7bd92858a727', '09f971e4-6c99-47a6-90b7-de2947caaa1a', 'b0e8a487-72f2-42d3-8b13-4bbce08d37f4', 'c108b5e0-12c7-4d02-852f-1fa9ab22b7c4', 'ccf693b1-a455-4531-84f4-d5af98ffa4f3', 'a392607b-9677-4192-9642-524d3ce7b7e0', '94e66074-430f-43d4-b938-1fd40f906c52', '02bed5e2-949d-45e0-9150-e08a1fd02c43'], 'covariate_ids': []}]
+2026-07-10 12:18:05.0786 - INFO - graphrag.index.workflows.create_community_reports - Workflow started: create_community_reports
+2026-07-10 12:18:05.0828 - INFO - graphrag.index.operations.summarize_communities.graph_context.context_builder - Number of nodes at level=1 => 10
+2026-07-10 12:18:05.0883 - INFO - graphrag.index.operations.summarize_communities.graph_context.context_builder - Number of nodes at level=0 => 41
+2026-07-10 12:19:05.0050 - INFO - graphrag.logger.progress - level 1 summarize communities progress: 1/3
+2026-07-10 12:20:06.0975 - INFO - graphrag.logger.progress - level 1 summarize communities progress: 2/3
+2026-07-10 12:21:02.0074 - INFO - graphrag.logger.progress - level 1 summarize communities progress: 3/3
+2026-07-10 12:22:17.0604 - INFO - graphrag.logger.progress - level 0 summarize communities progress: 1/6
+2026-07-10 12:23:16.0806 - INFO - graphrag.logger.progress - level 0 summarize communities progress: 2/6
+2026-07-10 12:24:25.0606 - INFO - graphrag.logger.progress - level 0 summarize communities progress: 3/6
+2026-07-10 12:25:24.0262 - INFO - graphrag.logger.progress - level 0 summarize communities progress: 4/6
+2026-07-10 12:26:29.0269 - INFO - graphrag.logger.progress - level 0 summarize communities progress: 5/6
+2026-07-10 12:27:27.0299 - INFO - graphrag.logger.progress - level 0 summarize communities progress: 6/6
+2026-07-10 12:27:27.0317 - INFO - graphrag.index.workflows.create_community_reports - Workflow completed: create_community_reports
+2026-07-10 12:27:27.0330 - INFO - graphrag.api.index - Workflow create_community_reports completed successfully
+2026-07-10 12:27:27.0337 - DEBUG - graphrag.api.index -                                                   id  ...  size
+0  0555d939ae3b9852fee6c51e9a4ea1f7fe8a5e9bc9fe17...  ...     4
+1  3c6373b02722dd3fd552db8bdb7d2dc31004c807f63973...  ...     4
+2  402316378c1a7621bf9bf392c8a66793f2e8e1a68c1689...  ...     2
+3  bd58f889c0e43f691acf9ffa8796f723a5460d36241ee3...  ...     7
+4  90e1c2f345868017dadc43588903adab995d560a8ffa33...  ...     6
+5  223aca7e143fb15f4e6013acf520d8b71d96896b7dacb1...  ...     5
+6  c7017dac8b4a438c64dbac40c7ef2eeef953db417810c4...  ...     9
+7  2998a8638166931c254cb9c72b79bb2a7839986aec2df5...  ...     4
+8  96bc6b39428fd57f772fab0140132f6cf3c4a72e8ebe5b...  ...    10
+
+[9 rows x 15 columns]
+2026-07-10 12:27:27.0338 - INFO - graphrag.index.workflows.generate_text_embeddings - Workflow started: generate_text_embeddings
+2026-07-10 12:27:27.0348 - INFO - graphrag.index.workflows.generate_text_embeddings - Embedding the following fields: ['entity_description', 'community_full_content', 'text_unit_text']
+2026-07-10 12:27:27.0795 - INFO - graphrag.index.operations.embed_text.run_embed_text - embedding 62 inputs via 62 snippets using 4 batches. max_batch_size=16, batch_max_tokens=8191
+2026-07-10 12:27:32.0522 - INFO - graphrag.logger.progress - generate embeddings progress: 1/4
+2026-07-10 12:27:34.0282 - INFO - graphrag.logger.progress - generate embeddings progress: 2/4
+2026-07-10 12:27:34.0285 - INFO - graphrag.logger.progress - generate embeddings progress: 3/4
+2026-07-10 12:27:35.0750 - INFO - graphrag.logger.progress - generate embeddings progress: 4/4
+2026-07-10 12:27:35.0803 - INFO - graphrag.index.workflows.generate_text_embeddings - Embedded 62 rows for entity_description
+2026-07-10 12:27:35.0840 - INFO - graphrag.index.operations.embed_text.run_embed_text - embedding 9 inputs via 9 snippets using 2 batches. max_batch_size=16, batch_max_tokens=8191
+2026-07-10 12:27:39.0708 - INFO - graphrag.logger.progress - generate embeddings progress: 1/2
+2026-07-10 12:27:41.0660 - INFO - graphrag.logger.progress - generate embeddings progress: 2/2
+2026-07-10 12:27:41.0672 - INFO - graphrag.index.workflows.generate_text_embeddings - Embedded 9 rows for community_full_content
+2026-07-10 12:27:41.0689 - INFO - graphrag.index.operations.embed_text.run_embed_text - embedding 3 inputs via 3 snippets using 1 batches. max_batch_size=16, batch_max_tokens=8191
+2026-07-10 12:27:43.0022 - INFO - graphrag.logger.progress - generate embeddings progress: 1/1
+2026-07-10 12:27:43.0028 - INFO - graphrag.index.workflows.generate_text_embeddings - Embedded 3 rows for text_unit_text
+2026-07-10 12:27:43.0028 - INFO - graphrag.index.workflows.generate_text_embeddings - Workflow completed: generate_text_embeddings
+2026-07-10 12:27:43.0032 - INFO - graphrag.api.index - Workflow generate_text_embeddings completed successfully
+2026-07-10 12:27:43.0032 - DEBUG - graphrag.api.index - None
+2026-07-10 12:27:43.0032 - INFO - graphrag.index.run.run_pipeline - Indexing pipeline complete.
+2026-07-10 12:27:43.0035 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/multilingual-e5-large: {
+  "attempted_request_count": 8,
+  "successful_response_count": 8,
+  "failed_response_count": 0,
+  "failure_rate": 0.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_seconds": 34.85614275932312,
+  "compute_duration_per_response_seconds": 4.35701784491539,
+  "cache_hit_rate": 0.0,
+  "streaming_responses": 0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}
+2026-07-10 12:27:43.0035 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai//models/Qwen3.5-35B-A3B-Q4_K_M.gguf: {
+  "attempted_request_count": 25,
+  "successful_response_count": 25,
+  "failed_response_count": 0,
+  "failure_rate": 0.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_seconds": 3079.2102949619293,
+  "compute_duration_per_response_seconds": 123.16841179847717,
+  "cached_responses": 3,
+  "cache_hit_rate": 0.12,
+  "streaming_responses": 0,
+  "responses_with_tokens": 25,
+  "prompt_tokens": 50191,
+  "completion_tokens": 17860,
+  "total_tokens": 68051,
+  "tokens_per_response": 2722.04,
+  "cost_per_response": 0.0
+}

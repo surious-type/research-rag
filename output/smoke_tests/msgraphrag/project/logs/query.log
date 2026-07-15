@@ -1,0 +1,30 @@
+2026-07-10 12:28:25.0015 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai/multilingual-e5-large: {
+  "attempted_request_count": 1,
+  "successful_response_count": 1,
+  "failed_response_count": 0,
+  "failure_rate": 0.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_seconds": 0.42505645751953125,
+  "compute_duration_per_response_seconds": 0.42505645751953125,
+  "cache_hit_rate": 0.0,
+  "streaming_responses": 0,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}
+2026-07-10 12:28:25.0015 - INFO - graphrag_llm.metrics.log_metrics_writer - Metrics for openai//models/Qwen3.5-35B-A3B-Q4_K_M.gguf: {
+  "attempted_request_count": 1,
+  "successful_response_count": 1,
+  "failed_response_count": 0,
+  "failure_rate": 0.0,
+  "requests_with_retries": 0,
+  "retries": 0,
+  "retry_rate": 0.0,
+  "compute_duration_seconds": 0,
+  "compute_duration_per_response_seconds": 0.0,
+  "cache_hit_rate": 0.0,
+  "streaming_responses": 1,
+  "tokens_per_response": 0.0,
+  "cost_per_response": 0.0
+}

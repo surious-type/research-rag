@@ -1,0 +1,80 @@
+{
+  "status": "PASS",
+  "index_completed": true,
+  "query_completed": true,
+  "query_method": "local",
+  "index_elapsed_seconds_estimate": 903,
+  "query_elapsed_seconds_estimate": 27.2,
+  "stats": {
+    "total_runtime": 902.4206998348236,
+    "num_documents": 1,
+    "update_documents": 0,
+    "input_load_time": 0,
+    "workflows": {
+      "load_input_documents": {
+        "overall": 0.0298004150390625,
+        "peak_memory_bytes": 864086,
+        "memory_delta_bytes": 729917,
+        "tracemalloc_overhead_bytes": 432656
+      },
+      "create_base_text_units": {
+        "overall": 0.6897315979003906,
+        "peak_memory_bytes": 42830494,
+        "memory_delta_bytes": 24586150,
+        "tracemalloc_overhead_bytes": 29782896
+      },
+      "create_final_documents": {
+        "overall": 0.010653495788574219,
+        "peak_memory_bytes": 67649,
+        "memory_delta_bytes": 20152,
+        "tracemalloc_overhead_bytes": 66096
+      },
+      "extract_graph": {
+        "overall": 324.2499096393585,
+        "peak_memory_bytes": 1128256,
+        "memory_delta_bytes": 369093,
+        "tracemalloc_overhead_bytes": 854896
+      },
+      "finalize_graph": {
+        "overall": 0.03670477867126465,
+        "peak_memory_bytes": 209979,
+        "memory_delta_bytes": 28854,
+        "tracemalloc_overhead_bytes": 116880
+      },
+      "extract_covariates": {
+        "overall": 0.00011754035949707031,
+        "peak_memory_bytes": 6433,
+        "memory_delta_bytes": 432,
+        "tracemalloc_overhead_bytes": 2160
+      },
+      "create_communities": {
+        "overall": 0.08692169189453125,
+        "peak_memory_bytes": 807647,
+        "memory_delta_bytes": 76431,
+        "tracemalloc_overhead_bytes": 428336
+      },
+      "create_final_text_units": {
+        "overall": 0.027161121368408203,
+        "peak_memory_bytes": 166339,
+        "memory_delta_bytes": 33567,
+        "tracemalloc_overhead_bytes": 107504
+      },
+      "create_community_reports": {
+        "overall": 561.5313742160797,
+        "peak_memory_bytes": 2824014,
+        "memory_delta_bytes": 2333594,
+        "tracemalloc_overhead_bytes": 2164336
+      },
+      "generate_text_embeddings": {
+        "overall": 15.690421104431152,
+        "peak_memory_bytes": 9397976,
+        "memory_delta_bytes": 4647264,
+        "tracemalloc_overhead_bytes": 2475808
+      }
+    }
+  },
+  "warnings": [
+    "Single-node smoke index required about 15 minutes end-to-end on the current local stack; concurrent use with other LLM-heavy frameworks should be serialized."
+  ],
+  "errors": []
+}

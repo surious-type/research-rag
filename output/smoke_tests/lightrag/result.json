@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "indexing_completed": true,
+  "query_completed": true,
+  "query_mode": "naive",
+  "query_elapsed_seconds": 11.435,
+  "document_count": 1,
+  "graph_file_present": true,
+  "entity_store_present": true,
+  "relation_store_present": true,
+  "chunk_vector_store_present": true,
+  "warnings": [
+    "Hybrid query attempt stalled under concurrent GraphRAG indexing against single-parallel LLM backend; sequential naive query succeeded after isolated container restart."
+  ],
+  "errors": []
+}

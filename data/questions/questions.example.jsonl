@@ -1,0 +1,1 @@
+{"id":"q001","question":"What is the main topic?","reference_answer":"Example answer.","evidence":[{"doc_version":"D0","section":null,"position":null,"text":"Example evidence"}],"question_type":"fact","expected_entities":["Example"],"expected_relations":[{"source":"Example","relation":"mentions","target":"Topic"}]}

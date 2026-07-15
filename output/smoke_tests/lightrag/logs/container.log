@@ -1,0 +1,180 @@
+WARNING: TOKEN_SECRET not set and AUTH_ACCOUNTS is not configured. Falling back to the default guest-mode JWT secret. 
+
+LightRAG log file: /app/lightrag.log
+
+[36m
+    ╔══════════════════════════════════════════════════════════════╗
+    ║                 LightRAG Server v1.5.4/0313                  ║
+    ║         Fast, Lightweight RAG Server Implementation          ║
+    ╚══════════════════════════════════════════════════════════════╝
+    [0m
+[35m
+📡 Server Configuration:[0m
+[37m    ├─ Host: [0m[33m0.0.0.0[0m
+[37m    ├─ Port: [0m[33m19621[0m
+[37m    ├─ Workers: [0m[33m1[0m
+[37m    ├─ Timeout: [0m[33m300[0m
+[37m    ├─ CORS Origins: [0m[33m*[0m
+[37m    ├─ SSL Enabled: [0m[33mFalse[0m
+[37m    ├─ Ollama Emulating Model: [0m[33mlightrag:latest[0m
+[37m    ├─ Log Level: [0m[33mINFO[0m
+[37m    ├─ Verbose Debug: [0m[33mFalse[0m
+[37m    ├─ API Key: [0m[33mNot Set[0m
+[37m    └─ JWT Auth: [0m[33mDisabled[0m
+[35m
+📂 Directory Configuration:[0m
+[37m    ├─ Working Directory: [0m[33m/app/data/rag_storage[0m
+[37m    └─ Input Directory: [0m[33m/app/data/inputs[0m
+[35m
+📊 Embedding Configuration:[0m
+[37m    ├─ Binding: [0m[33mopenai[0m
+[37m    ├─ Host: [0m[33mhttp://host.docker.internal:8010/v1[0m
+[37m    ├─ Model: [0m[33mmultilingual-e5-large[0m
+[37m    ├─ Dimensions: [0m[33m1024[0m
+[37m    └─ Asymmetric: [0m[33mTrue[0m
+[35m
+⚙️ RAG Configuration:[0m
+[37m    ├─ Summary Language: [0m[33mRussian[0m
+[37m    ├─ Max Parallel Insert: [0m[33m1[0m
+[37m    ├─ Chunk Size: [0m[33m450[0m
+[37m    ├─ Chunk Overlap Size: [0m[33m50[0m
+[37m    ├─ Cosine Threshold: [0m[33m0.2[0m
+[37m    ├─ Top-K: [0m[33m40[0m
+[37m    └─ Force LLM Summary on Merge: [0m[33m8[0m
+[35m
+💾 Storage Configuration:[0m
+[37m    ├─ KV Storage: [0m[33mJsonKVStorage[0m
+[37m    ├─ Vector Storage: [0m[33mNanoVectorDBStorage[0m
+[37m    ├─ Graph Storage: [0m[33mNetworkXStorage[0m
+[37m    ├─ Document Status Storage: [0m[33mJsonDocStatusStorage[0m
+[37m    └─ Workspace: [0m[33m-[0m
+[32m
+✨ Server starting up...
+[0m
+[35m
+🌐 Server Access Information:[0m
+[37m    ├─ WebUI (local): [0m[33mhttp://localhost:19621[0m
+[37m    ├─ Remote Access: [0m[33mhttp://<your-ip-address>:19621[0m
+[37m    ├─ API Documentation (local): [0m[33mhttp://localhost:19621/docs[0m
+[37m    └─ Alternative Documentation (local): [0m[33mhttp://localhost:19621/redoc[0m
+[35m
+📝 Note:[0m
+[36m    Since the server is running on 0.0.0.0:
+    - Use 'localhost' or '127.0.0.1' for local access
+    - Use your machine's IP address for remote access
+    - To find your IP address:
+      • Windows: Run 'ipconfig' in terminal
+      • Linux/Mac: Run 'ifconfig' or 'ip addr' in terminal
+    [0m
+INFO: OpenAI LLM Options: {'temperature': 0.1, 'max_tokens': 8000}
+INFO: Embedding config: binding=openai model=multilingual-e5-large embedding_dim=1024 max_token_size=512 document_prefix='"passage: "' query_prefix='"query: "'
+INFO: Send embedding dimension: False by env var (dimensions=1024, has_param=True, binding=openai)
+INFO: Embedding max_token_size: 512 (from env variable)
+INFO: Reranking is disabled
+INFO: [] Created new empty graph file: /app/data/rag_storage/graph_chunk_entity_relation.graphml
+INFO: Role LLM Configuration (initialized):
+INFO:  - extract: openai//models/Qwen3.5-35B-A3B-Q4_K_M.gguf, host=http://host.docker.internal:8080/v1, max_async=1, timeout=600
+INFO:  - keyword: openai//models/Qwen3.5-35B-A3B-Q4_K_M.gguf, host=http://host.docker.internal:8080/v1, max_async=1, timeout=600
+INFO:  - query: openai//models/Qwen3.5-35B-A3B-Q4_K_M.gguf, host=http://host.docker.internal:8080/v1, max_async=1, timeout=600
+INFO:  - vlm: openai//models/Qwen3.5-35B-A3B-Q4_K_M.gguf, host=http://host.docker.internal:8080/v1, max_async=1, timeout=600
+INFO: Role LLM Option:
+INFO:  - extract: OpenAI {'temperature': 0.1}
+INFO:  - keyword: OpenAI {'temperature': 0.1}
+INFO:  - query: OpenAI {'temperature': 0.1}
+INFO:  - vlm: OpenAI {'temperature': 0.1}
+INFO: WebUI assets mounted at /webui
+INFO: Started server process [1]
+INFO: Waiting for application startup.
+INFO: [] Process 1 KV load full_docs with 0 records
+INFO: [] Process 1 KV load text_chunks with 0 records
+INFO: [] Process 1 KV load full_entities with 0 records
+INFO: [] Process 1 KV load full_relations with 0 records
+INFO: [] Process 1 KV load entity_chunks with 0 records
+INFO: [] Process 1 KV load relation_chunks with 0 records
+INFO: [] Process 1 KV load llm_response_cache with 0 records
+INFO: [] Process 1 doc status load doc_status with 0 records
+INFO: Application startup complete.
+INFO: Uvicorn running on http://0.0.0.0:19621 (Press CTRL+C to quit)
+INFO: 172.17.0.1:36292 - "POST /documents/scan HTTP/1.1" 200
+INFO: Found 1 files to index.
+INFO: [File Extraction]Deferred smoke_document.txt to legacy parser
+INFO: Processing 1 document(s)
+INFO: Parsing (native): doc-478be6a392b6506456c61e4c60b3ca5a
+INFO: Extracting stage 1/1: smoke_document.txt
+INFO: Processing d-id: doc-478be6a392b6506456c61e4c60b3ca5a
+INFO: Chunking R: size=450, seps=['\n\n', '\n', '。', '！', '？', '；', '，', ' ', ''], overlap=50, doc_id: doc-478be6a392b6506456c61e4c60b3ca5a
+INFO: extract LLM func: 1 new workers initialized (Timeouts: Func: 600s, Worker: 1200s, Health Check: 1215s)
+INFO: 172.17.0.1:53958 - "GET /documents/status_counts HTTP/1.1" 200
+INFO:  == LLM cache == saving: default:extract:f3739cd4656d9d3f5f064813171c4d05
+INFO:  == LLM cache == saving: default:extract:eec578d89d627a34c756d0d8a97533ba
+INFO: Chunk 1 of 2 extracted 22 Ent + 21 Rel doc-478be6a392b6506456c61e4c60b3ca5a-chunk-000
+INFO: 172.17.0.1:44196 - "GET /documents/status_counts HTTP/1.1" 200
+INFO: 172.17.0.1:44204 - "GET /documents/paginated?current_page=1&page_size=20 HTTP/1.1" 405
+INFO:  == LLM cache == saving: default:extract:aca986c06dff27f4b2e4f50b2aaa2857
+INFO: 172.17.0.1:51746 - "GET /documents/status_counts HTTP/1.1" 200
+INFO:  == LLM cache == saving: default:extract:d88f1277142e5122a4805810da7ec230
+INFO: Chunk 2 of 2 extracted 17 Ent + 17 Rel doc-478be6a392b6506456c61e4c60b3ca5a-chunk-001
+INFO: Merging stage 1/1: smoke_document.txt
+INFO: Phase 1: Processing 34 entities from doc-478be6a392b6506456c61e4c60b3ca5a (async: 2)
+INFO: Phase 2: Processing 36 relations from doc-478be6a392b6506456c61e4c60b3ca5a (async: 2)
+INFO: Upserting relation VDB: `Контрольный запуск 14 июня 2025 года->Полюс-3`
+INFO: Upserting relation VDB: `Атлас->Полюс-3`
+INFO: Upserting relation VDB: `Атлас->Дежурная смена`
+INFO: Upserting relation VDB: `Атлас->Вектор-7`
+INFO: Upserting relation VDB: `Гранит->Полюс-3`
+INFO: Upserting relation VDB: `Вектор-7->Северный Контур`
+INFO: Upserting relation VDB: `RPT-2025-06->Северный Контур`
+INFO: Upserting relation VDB: `Контрольный запуск 14 июня 2025 года->Насосный узел`
+INFO: Upserting relation VDB: `73 градуса->Полюс-3`
+INFO: Upserting relation VDB: `4,2 миллиметра в секунду->Полюс-3`
+INFO: Upserting relation VDB: `67 баллов->Полюс-3`
+INFO: Upserting relation VDB: `65 баллов->Полюс-3`
+INFO: Upserting relation VDB: `18 секунд->Атлас`
+INFO: Upserting relation VDB: `5 секунд->Гранит`
+INFO: Upserting relation VDB: `60 документов->Северный Контур`
+INFO: Upserting relation VDB: `Северный Контур->октябрь 2025 года`
+INFO: Upserting relation VDB: `Проект Орион-128->Северный Контур`
+INFO: Upserting relation VDB: `Алексей Ветров->Проект Орион-128`
+INFO: Upserting relation VDB: `Марина Лебедева->Проект Орион-128`
+INFO: Upserting relation VDB: `Игорь Соколов->Проект Орион-128`
+INFO: Upserting relation VDB: `Атлас->Проект Орион-128`
+INFO: Upserting relation VDB: `Вектор-7->Технические документы`
+INFO: Upserting relation VDB: `Вектор-7->Инструкции по калибровке`
+INFO: Upserting relation VDB: `Атлас->Маяк`
+INFO: Upserting relation VDB: `Атлас->Гранит`
+INFO: Upserting relation VDB: `Первый прототип системы->Проект Орион-128`
+INFO: Upserting relation VDB: `Проект Орион-128->Стендовые испытания`
+INFO: Upserting relation VDB: `Полюс-3->Стендовые испытания`
+INFO: Upserting relation VDB: `Аварийные регламенты->Вектор-7`
+INFO: Upserting relation VDB: `Вектор-7->Процедуры диагностики`
+INFO: Upserting relation VDB: `Вектор-7->Схемы подключения датчиков`
+INFO: Upserting relation VDB: `Датчики температуры->Маяк`
+INFO: Upserting relation VDB: `Датчики вибрации->Маяк`
+INFO: Upserting relation VDB: `Датчики давления->Маяк`
+INFO: Upserting relation VDB: `Инженерные смены->Проект Орион-128`
+INFO: Upserting relation VDB: `Гранит->Индекс риска оборудования`
+INFO: Phase 2 relation processing completed for doc-478be6a392b6506456c61e4c60b3ca5a: edges=36 added_entities=0
+INFO: Phase 3: Updating final 34(34+0) entities and  36 relations from doc-478be6a392b6506456c61e4c60b3ca5a
+INFO: Completed merging: 34 entities, 0 extra entities, 36 relations
+INFO: [] entities flush: embedding 34 vectors in 5 batch(es) (batch_num=8)
+INFO: [] relationships flush: embedding 36 vectors in 5 batch(es) (batch_num=8)
+INFO: [] chunks flush: embedding 2 vectors in 1 batch(es) (batch_num=8)
+INFO: Embedding func: 8 new workers initialized (Timeouts: Func: 120s, Worker: 240s, Health Check: 255s)
+INFO: [] Writing graph with 34 nodes, 36 edges
+INFO: In memory DB persist to disk
+INFO: Completed processing file 1/1: smoke_document.txt
+INFO: Enqueued document processing pipeline stopped
+INFO: Scanning process completed: 1 files Processed.
+INFO: keyword LLM func: 1 new workers initialized (Timeouts: Func: 600s, Worker: 1200s, Health Check: 1215s)
+INFO:  == LLM cache == saving: hybrid:keywords:965847eb13d469cca095fe508eb0ed74
+WARNING: low_level_keywords is empty
+INFO: Query edges: главный модуль, проект (top_k:40, cosine:0.2)
+INFO: Global query: 34 entites, 36 relations
+INFO: Raw search results: 34 entities, 36 relations, 0 vector chunks
+INFO: After truncation: 34 entities, 36 relations
+INFO: Selecting 2 from 2 entity-related chunks by vector similarity
+INFO: Find no additional relations-related chunks from 36 relations
+INFO: Round-robin merged chunks: 2 -> 2 (deduplicated 0)
+INFO: Final context: 34 entities, 36 relations, 2 chunks
+INFO: Final chunks S+F/O: E17/1 E22/2
+INFO: query LLM func: 1 new workers initialized (Timeouts: Func: 600s, Worker: 1200s, Health Check: 1215s)

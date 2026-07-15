@@ -1,0 +1,71 @@
+{
+  "autoscanned": false,
+  "busy": false,
+  "job_name": "smoke_document.txt[1 files]",
+  "job_start": "2026-07-10T08:59:03.110596+00:00",
+  "docs": 1,
+  "batchs": 1,
+  "cur_batch": 1,
+  "request_pending": false,
+  "latest_message": "Enqueued document processing pipeline stopped",
+  "history_messages": [
+    "Processing 1 document(s)",
+    "Parsing (native): doc-478be6a392b6506456c61e4c60b3ca5a",
+    "Extracting stage 1/1: smoke_document.txt",
+    "Processing d-id: doc-478be6a392b6506456c61e4c60b3ca5a",
+    "Chunk 1 of 2 extracted 22 Ent + 21 Rel doc-478be6a392b6506456c61e4c60b3ca5a-chunk-000",
+    "Chunk 2 of 2 extracted 17 Ent + 17 Rel doc-478be6a392b6506456c61e4c60b3ca5a-chunk-001",
+    "Merging stage 1/1: smoke_document.txt",
+    "Phase 1: Processing 34 entities from doc-478be6a392b6506456c61e4c60b3ca5a (async: 2)",
+    "Phase 2: Processing 36 relations from doc-478be6a392b6506456c61e4c60b3ca5a (async: 2)",
+    "Phase 3: Updating final 34(34+0) entities and  36 relations from doc-478be6a392b6506456c61e4c60b3ca5a",
+    "Completed merging: 34 entities, 0 extra entities, 36 relations",
+    "Completed processing file 1/1: smoke_document.txt",
+    "Enqueued document processing pipeline stopped"
+  ],
+  "update_status": {
+    "full_docs": [
+      false
+    ],
+    "text_chunks": [
+      false
+    ],
+    "full_entities": [
+      false
+    ],
+    "full_relations": [
+      false
+    ],
+    "entity_chunks": [
+      false
+    ],
+    "relation_chunks": [
+      false
+    ],
+    "entities": [
+      false
+    ],
+    "relationships": [
+      false
+    ],
+    "chunks": [
+      false
+    ],
+    "chunk_entity_relation": [
+      false
+    ],
+    "llm_response_cache": [
+      true
+    ],
+    "doc_status": [
+      false
+    ]
+  },
+  "destructive_busy": false,
+  "scanning": false,
+  "scanning_exclusive": false,
+  "pending_enqueues": 0,
+  "cancellation_requested": false,
+  "cancellation_reason": null,
+  "cancellation_detail": null
+}

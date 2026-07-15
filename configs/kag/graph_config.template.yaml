@@ -1,0 +1,80 @@
+project:
+  namespace: __PROJECT_NAMESPACE__
+  host_addr: http://127.0.0.1:8887
+  id: __PROJECT_ID__
+  language: en
+  biz_scene: default
+  ckpt_dir: __CKPT_DIR__
+chat_llm:
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8080/v1
+  model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+  temperature: 0
+  max_tokens: 2048
+  enable_check: false
+llm:
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8080/v1
+  model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+  temperature: 0
+  max_tokens: 2048
+  enable_check: false
+vectorizer:
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8010/v1
+  model: multilingual-e5-large
+  vector_dimensions: 1024
+  enable_check: false
+vectorize_model:
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8010/v1
+  model: multilingual-e5-large
+  vector_dimensions: 1024
+  enable_check: false
+kag_builder_pipeline:
+  type: stream
+  num_chains: 1
+  num_threads_per_chain: 1
+  register_path: ./configs/kag/register_pkg
+  scanner:
+    type: file
+  chain:
+    type: unstructured
+    reader:
+      type: txt
+    splitter:
+      type: length
+      split_length: 500
+      window_length: 50
+    extractor:
+      type: schema_constraint_extractor
+      llm:
+        type: openai
+        api_key: local
+        base_url: http://127.0.0.1:8080/v1
+        model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+        temperature: 0
+        max_tokens: 2048
+        enable_check: false
+      ner_prompt:
+        type: spg_entity
+      std_prompt:
+        type: default_std
+      triple_prompt:
+        type: spg_relation
+    vectorizer:
+      type: batch
+      vectorize_model:
+        type: openai
+        api_key: local
+        base_url: http://127.0.0.1:8010/v1
+        model: multilingual-e5-large
+        vector_dimensions: 1024
+        enable_check: false
+      batch_size: 8
+    writer:
+      type: kg

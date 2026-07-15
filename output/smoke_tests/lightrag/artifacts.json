@@ -1,0 +1,23 @@
+{
+  "rag_storage_files": [
+    "rag_storage/graph_chunk_entity_relation.graphml",
+    "rag_storage/kv_store_doc_status.json",
+    "rag_storage/kv_store_entity_chunks.json",
+    "rag_storage/kv_store_full_docs.json",
+    "rag_storage/kv_store_full_entities.json",
+    "rag_storage/kv_store_full_relations.json",
+    "rag_storage/kv_store_llm_response_cache.json",
+    "rag_storage/kv_store_relation_chunks.json",
+    "rag_storage/kv_store_text_chunks.json",
+    "rag_storage/vdb_chunks.json",
+    "rag_storage/vdb_entities.json",
+    "rag_storage/vdb_relationships.json"
+  ],
+  "log_files": [
+    "logs/container.log",
+    "logs/pipeline_status.json",
+    "logs/scan_response.json",
+    "logs/status_counts.json"
+  ],
+  "input_files": []
+}

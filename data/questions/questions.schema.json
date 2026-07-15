@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["id", "question", "reference_answer", "evidence", "question_type", "expected_entities", "expected_relations"],
+  "properties": {
+    "id": {"type": "string"},
+    "question": {"type": "string"},
+    "reference_answer": {"type": "string"},
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["doc_version", "section", "position", "text"],
+        "properties": {
+          "doc_version": {"type": "string", "enum": ["D0", "D1", "D1_add", "D2", "D2_edit", "D3", "D3_delete"]},
+          "section": {"type": ["string", "null"]},
+          "position": {"type": ["string", "null"]},
+          "text": {"type": "string"}
+        }
+      }
+    },
+    "question_type": {"type": "string", "enum": ["fact", "definition", "multi_hop", "summary", "comparison", "absent", "update"]},
+    "expected_entities": {"type": "array", "items": {"type": "string"}},
+    "expected_relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["source", "relation", "target"],
+        "properties": {
+          "source": {"type": "string"},
+          "relation": {"type": "string"},
+          "target": {"type": "string"}
+        }
+      }
+    }
+  }
+}
