@@ -8,6 +8,7 @@ import json
 import logging
 import os
 import re
+import shlex
 import sys
 import time
 from collections import Counter
@@ -18,6 +19,7 @@ import pandas as pd
 import yaml
 
 from .models import BuildMetrics, ContextItem, QueryAnswer
+from .metrics import normalize_graph_metrics
 from .parsers import parse_lightrag_outputs, parse_msgraphrag_outputs, parse_neo4j_summary
 from .utils import (
     atomic_write_json,
@@ -40,6 +42,7 @@ KAG_NEO4J_DEFAULT_DATABASE = "neo4j"
 KAG_LOCAL_HOST_ADDR = "http://127.0.0.1:8887"
 KAG_SELECTED_PIPELINE = "kag_solver_pipeline"
 KAG_EXPECTED_RETRIEVER_TYPES = ("kg_cs_open_spg", "kg_fr_open_spg", "rc_open_spg")
+KAG_REQUIRED_VECTOR_INDEX_PROPERTIES = {"name", "description", "content"}
 KAG_PROXY_ENV_KEYS = (
     "ALL_PROXY",
     "all_proxy",
@@ -148,7 +151,7 @@ def summarize_kag_namespace_graph(node_rows: list[dict[str, Any]], edge_rows: li
     semantic_degree: Counter[str] = Counter()
     entity_rows: list[dict[str, Any]] = []
     relationship_rows: list[dict[str, Any]] = []
-    documents_count = 0
+    backend_document_nodes_count = 0
     chunks_count = 0
     knowledge_units_count = 0
 
@@ -157,7 +160,7 @@ def summarize_kag_namespace_graph(node_rows: list[dict[str, Any]], edge_rows: li
         if node_type is None:
             continue
         if node_type in {"Doc", "Document"}:
-            documents_count += 1
+            backend_document_nodes_count += 1
             continue
         if node_type == "Chunk":
             chunks_count += 1
@@ -186,7 +189,8 @@ def summarize_kag_namespace_graph(node_rows: list[dict[str, Any]], edge_rows: li
     return {
         "nodes_total": len(node_rows),
         "edges_total": len(edge_rows),
-        "documents_count": documents_count,
+        "documents_count": backend_document_nodes_count,
+        "backend_document_nodes_count": backend_document_nodes_count,
         "chunks_count": chunks_count,
         "knowledge_units_count": knowledge_units_count,
         "communities_count": None,
@@ -205,6 +209,71 @@ def _collect_kag_retriever_types(pipeline_config: dict[str, Any]) -> list[str]:
             if retriever_type:
                 retriever_types.append(str(retriever_type))
     return retriever_types
+
+
+def _extract_text_probe_terms(source_path: Path) -> list[str]:
+    text = source_path.read_text(encoding="utf-8", errors="ignore")
+    terms: list[str] = []
+    for token in re.findall(r"[\w\-\u0400-\u04FF]{4,}", text, flags=re.UNICODE):
+        cleaned = token.strip()
+        if cleaned and cleaned not in terms:
+            terms.append(cleaned)
+        if len(terms) >= 5:
+            break
+    return terms or [source_path.stem]
+
+
+def _merge_kag_query_diagnostics(run_dir: Path, updates: dict[str, Any]) -> dict[str, Any]:
+    diagnostics_path = run_dir / "query" / "diagnostics.json"
+    diagnostics = load_json(diagnostics_path) if diagnostics_path.exists() else {}
+    diagnostics.update(updates)
+    atomic_write_json(diagnostics_path, diagnostics)
+    return diagnostics
+
+
+def _extract_kag_text_context(item: dict[str, Any]) -> tuple[str, str, dict[str, Any], float | None]:
+    text = item.get("content") or item.get("text") or item.get("summary") or item.get("name") or ""
+    source = item.get("document_name") or item.get("title") or item.get("id") or item.get("name") or "kag"
+    score = item.get("score")
+    return str(text), str(source), item, score if isinstance(score, (int, float)) else None
+
+
+def _extract_kag_retriever_errors(trace: Any) -> list[dict[str, Any]]:
+    if not isinstance(trace, dict):
+        return []
+    errors: list[dict[str, Any]] = []
+    for block in trace.get("decompose", []):
+        if not isinstance(block, dict):
+            continue
+        err_msg = str(block.get("err_msg") or "").strip()
+        if not err_msg:
+            continue
+        errors.append(
+            {
+                "retriever_method": block.get("retriever_method") or "unknown",
+                "error": err_msg,
+                "task": block.get("task"),
+            }
+        )
+    return errors
+
+
+def _classify_kag_query_answer(answer_text: str, contexts: list[ContextItem], retriever_errors: list[dict[str, Any]], query_error: str | None) -> tuple[str, str | None]:
+    if query_error or not str(answer_text or "").strip():
+        return "failed", query_error or "empty answer"
+    if not contexts:
+        return "degraded", "empty contexts"
+    if retriever_errors:
+        return "degraded", "; ".join(str(row.get("error") or "").strip() for row in retriever_errors if row.get("error")) or "retriever error"
+    return "success", None
+
+
+def _augment_retriever_errors(question_diag: dict[str, Any], retriever_errors: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    augmented = list(retriever_errors)
+    kg_fr_error = str(question_diag.get("kg_fr_error") or "").strip()
+    if kg_fr_error and not any(row.get("retriever_method") == "kg_fr_open_spg" and row.get("error") == kg_fr_error for row in augmented):
+        augmented.append({"retriever_method": "kg_fr_open_spg", "error": kg_fr_error})
+    return augmented
 
 
 def _prepare_kag_query_environment(run_dir: Path) -> tuple[dict[str, Any], dict[str, Any], Path]:
@@ -316,6 +385,8 @@ class MsGraphRAGAdapter:
         metrics = BuildMetrics(
             build_time_seconds=duration,
             documents_count=None,
+            input_documents_count=None,
+            backend_document_nodes_count=None,
             chunks_count=None,
             index_size_bytes=file_size(output_dir),
             build_status="success" if process.returncode == 0 else "failed",
@@ -428,6 +499,8 @@ class LightRAGAdapter:
         metrics = BuildMetrics(
             build_time_seconds=duration,
             documents_count=len(json.loads((work_dir / "kv_store_full_docs.json").read_text(encoding="utf-8"))),
+            input_documents_count=len(json.loads((work_dir / "kv_store_full_docs.json").read_text(encoding="utf-8"))),
+            backend_document_nodes_count=None,
             chunks_count=len(json.loads((work_dir / "kv_store_text_chunks.json").read_text(encoding="utf-8"))),
             index_size_bytes=file_size(work_dir),
             build_status="success",
@@ -522,6 +595,187 @@ class KAGAdapter:
             userNo="openspg",
         )
 
+    def _index_rows_by_name(self, rows: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+        return {str(row.get("name")): row for row in rows if row.get("name")}
+
+    def _is_online_index(self, row: dict[str, Any] | None) -> bool:
+        return str((row or {}).get("state") or "").upper() == "ONLINE"
+
+    def _namespace_index_matches(self, row: dict[str, Any], namespace_labels: set[str]) -> bool:
+        labels = {str(label) for label in row.get("labelsOrTypes") or row.get("labels") or []}
+        return bool(labels & namespace_labels)
+
+    def _required_vector_indexes_online(self, vector_rows: list[dict[str, Any]], namespace_labels: set[str]) -> bool:
+        relevant_rows = [row for row in vector_rows if self._namespace_index_matches(row, namespace_labels)]
+        if not relevant_rows:
+            return False
+        online_rows = [row for row in relevant_rows if self._is_online_index(row)]
+        if not online_rows:
+            return False
+        indexed_props = {
+            str(prop)
+            for row in online_rows
+            for prop in (row.get("properties") or row.get("propertyKeys") or [])
+        }
+        return bool(indexed_props & KAG_REQUIRED_VECTOR_INDEX_PROPERTIES)
+
+    def _run_neo4j_rows(self, session: Any, query: str, **params: Any) -> list[dict[str, Any]]:
+        return [record.data() for record in session.run(query, **params)]
+
+    def _quote_cypher_name(self, value: str) -> str:
+        return "`" + value.replace("`", "``") + "`"
+
+    def _wait_for_fulltext_online(self, session: Any, timeout_seconds: float = 30.0) -> dict[str, Any] | None:
+        deadline = time.monotonic() + timeout_seconds
+        last_row = None
+        while time.monotonic() < deadline:
+            rows = self._run_neo4j_rows(session, "SHOW FULLTEXT INDEXES")
+            row = self._index_rows_by_name(rows).get("_default_text_index")
+            last_row = row
+            if self._is_online_index(row):
+                return row
+            time.sleep(0.5)
+        return last_row
+
+    def _discover_namespace_text_index_spec(self, session: Any, namespace: str, namespace_labels: set[str]) -> dict[str, Any]:
+        schema_rows = self._run_neo4j_rows(
+            session,
+            """
+            CALL db.schema.nodeTypeProperties()
+            YIELD nodeLabels, propertyName, propertyTypes, mandatory
+            RETURN nodeLabels, propertyName, propertyTypes, mandatory
+            """,
+        )
+        sampled_nodes = self._run_neo4j_rows(
+            session,
+            """
+            MATCH (n)
+            WHERE any(label IN labels(n) WHERE label STARTS WITH $prefix)
+            RETURN labels(n) AS labels, properties(n) AS props
+            LIMIT 200
+            """,
+            prefix=f"{namespace}.",
+        )
+        sampled_string_props: dict[str, set[str]] = {}
+        for row in sampled_nodes:
+            labels = {label for label in row.get("labels", []) if label in namespace_labels}
+            props = row.get("props") or {}
+            if not isinstance(props, dict):
+                continue
+            for label in labels:
+                for key, value in props.items():
+                    if isinstance(value, str) and value.strip():
+                        sampled_string_props.setdefault(label, set()).add(str(key))
+
+        valid_labels: list[str] = []
+        valid_props: set[str] = set()
+        for label in sorted(namespace_labels):
+            schema_props: set[str] = set()
+            for row in schema_rows:
+                node_labels = {str(item) for item in row.get("nodeLabels") or []}
+                if label not in node_labels:
+                    continue
+                prop_name = str(row.get("propertyName") or "").strip()
+                prop_types = [str(item).lower() for item in row.get("propertyTypes") or []]
+                if prop_name and any("string" in item for item in prop_types):
+                    schema_props.add(prop_name)
+            actual_props = schema_props & sampled_string_props.get(label, set())
+            if actual_props:
+                valid_labels.append(label)
+                valid_props.update(actual_props)
+        return {
+            "labels": valid_labels,
+            "properties": sorted(valid_props),
+            "schema_rows": schema_rows,
+            "sampled_string_properties": {key: sorted(value) for key, value in sampled_string_props.items()},
+        }
+
+    def _provision_default_text_index(
+        self,
+        session: Any,
+        namespace: str,
+        namespace_labels: set[str],
+        run_dir: Path,
+    ) -> dict[str, Any]:
+        spec = self._discover_namespace_text_index_spec(session, namespace, namespace_labels)
+        ddl = None
+        method = "existing"
+        error = None
+        if spec["labels"] and spec["properties"]:
+            label_expr = ":".join(["n", "|".join(self._quote_cypher_name(label) for label in spec["labels"])])
+            property_expr = ", ".join(f"n.{self._quote_cypher_name(prop)}" for prop in spec["properties"])
+            ddl = f"CREATE FULLTEXT INDEX _default_text_index IF NOT EXISTS FOR ({label_expr}) ON EACH [{property_expr}]"
+            method = "benchmark_post_build_provisioner"
+            session.run(ddl).consume()
+        else:
+            error = f"unable to discover text index spec for namespace {namespace}"
+        index_row = self._wait_for_fulltext_online(session)
+        provision_payload = {
+            "database": _resolve_kag_neo4j_database(namespace, get_kag_neo4j_config()["database"]),
+            "namespace": namespace,
+            "method": method,
+            "ddl": ddl,
+            "error": error,
+            "spec": spec,
+            "index": index_row,
+        }
+        atomic_write_json(run_dir / "build" / "neo4j_fulltext_provisioning.json", provision_payload)
+        return provision_payload
+
+    def _probe_kag_search_api(self, project_id: str, source_path: Path) -> dict[str, Any]:
+        _ensure_kag_imports()
+        from knext.search.client import SearchClient
+
+        probe_terms = _extract_text_probe_terms(source_path)
+        client = SearchClient(host_addr=KAG_LOCAL_HOST_ADDR, project_id=int(project_id))
+        for term in probe_terms:
+            try:
+                rows = client.search_text(query_string=term, topk=3)
+                return {"method": "knext.search.client.SearchClient.search_text", "query": term, "hits": rows}
+            except Exception as exc:
+                last_error = {"method": "knext.search.client.SearchClient.search_text", "query": term, "error": str(exc)}
+        return last_error  # type: ignore[name-defined]
+
+    def _inspect_namespace_indexes(
+        self,
+        session: Any,
+        namespace: str,
+        run_dir: Path,
+        project_info: dict[str, Any],
+        source_path: Path,
+        node_rows: list[dict[str, Any]],
+    ) -> dict[str, Any]:
+        namespace_labels = {
+            str(label)
+            for row in node_rows
+            for label in row.get("labels", [])
+            if isinstance(label, str) and label.startswith(f"{namespace}.")
+        }
+        fulltext_rows = self._run_neo4j_rows(session, "SHOW FULLTEXT INDEXES")
+        vector_rows = self._run_neo4j_rows(session, "SHOW VECTOR INDEXES")
+        atomic_write_json(run_dir / "build" / "neo4j_fulltext_indexes.json", {"indexes": fulltext_rows})
+        atomic_write_json(run_dir / "build" / "neo4j_vector_indexes.json", {"indexes": vector_rows})
+        fulltext_index = self._index_rows_by_name(fulltext_rows).get("_default_text_index")
+        provisioning = None
+        if not self._is_online_index(fulltext_index):
+            provisioning = self._provision_default_text_index(session, namespace, namespace_labels, run_dir)
+            fulltext_rows = self._run_neo4j_rows(session, "SHOW FULLTEXT INDEXES")
+            vector_rows = self._run_neo4j_rows(session, "SHOW VECTOR INDEXES")
+            atomic_write_json(run_dir / "build" / "neo4j_fulltext_indexes.json", {"indexes": fulltext_rows})
+            atomic_write_json(run_dir / "build" / "neo4j_vector_indexes.json", {"indexes": vector_rows})
+            fulltext_index = self._index_rows_by_name(fulltext_rows).get("_default_text_index")
+        probe = self._probe_kag_search_api(str(project_info["id"]), source_path)
+        atomic_write_json(run_dir / "build" / "neo4j_search_probe.json", probe)
+        return {
+            "fulltext_index": fulltext_index,
+            "fulltext_indexes": fulltext_rows,
+            "vector_indexes": vector_rows,
+            "vector_indexes_online": self._required_vector_indexes_online(vector_rows, namespace_labels),
+            "index_provisioning": provisioning
+            or {"method": "existing", "ddl": None, "error": None, "index": fulltext_index},
+            "search_probe": probe,
+        }
+
     def build(self, source_path: Path, run_dir: Path) -> tuple[BuildMetrics, dict[str, Any]]:
         config_template = (ROOT / "configs" / "kag" / "graph_config.template.yaml").read_text(encoding="utf-8")
         namespace = _normalize_kag_namespace(run_dir)
@@ -574,6 +828,8 @@ class KAGAdapter:
         metrics = BuildMetrics(
             build_time_seconds=duration,
             documents_count=None,
+            input_documents_count=None,
+            backend_document_nodes_count=None,
             chunks_count=None,
             index_size_bytes=None,
             build_status="success" if process.returncode == 0 else "failed",
@@ -582,15 +838,42 @@ class KAGAdapter:
         if process.returncode != 0:
             return metrics, {}
         summary = self._neo4j_summary(project_info["namespace"], run_dir=run_dir)
-        metrics.documents_count = summary.get("documents_count")
+        input_documents_count = 1 if source_path.exists() else 0
+        metrics.input_documents_count = input_documents_count
+        metrics.documents_count = input_documents_count
+        metrics.backend_document_nodes_count = summary.get("backend_document_nodes_count")
         metrics.chunks_count = summary.get("chunks_count")
-        graph_metrics = parse_neo4j_summary(summary).to_dict()
+        graph_metrics = normalize_graph_metrics(
+            nodes_total=summary.get("nodes_total"),
+            edges_total=summary.get("edges_total"),
+            documents_count=input_documents_count,
+            input_documents_count=input_documents_count,
+            backend_document_nodes_count=summary.get("backend_document_nodes_count"),
+            chunks_count=summary.get("chunks_count"),
+            communities_count=summary.get("communities_count"),
+            entity_rows=summary.get("entity_rows", []),
+            relationship_rows=summary.get("relationship_rows", []),
+        ).to_dict()
         if not summary.get("nodes_total"):
             metrics.build_status = "failed"
             metrics.build_error = f"kag namespace {project_info['namespace']} has zero matched nodes in Neo4j"
         elif not summary.get("chunks_count"):
             metrics.build_status = "failed"
             metrics.build_error = f"kag namespace {project_info['namespace']} has zero matched chunks in Neo4j"
+        _merge_kag_query_diagnostics(
+            run_dir,
+            {
+                "project_id": str(project_info["id"]),
+                "namespace": str(project_info["namespace"]),
+                "database": summary.get("database"),
+                "fulltext_index": summary.get("fulltext_index"),
+                "fulltext_indexes": summary.get("fulltext_indexes"),
+                "vector_indexes": summary.get("vector_indexes"),
+                "vector_indexes_online": summary.get("vector_indexes_online"),
+                "index_provisioning": summary.get("index_provisioning"),
+                "search_probe": summary.get("search_probe"),
+            },
+        )
         return metrics, graph_metrics
 
     def _neo4j_summary(self, namespace: str, run_dir: Path | None = None) -> dict[str, Any]:
@@ -601,6 +884,7 @@ class KAGAdapter:
                 "nodes_total": None,
                 "edges_total": None,
                 "documents_count": None,
+                "backend_document_nodes_count": None,
                 "chunks_count": None,
                 "communities_count": None,
                 "entity_rows": [],
@@ -673,12 +957,49 @@ class KAGAdapter:
                         prefix=f"{namespace}.",
                     )
                 ]
+                rel_128_examples = self._run_neo4j_rows(
+                    session,
+                    """
+                    MATCH (a)-[r]->(b)
+                    WHERE any(label IN labels(a) WHERE label STARTS WITH $prefix)
+                      AND any(label IN labels(b) WHERE label STARTS WITH $prefix)
+                      AND type(r) = '128'
+                    RETURN labels(a) AS source_labels,
+                           labels(b) AS target_labels,
+                           properties(r) AS properties,
+                           type(r) AS relation_type
+                    LIMIT 10
+                    """,
+                    prefix=f"{namespace}.",
+                )
+                index_summary = (
+                    self._inspect_namespace_indexes(
+                        session=session,
+                        namespace=namespace,
+                        run_dir=run_dir,
+                        project_info=load_json(run_dir / "project.json") if run_dir is not None else {"id": os.environ.get("KAG_PROJECT_ID", "0")},
+                        source_path=Path(load_json(run_dir / "manifest.json")["source"]["path"]) if run_dir is not None else ROOT / "source.txt",
+                        node_rows=node_rows,
+                    )
+                    if run_dir is not None
+                    else {}
+                )
         finally:
             driver.close()
         matched_label_rows = [row for row in label_rows if str(row.get("label", "")).startswith(f"{namespace}.")]
         if run_dir is not None:
             atomic_write_json(run_dir / "build" / "neo4j_labels_raw.json", {"labels": label_rows})
             atomic_write_json(run_dir / "build" / "neo4j_relationship_types_raw.json", {"relationship_types": relationship_type_rows})
+            atomic_write_json(
+                run_dir / "build" / "relationship_type_128_examples.json",
+                {
+                    "namespace": namespace,
+                    "database": database_name,
+                    "relationship_type": "128",
+                    "examples": rel_128_examples,
+                    "classification": "opaque numeric OpenSPG/internal identifier until mapped explicitly",
+                },
+            )
             atomic_write_json(
                 run_dir / "build" / "neo4j_namespace_match.json",
                 {
@@ -688,17 +1009,23 @@ class KAGAdapter:
                     "matched_relationship_types": matched_relationship_type_rows,
                 },
             )
-        return summarize_kag_namespace_graph(node_rows, edge_rows, namespace)
+        summary = summarize_kag_namespace_graph(node_rows, edge_rows, namespace)
+        summary["database"] = database_name
+        summary.update(index_summary if run_dir is not None else {})
+        return summary
 
     def query(self, run_id: str, run_dir: Path, questions: list[dict[str, Any]]) -> list[QueryAnswer]:
         project, config, _ = _prepare_kag_query_environment(run_dir)
         _, diagnostics = _resolve_kag_query_diagnostics(config, project)
-        atomic_write_json(run_dir / "query" / "diagnostics.json", diagnostics)
+        _merge_kag_query_diagnostics(run_dir, diagnostics)
         ensure_dir(run_dir / "query" / "traces")
+        os.environ["KAG_BENCH_QUERY_DIR"] = str(run_dir / "query")
+        per_question_diags: dict[str, dict[str, Any]] = {}
         answers: list[QueryAnswer] = []
         for row in questions:
             started = time.perf_counter()
             try:
+                os.environ["KAG_BENCH_QUESTION_ID"] = row["id"]
                 with _without_proxy_for_kag_local_hosts():
                     payload = asyncio.run(
                         _invoke_kag_query_with_trace(
@@ -708,18 +1035,22 @@ class KAGAdapter:
                             project=project,
                         )
                     )
-                atomic_write_json(run_dir / "query" / "traces" / f"{row['id']}.json", payload)
                 answer_text, trace = _normalize_kag_response(payload)
                 contexts = _normalize_kag_context(trace)
-                status = "success"
-                error = None
+                question_diag_path = run_dir / "query" / "_bench_diag" / f"{row['id']}.json"
+                question_diag = load_json(question_diag_path) if question_diag_path.exists() else {}
+                per_question_diags[row["id"]] = question_diag
+                retriever_errors = _augment_retriever_errors(question_diag, _extract_kag_retriever_errors(trace))
+                payload["retriever_errors"] = retriever_errors
+                atomic_write_json(run_dir / "query" / "traces" / f"{row['id']}.json", payload)
+                status, error = _classify_kag_query_answer(answer_text, contexts, retriever_errors, None)
             except Exception as exc:
                 payload = {"answer": "", "trace": {}, "error": str(exc)}
                 atomic_write_json(run_dir / "query" / "traces" / f"{row['id']}.json", payload)
                 answer_text = ""
                 contexts = []
-                status = "failed"
-                error = str(exc)
+                retriever_errors = []
+                status, error = _classify_kag_query_answer(answer_text, contexts, retriever_errors, str(exc))
             latency = time.perf_counter() - started
             answers.append(
                 QueryAnswer(
@@ -736,8 +1067,17 @@ class KAGAdapter:
                     generation_time_seconds=None,
                     status=status,
                     error=error,
+                    retriever_errors=retriever_errors,
                 )
             )
+        _merge_kag_query_diagnostics(
+            run_dir,
+            {
+                "kg_fr_arguments_type": {question_id: payload.get("kg_fr_arguments_type") for question_id, payload in per_question_diags.items()},
+                "kg_fr_arguments_normalized": {question_id: payload.get("kg_fr_arguments_normalized") for question_id, payload in per_question_diags.items()},
+                "kg_fr_error": {question_id: payload.get("kg_fr_error") for question_id, payload in per_question_diags.items()},
+            },
+        )
         return answers
 
 
@@ -802,7 +1142,7 @@ def _normalize_kag_context(trace: Any) -> list[ContextItem]:
     def add_context(text: Any, source: Any, metadata: dict[str, Any] | None = None, score: Any = None) -> None:
         normalized_text = str(text or "").strip()
         normalized_source = str(source or "kag")
-        if not normalized_text:
+        if not normalized_text or normalized_text in {"[]", "{}"}:
             return
         key = (normalized_source, normalized_text)
         if key in seen:
@@ -836,6 +1176,21 @@ def _normalize_kag_context(trace: Any) -> list[ContextItem]:
                 score=chunk.get("score"),
             )
         for graph_item in block.get("graph_data", []):
+            if isinstance(graph_item, dict):
+                add_context(graph_item.get("content") or graph_item.get("text") or graph_item, "graph", metadata=graph_item)
+            else:
+                add_context(graph_item, "graph", metadata={"graph_data": graph_item})
+        for chunk in block.get("chunks", []):
+            if not isinstance(chunk, dict):
+                continue
+            text, source, metadata, score = _extract_kag_text_context(chunk)
+            add_context(text, source, metadata=metadata, score=score)
+        for doc in block.get("docs", []):
+            if not isinstance(doc, dict):
+                continue
+            text, source, metadata, score = _extract_kag_text_context(doc)
+            add_context(text, source, metadata=metadata, score=score)
+        for graph_item in block.get("graphs", []):
             if isinstance(graph_item, dict):
                 add_context(graph_item.get("content") or graph_item.get("text") or graph_item, "graph", metadata=graph_item)
             else:

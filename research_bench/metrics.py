@@ -11,6 +11,8 @@ def normalize_graph_metrics(
     nodes_total: int | None,
     edges_total: int | None,
     documents_count: int | None,
+    input_documents_count: int | None = None,
+    backend_document_nodes_count: int | None = None,
     chunks_count: int | None,
     communities_count: int | None,
     entity_rows: list[dict[str, Any]],
@@ -53,6 +55,8 @@ def normalize_graph_metrics(
         entities_count=entities_count,
         relationships_count=len(semantic_relationships),
         documents_count=documents_count,
+        input_documents_count=input_documents_count if input_documents_count is not None else documents_count,
+        backend_document_nodes_count=backend_document_nodes_count,
         chunks_count=chunks_count,
         communities_count=communities_count,
         isolated_entities_count=isolated_entities,
@@ -60,5 +64,9 @@ def normalize_graph_metrics(
         connected_entities_ratio=(connected_entities / entities_count) if entities_count else None,
         entity_types=dict(entity_types),
         relationship_types=dict(relationship_types),
+        notes={
+            "excluded_numeric_relationship_types": "Numeric relationship labels such as `128` are treated as opaque OpenSPG/internal identifiers unless mapped explicitly."
+        }
+        if any(str(row.get("type") or "").strip().isdigit() for row in relationship_rows)
+        else {},
     )
-

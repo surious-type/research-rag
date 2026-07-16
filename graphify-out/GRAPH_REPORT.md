@@ -1,16 +1,16 @@
 # Graph Report - research-rag  (2026-07-16)
 
 ## Corpus Check
-- 1048 files · ~14,566,457 words
+- 1048 files · ~14,569,101 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 15323 nodes · 19676 edges · 1262 communities (1050 shown, 212 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 2227 edges (avg confidence: 0.64)
+- 15361 nodes · 19796 edges · 1277 communities (1072 shown, 205 thin omitted)
+- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 2232 edges (avg confidence: 0.64)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `420ac7f6`
+- Built from commit: `7d96c8fc`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -893,6 +893,7 @@
 - .result_table_result
 - .result_nodes
 - .is_dynamic
+- OutlineIndexManager
 - .spreadable
 - .advanced_config
 - .alter_operation
@@ -919,6 +920,8 @@
 - .ext_info
 - .spreadable
 - .constraint_items
+- EvaForNetOperatorQA
+- ThinkerClient
 - build.sh
 - quickstart.mdx
 - Chapter 2. Simple Pattern Matching
@@ -1019,8 +1022,11 @@
 - upload_dev.sh
 - __init__.py
 - baidu-map-mcp-server
+- .assemble_sub_graph
 - _ApiExceptionHandler
 - kag_pipeline_test.py
+- PrqaGenerator
+- runner.py
 - Support files, eBooks, discount offers, and more
 - .params
 - .result_edges
@@ -1029,6 +1035,15 @@
 - openswan
 - snort
 - vconfig
+- RespGenerator
+- QuestionNER
+- QuestionNER
+- commit_schema
+- .add_constraint
+- Power Save Mode
+- Mesh Networking (802.11s)
+- Comparing model performance with Spark Streaming
+- .relations
 
 ## God Nodes (most connected - your core abstractions)
 1. `Configuration` - 245 edges
@@ -1049,10 +1064,10 @@
   scripts/kag/build.py → frameworks/kag/kag/common/conf.py
 - `_prepare_kag_query_environment()` --calls--> `import_modules_from_path()`  [INFERRED]
   research_bench/frameworks.py → frameworks/kag/kag/common/registry/utils.py
-- `_invoke_kag_query_with_trace()` --calls--> `is_chinese()`  [INFERRED]
-  research_bench/frameworks.py → frameworks/kag/kag/solver/main_solver.py
-- `_invoke_kag_query_with_trace()` --calls--> `do_qa_pipeline()`  [INFERRED]
-  research_bench/frameworks.py → frameworks/kag/kag/solver/main_solver.py
+- `BenchmarkCompatibilityKgFrRetriever` --uses--> `KgFreeRetrieverWithOpenSPGRetriever`  [INFERRED]
+  research_bench/_kag_registry/__init__.py → frameworks/kag/kag/common/tools/algorithm_tool/graph_retriever/kg_fr_retriever.py
+- `BenchmarkCompatibilityNer` --uses--> `KgFreeRetrieverWithOpenSPGRetriever`  [INFERRED]
+  research_bench/_kag_registry/__init__.py → frameworks/kag/kag/common/tools/algorithm_tool/graph_retriever/kg_fr_retriever.py
 
 ## Import Cycles
 - None detected.
@@ -1063,7 +1078,7 @@
 - **Global Search Prompt Suite** — frameworks_msgraphrag_prompts_global_search_map_system_prompt_document, frameworks_msgraphrag_prompts_global_search_reduce_system_prompt_document, frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_document [EXTRACTED 1.00]
 - **CAD Extraction and Reporting Chain** — frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction, frameworks_msgraphrag_prompts_summarize_descriptions_document, frameworks_msgraphrag_prompts_community_report_graph_cad_domain_prompting [INFERRED 0.85]
 
-## Communities (1262 total, 212 thin omitted)
+## Communities (1277 total, 205 thin omitted)
 
 ### Community 0 - "MSGraphRAG Prompting"
 Cohesion: 0.09
@@ -1083,7 +1098,7 @@ Nodes (24): For /graphify add and --watch, For /graphify query, For the commit h
 
 ### Community 5 - "Question Schema Evidence"
 Cohesion: 0.01
-Nodes (56): AtomicQueryExtractPrompt, ChunkSummaryPrompt, OpenIEEntitystandardizationdPrompt, OpenIETriplePrompt, OpenIEEntitystandardizationdPrompt, OpenIETriplePrompt, extract table context, TableContextPrompt (+48 more)
+Nodes (69): Initializes the KAGExtractor with the specified parameters.          Args:, Initializes the SchemaBasedExtractor instance.          Args:             llm (L, Initializes the KAGExtractor with the specified parameters.          Args:, Initializes the KAGExtractor with the specified parameters.          Args:, AtomicQueryExtractPrompt, ChunkSummaryPrompt, OpenIEEntitystandardizationdPrompt, OpenIETriplePrompt (+61 more)
 
 ### Community 6 - "CAD Corpus Variants"
 Cohesion: 0.38
@@ -1091,11 +1106,11 @@ Nodes (7): CAD Manual Baseline, CAD Manual Added Revision, CAD Manual Edited Rev
 
 ### Community 9 - "run_runtime_repair.py"
 Cohesion: 0.03
-Nodes (54): OpenIENERPrompt, KAGConfigAccessor, KAGConstants, object, Get the configuration information.          If task_id is provided, retrieve the, get_default_chat_llm_config(), LogicFormConfiguration, DefaultStdSchema (+46 more)
+Nodes (62): OpenIENERPrompt, KAGConfigAccessor, KAGConstants, object, Get the configuration information.          If task_id is provided, retrieve the, get_default_chat_llm_config(), LogicFormConfiguration, DefaultStdSchema (+54 more)
 
 ### Community 10 - "container_runtime_repair.py"
-Cohesion: 0.02
-Nodes (44): binary_expr_parse(), DeduceNode, extract_steps_and_actions(), GetNode, GetSPONode, GetSPONodeData, MathNode, parse_logic_form_with_str() (+36 more)
+Cohesion: 0.03
+Nodes (36): binary_expr_parse(), DeduceNode, extract_steps_and_actions(), GetNode, GetSPONode, GetSPONodeData, MathNode, parse_logic_form_with_str() (+28 more)
 
 ### Community 11 - "container_runtime_repair.py"
 Cohesion: 0.01
@@ -1103,23 +1118,23 @@ Nodes (171): Adding a Callback in Access, Adding Callbacks, Adding Shapes, Avoid
 
 ### Community 12 - "container_runtime_repair.py"
 Cohesion: 0.18
-Nodes (30): main(), canonical_source_path(), load_questions(), load_smoke_questions(), load_source_info(), Any, Path, questions_sha256() (+22 more)
+Nodes (28): datetime, main(), load_smoke_questions(), Any, CheckResult, latency_summary(), safe_float(), utc_run_id() (+20 more)
 
 ### Community 13 - "container_runtime_repair.py"
 Cohesion: 0.02
-Nodes (63): KAGStaticPlanner, Synchronously generates task plan using LLM.          Args:             query: U, Asynchronously generates task plan using LLM.          Args:             query:, Static planner that generates task plans using LLM with query rewriting capabili, Formats parent task execution context into a structured dictionary.          Arg, Determines if query rewriting is needed based on parameter patterns.          Ar, Performs asynchronous query rewriting using LLM and context.          Args:, Invokes the builder chain to process the input file.          Args: (+55 more)
+Nodes (58): chat_loop(), cleanup(), main(), Run an interactive chat loop, chat_loop(), cleanup(), main(), Run an interactive chat loop (+50 more)
 
 ### Community 14 - "container_runtime_repair.py"
 Cohesion: 0.06
-Nodes (10): _find_entities(), KgRetrieverTemplate, Find tails entities for path selection          Args:             kg_graph (KgGr, Find heads entities for path selection          Args:             kg_graph (KgGr, Store logical node structure in knowledge graph      Args:         kg_graph (KgG, _store_lf_node_structure(), DocData, KgGraph (+2 more)
+Nodes (14): _find_entities(), Find tails entities for path selection          Args:             kg_graph (KgGr, Find heads entities for path selection          Args:             kg_graph (KgGr, Store logical node structure in knowledge graph      Args:         kg_graph (KgG, _store_lf_node_structure(), KgGraph, Initializes an ordered dictionary to store tasks in insertion order., _find_entities() (+6 more)
 
 ### Community 15 - "container_runtime_repair.py"
-Cohesion: 0.02
-Nodes (70): DiGraph, AtomicQueryChunkRetriever, RetrieverABC, KgConstrainRetrieverWithOpenSPGRetriever, RetrieverABC, KgFreeRetrieverWithOpenSPGRetriever, RetrieverABC, chat_loop() (+62 more)
+Cohesion: 0.03
+Nodes (56): DiGraph, AtomicQueryChunkRetriever, RetrieverABC, std_logic_node(), directionlite_v1(), filter_result(), geocoder_v2(), location_ip() (+48 more)
 
 ### Community 16 - "container_runtime_repair.py"
 Cohesion: 0.03
-Nodes (28): Retrieve related entities based on the given entity mention.          This funct, :param one_graph:         :return: list(RelationData), FuzzyOneHopSelect, extra_relation_candis_types(), generate_gql_head_element(), generate_gql_spo_element(), recall_one_hop_graph_by_entities(), run_gql() (+20 more)
+Nodes (29): Retrieve related entities based on the given entity mention.          This funct, ExactOneHopSelect, :param one_graph:         :return: list(RelationData), FuzzyOneHopSelect, extra_relation_candis_types(), generate_gql_head_element(), generate_gql_spo_element(), recall_one_hop_graph_by_entities() (+21 more)
 
 ### Community 17 - "graphify reference: extra exports and benchmark"
 Cohesion: 0.22
@@ -1142,16 +1157,16 @@ Cohesion: 0.50
 Nodes (3): For --cluster-only, For --update (incremental re-extraction), graphify reference: incremental update and cluster-only
 
 ### Community 37 - "multilingual-e5-large README"
-Cohesion: 0.03
-Nodes (38): ChunkExtractor, Input, Output, Invokes the semantic extractor to process input data.          Args:, NaiveRagExtractor, Input, Output, SubGraph (+30 more)
+Cohesion: 0.02
+Nodes (44): KAGAligner, Input, Output, SubGraph, A class that extends the AlignerABC base class. It is responsible for aligning a, Initializes the KAGAligner instance.          Args:             **kwargs: Arbitr, Merges a list of subgraphs into a single subgraph.          Args:             in, Handles the input by converting it to the appropriate type, invoking the aligner (+36 more)
 
 ### Community 38 - "embedding service README"
-Cohesion: 0.03
-Nodes (48): SPGTypeName, Builds the prompt using the provided variables.          Args:             varia, Process property name by removing descriptions enclosed in parentheses., Process property names by removing descriptions enclosed in parentheses., Parses the response string into a list of SPG records.          Args:, Creates the schema for extraction prompt based on the project schema., Base class for generating SPG schema-based entity/event extraction prompts., Returns the list of accepted SPG types.          Returns:             List[SpgTy (+40 more)
+Cohesion: 0.10
+Nodes (16): Any, PropertyName, Gets a property of this SPGRecord by name.          Args:             property_n, Upserts a property of this SPGRecord.          Args:             property_name (, Appends a property of this SPGRecord.          Args:             property_name (, Upserts properties of this SPGRecord.          Args:             properties (Dic, Removes a property of this SPGRecord.          Args:             property_name (, Removes properties by given names.          Args:             property_names (Li (+8 more)
 
 ### Community 39 - "container_validation.py"
 Cohesion: 0.03
-Nodes (30): ExecutorABC, ExecutorResponse, ABC, Abstract base class for recording executor responses.      Subclasses must imple, Initializes the executor response instance., Generates a string representation of the executor response.          Returns:, Abstract base class for task executors that perform actual computation., Initializes the executor instance. (+22 more)
+Nodes (31): ExecutorABC, ExecutorResponse, ABC, Abstract base class for recording executor responses.      Subclasses must imple, Initializes the executor response instance., Generates a string representation of the executor response.          Returns:, Abstract base class for task executors that perform actual computation., Initializes the executor instance. (+23 more)
 
 ### Community 40 - "container_validation.py"
 Cohesion: 0.04
@@ -1159,7 +1174,7 @@ Nodes (24): cosine_similarity(), output: [(candi_name, candi_score),...], Splits
 
 ### Community 41 - "container_validation.py"
 Cohesion: 0.03
-Nodes (73): About the Author, About the Reviewers, Acknowledgments, An architecture for a machine learning system, Chapter 10. Real-time Machine Learning with Spark Streaming, Chapter 1. Getting Up and Running with Spark, Chapter 2. Designing a Machine Learning System, Chapter 3. Obtaining, Processing, and Preparing Data with Spark (+65 more)
+Nodes (70): About the Author, About the Reviewers, Acknowledgments, An architecture for a machine learning system, Chapter 10. Real-time Machine Learning with Spark Streaming, Chapter 1. Getting Up and Running with Spark, Chapter 2. Designing a Machine Learning System, Chapter 3. Obtaining, Processing, and Preparing Data with Spark (+62 more)
 
 ### Community 42 - "container_validation.py"
 Cohesion: 0.03
@@ -1178,16 +1193,16 @@ Cohesion: 0.05
 Nodes (31): OutlineSplitter, Input, Output, 处理单个批次的文档块          Args:             batch: List[Chunk] 待处理的文档块          Return, 使用LLM对齐提取的outline层级，使用前一个对齐完成的batch的后30%作为交叉部分          Args:             outlin, 并行处理outline对齐，每个batch与相邻batch有30%的交叉部分          Args:             outlines: List, 基于规则的outline对齐(作为备选方案), 批量处理文档块并提取大纲          Args:             chunk: List[Chunk] 输入的文档块列表          Ret (+23 more)
 
 ### Community 46 - "KAG Automatic Builder Validation"
-Cohesion: 0.04
-Nodes (54): ApacheBench (ab), arp, brctl, conntrack-tools, crtools, ebtables, ether-wake, ethtool (+46 more)
+Cohesion: 0.03
+Nodes (62): ApacheBench (ab), arp, brctl, conntrack-tools, crtools, ebtables, ether-wake, ethtool (+54 more)
 
 ### Community 47 - "__init__.py"
-Cohesion: 0.08
-Nodes (22): BatchVectorizer, A class for generating embedding vectors for node attributes in a SubGraph in ba, DefaultStructuredBuilderChain, A class representing a default SPG builder chain, used to import structured data, Construct the builder chain by connecting the mapping, vectorizer (if available), BuilderChainRunner, A class that manages the execution of a KAGBuilderChain with parallel processing, company_link_func() (+14 more)
+Cohesion: 0.10
+Nodes (17): BatchVectorizer, A class for generating embedding vectors for node attributes in a SubGraph in ba, DefaultStructuredBuilderChain, A class representing a default SPG builder chain, used to import structured data, Construct the builder chain by connecting the mapping, vectorizer (if available), BuilderChainRunner, A class that manages the execution of a KAGBuilderChain with parallel processing, company_link_func() (+9 more)
 
 ### Community 48 - "__init__.py"
-Cohesion: 0.03
-Nodes (38): Initializes the KAGExtractor with the specified parameters.          Args:, Initializes the SchemaBasedExtractor instance.          Args:             llm (L, Initializes the KAGExtractor with the specified parameters.          Args:, Initializes the KAGExtractor with the specified parameters.          Args:, init_prompt_with_fallback(), RerankByVector, LLMGeneratorWithThought, LLMClient (+30 more)
+Cohesion: 0.05
+Nodes (21): RerankByVector, LLMGeneratorWithThought, GeneratorABC, ABC, Abstract base class for components that generate final answers from problem-solv, Synchronous interface for generating final answer.          Args:             qu, Asynchronous interface for answer generation.          Converts the synchronous, do_report() (+13 more)
 
 ### Community 49 - "__init__.py"
 Cohesion: 0.06
@@ -1222,12 +1237,12 @@ Cohesion: 0.04
 Nodes (31): BasicType, object, Gets the basic_info of this BasicType.  # noqa: E501           :return: The basi, Sets the basic_info of this BasicType.           :param basic_info: The basic_in, Gets the parent_type_info of this BasicType.  # noqa: E501           :return: Th, Sets the parent_type_info of this BasicType.           :param parent_type_info:, Gets the spg_type_enum of this BasicType.  # noqa: E501           :return: The s, Sets the spg_type_enum of this BasicType.           :param spg_type_enum: The sp (+23 more)
 
 ### Community 57 - "Node"
-Cohesion: 0.06
-Nodes (26): DataFrame, Input, Output, A class for extracting knowledge graph subgraphs from table using a large langua, Default parsing results for table data, Table row summary info, Table column summary info, Invokes the semantic extractor to process input data.          Args: (+18 more)
+Cohesion: 0.07
+Nodes (15): DataFrame, Input, Output, A class for extracting knowledge graph subgraphs from table using a large langua, Default parsing results for table data, Table row summary info, Table column summary info, Invokes the semantic extractor to process input data.          Args: (+7 more)
 
 ### Community 58 - "ExternalGraphLoaderABC"
-Cohesion: 0.06
-Nodes (23): Edge, DefaultExternalGraphLoader, ndarray, Node, Creates an instance of DefaultExternalGraphLoader from JSON files containing nod, A default implementation of the ExternalGraphLoaderABC interface.      This clas, Initializes the DefaultExternalGraphLoader with the given nodes, edges, and matc, ExternalGraphLoaderABC (+15 more)
+Cohesion: 0.08
+Nodes (16): ExternalGraphLoaderABC, MatchConfig, Input, ndarray, Node, Output, SubGraph, Method to match entities based on the given query.          Args:             qu (+8 more)
 
 ### Community 59 - "GraphStore"
 Cohesion: 0.04
@@ -1242,8 +1257,8 @@ Cohesion: 0.05
 Nodes (30): BaseSpgType, object, Gets the basic_info of this BaseSpgType.  # noqa: E501           :return: The ba, Sets the basic_info of this BaseSpgType.           :param basic_info: The basic_, Gets the parent_type_info of this BaseSpgType.  # noqa: E501           :return:, Sets the parent_type_info of this BaseSpgType.           :param parent_type_info, Gets the spg_type_enum of this BaseSpgType.  # noqa: E501           :return: The, Sets the spg_type_enum of this BaseSpgType.           :param spg_type_enum: The (+22 more)
 
 ### Community 63 - "LengthSplitter"
-Cohesion: 0.04
-Nodes (27): Initializes the DocxReader with an optional LLMClient instance.          Args:, PDFReader, Input, Output, SubGraph, Processes a single page of text, removing headers, footnotes, watermarks, and sp, Extracts text from a given page layout.          Args:             page_layout (, Processes a PDF file and returns its content as structured chunks and a graph re (+19 more)
+Cohesion: 0.06
+Nodes (20): Initializes the DocxReader with an optional LLMClient instance.          Args:, PDFReader, Input, Output, SubGraph, Processes a single page of text, removing headers, footnotes, watermarks, and sp, Extracts text from a given page layout.          Args:             page_layout (, Processes a PDF file and returns its content as structured chunks and a graph re (+12 more)
 
 ### Community 64 - "Methods"
 Cohesion: 0.07
@@ -1278,12 +1293,12 @@ Cohesion: 0.05
 Nodes (29): IndexType, object, Gets the basic_info of this IndexType.  # noqa: E501           :return: The basi, Sets the basic_info of this IndexType.           :param basic_info: The basic_in, Gets the parent_type_info of this IndexType.  # noqa: E501           :return: Th, Sets the parent_type_info of this IndexType.           :param parent_type_info:, Gets the spg_type_enum of this IndexType.  # noqa: E501           :return: The s, Sets the spg_type_enum of this IndexType.           :param spg_type_enum: The sp (+21 more)
 
 ### Community 72 - "Property"
-Cohesion: 0.12
-Nodes (29): IndentLevel, Enum, RegisterUnit, AlterOperationEnum, BasicTypeEnum, ConstraintTypeEnum, HypernymPredicateEnum, IndexTypeEnum (+21 more)
+Cohesion: 0.17
+Nodes (16): IndentLevel, Enum, RegisterUnit, BasicType, ConceptType, EntityType, EventType, IndexType (+8 more)
 
 ### Community 73 - "SchemaClient"
-Cohesion: 0.06
-Nodes (16): OpenIENERPrompt, OpenIENERPrompt, QuestionNER, BaseSpgType, Relation, Commit all altered schemas to server., Query SPG type by name., Query relation type by s_p_o name. (+8 more)
+Cohesion: 0.14
+Nodes (6): OpenIENERPrompt, Relation, Query SPG type by name., Query relation type by s_p_o name., Create session for altering schema., SchemaClient
 
 ### Community 74 - "Methods"
 Cohesion: 0.05
@@ -1314,8 +1329,8 @@ Cohesion: 0.05
 Nodes (23): BaseSpgType, Returns the model properties as a dict, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, Base class of `ConceptType`, `EntityType`, `EventType`, `StandardType`, `BasicTy, Init a BaseSpgType object. (+15 more)
 
 ### Community 81 - "ReaderABC"
-Cohesion: 0.06
-Nodes (22): DictReader, Input, Output, A class for reading dictionaries into Chunk objects.      This class inherits fr, Initializes the DictReader with the specified column names.          Args:, Converts the input dictionary into a list of Chunk objects.          Args:, MixReader, A reader class that can handle multiple types of inputs by delegating to specifi (+14 more)
+Cohesion: 0.05
+Nodes (23): DictReader, Input, Output, A class for reading dictionaries into Chunk objects.      This class inherits fr, Initializes the DictReader with the specified column names.          Args:, Converts the input dictionary into a list of Chunk objects.          Args:, MixReader, A reader class that can handle multiple types of inputs by delegating to specifi (+15 more)
 
 ### Community 82 - "DocxReader"
 Cohesion: 0.08
@@ -1350,8 +1365,8 @@ Cohesion: 0.05
 Nodes (38): 1. 全面推动企业发展模式转变, 1.数字化能耗管理降低能耗水平, 1. 无量纲化, 1. 显著提升产品研发创新效率, 1. 有效赋能行业提质增效降本, 2. 产业链协同创新形成合力, 2.产品全周期数字化碳管理降低碳排放水平, 2. 场景建设加速深化,行业形成差异化路径 (+30 more)
 
 ### Community 90 - "SchemaFreeExtractor"
-Cohesion: 0.09
-Nodes (18): Input, Output, SubGraph, Performs named entity recognition on a given text passage.         Args:, Performs named entity recognition on a given text passage.         Args:, Standardizes named entities.          Args:             passage (str): The input, Standardizes named entities.          Args:             passage (str): The input, Extracts triples (subject-predicate-object structures) from a given text passage (+10 more)
+Cohesion: 0.11
+Nodes (14): Input, Output, Performs named entity recognition on a given text passage.         Args:, Performs named entity recognition on a given text passage.         Args:, Standardizes named entities.          Args:             passage (str): The input, Standardizes named entities.          Args:             passage (str): The input, Extracts triples (subject-predicate-object structures) from a given text passage, Extracts triples (subject-predicate-object structures) from a given text passage (+6 more)
 
 ### Community 91 - "procfs entries"
 Cohesion: 0.09
@@ -1379,7 +1394,7 @@ Nodes (19): GraphApi, object, delete_vertex  # noqa: E501          This method m
 
 ### Community 97 - "DataEdge"
 Cohesion: 0.06
-Nodes (23): DataEdge, object, Sets the id of this DataEdge.           :param id: The id of this DataEdge.  # n, Gets the _from of this DataEdge.  # noqa: E501           :return: The _from of t, Sets the _from of this DataEdge.           :param _from: The _from of this DataE, Gets the from_type of this DataEdge.  # noqa: E501           :return: The from_t, Sets the from_type of this DataEdge.           :param from_type: The from_type o, Gets the to of this DataEdge.  # noqa: E501           :return: The to of this Da (+15 more)
+Nodes (22): DataEdge, object, Sets the id of this DataEdge.           :param id: The id of this DataEdge.  # n, Gets the _from of this DataEdge.  # noqa: E501           :return: The _from of t, Sets the _from of this DataEdge.           :param _from: The _from of this DataE, Gets the from_type of this DataEdge.  # noqa: E501           :return: The from_t, Sets the from_type of this DataEdge.           :param from_type: The from_type o, Gets the to of this DataEdge.  # noqa: E501           :return: The to of this Da (+14 more)
 
 ### Community 98 - "Node"
 Cohesion: 0.06
@@ -1402,12 +1417,12 @@ Cohesion: 0.09
 Nodes (17): Input, Output, Performs named entity recognition on a given text passage.         Args:, Performs named entity recognition on a given text passage.         Args:, Performs named entity standardization on a given text passage and entities., Performs named entity standardization on a given text passage and entities., Performs relation extraction on a given text passage and entities.          Args, Performs relation extraction on a given text passage and entities.          Args (+9 more)
 
 ### Community 103 - "MPBuilderComponentWrapper"
-Cohesion: 0.07
-Nodes (18): MPReaderWrapper, BuilderComponent, BuilderComponentData, MPBuilderComponentWrapper, Any, Input, Output, Abstract method to be implemented by subclasses for build component.          Ar (+10 more)
+Cohesion: 0.05
+Nodes (29): Returns the total number of shards in the world based on the configured sharding, Returns the range of indices that the current shard is responsible for., Checks if the current process is the master process.          Returns:, Checks if the current instance is the master instance.          Returns:, Checks if the current machine is the master machine.          Returns:, Returns a string representation of the ShardingInfo object.          Returns:, Creates a copy of the current ShardingInfo object.          Returns:, Initializes a new instance of the ShardingInfo class.          Args: (+21 more)
 
 ### Community 104 - "SplitterABC"
-Cohesion: 0.06
-Nodes (20): BaseTableSplitter, A base class for splitting table data into smaller chunks.      This class inher, Splits a markdown format table into smaller markdown tables.          Args:, Internal method to split a markdown format table into smaller markdown tables., PatternSplitter, Input, Output, Splits the given chunk into smaller chunks based on the pattern and chunk cut nu (+12 more)
+Cohesion: 0.08
+Nodes (15): Process nodes below target cut depth level., Create a comprehensive chunk when no target level is found., PatternSplitter, Input, Output, Splits the given chunk into smaller chunks based on the pattern and chunk cut nu, Invokes the chunk splitting process on the given input.          Args:, A class for splitting text content based on specified patterns and chunking stra (+7 more)
 
 ### Community 105 - "中国算力发展指数白皮书 (2023 年)"
 Cohesion: 0.06
@@ -1426,8 +1441,8 @@ Cohesion: 0.06
 Nodes (30): 1. Precondition, 2. Launch the MCP server, 3. Configure Cursor to connect to the KAG MCP server, 4. Test the KAG MCP Server in a Cursor Chat Session, 1. 前置条件, 2. 运行 MCP server, 3. 配置 Cursor 连接 KAG MCP server, 4. 测试在 Cursor 聊天会话中使用 KAG MCP server (+22 more)
 
 ### Community 109 - "12. Wireless in Linux"
-Cohesion: 0.06
-Nodes (34): 12. Wireless in Linux, Association, Authentication, Block Ack, Block Ack Request (BAR), Entering Power Save Mode, Exiting Power Save Mode, Fragmentation (+26 more)
+Cohesion: 0.12
+Nodes (16): 12. Wireless in Linux, Block Ack, Block Ack Request (BAR), High Throughput (ieee802.11n), IBSS, or Ad Hoc Mode, Infrastructure BSS, Linux Wireless Development Process, Mac80211 Subsystem (+8 more)
 
 ### Community 110 - "Methods"
 Cohesion: 0.06
@@ -1462,8 +1477,8 @@ Cohesion: 0.10
 Nodes (9): BuilderChainABC, ABC, Chain, Implements the right shift operator ">>" functionality to link Component or Chai, Base class for creating structured sequences of calls to components., Component, ABC, Base class for all component. (+1 more)
 
 ### Community 118 - "Configuration"
-Cohesion: 0.06
-Nodes (17): Configuration, object, Set default instance of configuration.          It stores default configuration,, Return new instance of configuration.          This method returns newly created, The logger file.          If the logger_file is None, then add stream handler an, The logger file.          If the logger_file is None, then add stream handler an, Debug status          :param value: The debug status, True or False.         :ty, Debug status          :param value: The debug status, True or False.         :ty (+9 more)
+Cohesion: 0.05
+Nodes (21): Configuration, object, Set default instance of configuration.          It stores default configuration,, Return new instance of configuration.          This method returns newly created, The logger file.          If the logger_file is None, then add stream handler an, The logger file.          If the logger_file is None, then add stream handler an, Debug status          :param value: The debug status, True or False.         :ty, Debug status          :param value: The debug status, True or False.         :ty (+13 more)
 
 ### Community 119 - "互联网行业可持续信息披露 发展报告"
 Cohesion: 0.06
@@ -1499,7 +1514,7 @@ Nodes (8): AtomicQueryIndex, ChunkIndex, EventIndex, GraphIndex, OutlineIndex, S
 
 ### Community 127 - "KAGIndexManager"
 Cohesion: 0.07
-Nodes (3): KAGHybridIndexManager, KAGIndexManager, OutlineIndexManager
+Nodes (3): KAGHybridIndexManager, KAGIndexManager, SummaryIndexManager
 
 ### Community 128 - "EdgeRecord"
 Cohesion: 0.07
@@ -1510,12 +1525,12 @@ Cohesion: 0.07
 Nodes (19): object, Sets the project_id of this WriterGraphRequest.           :param project_id: The, Gets the operation of this WriterGraphRequest.  # noqa: E501           :return:, Sets the operation of this WriterGraphRequest.           :param operation: The o, Gets the sub_graph of this WriterGraphRequest.  # noqa: E501           :return:, Sets the sub_graph of this WriterGraphRequest.           :param sub_graph: The s, Gets the enable_lead_to of this WriterGraphRequest.  # noqa: E501           :ret, Sets the enable_lead_to of this WriterGraphRequest.           :param enable_lead (+11 more)
 
 ### Community 130 - "ReasonTask"
-Cohesion: 0.07
-Nodes (19): object, Gets the task_id of this ReasonTask.  # noqa: E501           :return: The task_i, Sets the task_id of this ReasonTask.           :param task_id: The task_id of th, Gets the project_id of this ReasonTask.  # noqa: E501           :return: The pro, Sets the project_id of this ReasonTask.           :param project_id: The project, Gets the dsl of this ReasonTask.  # noqa: E501           :return: The dsl of thi, Sets the dsl of this ReasonTask.           :param dsl: The dsl of this ReasonTas, Gets the status of this ReasonTask.  # noqa: E501           :return: The status (+11 more)
+Cohesion: 0.05
+Nodes (27): object, Gets the task_id of this ReasonTask.  # noqa: E501           :return: The task_i, Sets the task_id of this ReasonTask.           :param task_id: The task_id of th, Gets the project_id of this ReasonTask.  # noqa: E501           :return: The pro, Sets the project_id of this ReasonTask.           :param project_id: The project, Gets the graph_store_url of this ReasonTask.  # noqa: E501           :return: Th, Sets the graph_store_url of this ReasonTask.           :param graph_store_url: T, Gets the dsl of this ReasonTask.  # noqa: E501           :return: The dsl of thi (+19 more)
 
 ### Community 131 - "StreamData"
-Cohesion: 0.07
-Nodes (19): object, Sets the answer of this StreamData.           :param answer: The answer of this, Gets the reference of this StreamData.  # noqa: E501           :return: The refe, Sets the reference of this StreamData.           :param reference: The reference, Gets the think of this StreamData.  # noqa: E501           :return: The think of, Sets the think of this StreamData.           :param think: The think of this Str, Gets the metrics of this StreamData.  # noqa: E501           :return: The metric, Sets the metrics of this StreamData.           :param metrics: The metrics of th (+11 more)
+Cohesion: 0.08
+Nodes (18): object, Sets the answer of this StreamData.           :param answer: The answer of this, Gets the reference of this StreamData.  # noqa: E501           :return: The refe, Sets the reference of this StreamData.           :param reference: The reference, Gets the think of this StreamData.  # noqa: E501           :return: The think of, Sets the think of this StreamData.           :param think: The think of this Str, Gets the metrics of this StreamData.  # noqa: E501           :return: The metric, Sets the metrics of this StreamData.           :param metrics: The metrics of th (+10 more)
 
 ### Community 132 - "OperatorOverview"
 Cohesion: 0.07
@@ -1530,12 +1545,12 @@ Cohesion: 0.07
 Nodes (19): object, Sets the project_id of this TextSearchRequest.           :param project_id: The, Gets the query_string of this TextSearchRequest.  # noqa: E501           :return, Sets the query_string of this TextSearchRequest.           :param query_string:, Gets the label_constraints of this TextSearchRequest.  # noqa: E501           :r, Sets the label_constraints of this TextSearchRequest.           :param label_con, Gets the topk of this TextSearchRequest.  # noqa: E501           :return: The to, Sets the topk of this TextSearchRequest.           :param topk: The topk of this (+11 more)
 
 ### Community 135 - "KnowledgeUnitPrompt"
-Cohesion: 0.08
-Nodes (12): KnowledgeUnitPrompt, OpenIENERKnowledgeUnitPrompt, "Name": "2023 International Biodiversity Summit",         "Category": "Event",, {             "名称": "当阳县五七干校",             "类型": "组织机构",             "领域本体": "教育, "No Mediocre Song Details":{           "Content": "\"No Mediocre\" is a song by, "2019年全国全国发电总量与结构": {           "内容": "2019年全国发电总量71422亿千瓦时，同比增长3.5%。其中火电占比72.3%, OpenIEKnowledgeUnitTriplePrompt, check_data() (+4 more)
+Cohesion: 0.22
+Nodes (4): OpenIENERKnowledgeUnitPrompt, "Name": "2023 International Biodiversity Summit",         "Category": "Event",, {             "名称": "当阳县五七干校",             "类型": "组织机构",             "领域本体": "教育, load_NER_data()
 
 ### Community 136 - "utils.py"
 Cohesion: 0.08
-Nodes (21): append_python_path(), copyfile(), copytree(), dynamic_import_class(), escape_single_quotes(), extract_content_target(), flatten_2d_list(), generate_random_string() (+13 more)
+Nodes (20): append_python_path(), copyfile(), copytree(), dynamic_import_class(), escape_single_quotes(), extract_content_target(), flatten_2d_list(), get_now() (+12 more)
 
 ### Community 137 - "Methods"
 Cohesion: 0.07
@@ -1558,8 +1573,8 @@ Cohesion: 0.08
 Nodes (17): object, Sets the id of this RefDoc.           :param id: The id of this RefDoc.  # noqa:, Gets the content of this RefDoc.  # noqa: E501           :return: The content of, Sets the content of this RefDoc.           :param content: The content of this R, Gets the document_id of this RefDoc.  # noqa: E501           :return: The docume, Sets the document_id of this RefDoc.           :param document_id: The document_, Gets the document_name of this RefDoc.  # noqa: E501           :return: The docu, Sets the document_name of this RefDoc.           :param document_name: The docum (+9 more)
 
 ### Community 142 - "BuilderChainStreamRunner"
-Cohesion: 0.29
-Nodes (4): KAGBenchmark, Any, Determines if a callable is an asynchronous function.          This function che, run_cmd()
+Cohesion: 0.18
+Nodes (7): KAGBenchmark, Any, _SubParsersAction, Determines if a callable is an asynchronous function.          This function che, run_benchmark(), RunBenchmark, run_cmd()
 
 ### Community 143 - "VertexRecordInstance"
 Cohesion: 0.08
@@ -1663,7 +1678,7 @@ Nodes (27): (一)个人工作履历、专业背景以及兼职情况, (一)出�
 
 ### Community 168 - "OpenSPGReporter"
 Cohesion: 0.06
-Nodes (28): _convert_spo_to_graph(), extract_ids(), generate_ref_doc_set(), merge_ref_doc_set(), OpenSPGReporter, process_planning(), dict, Jinja2 undefined variable handler that suppresses errors and returns empty value (+20 more)
+Nodes (28): generate_random_string(), _convert_spo_to_graph(), extract_ids(), generate_ref_doc_set(), merge_ref_doc_set(), OpenSPGReporter, process_planning(), dict (+20 more)
 
 ### Community 169 - "Methods"
 Cohesion: 0.08
@@ -1694,20 +1709,20 @@ Cohesion: 0.08
 Nodes (24): 1. Prerequisites, 2. Reproduction Steps, 1. 前置条件, 2. 复现步骤, KAG AffairQA, Step 1：进入示例目录, Step 2：配置模型, Step 3：初始化项目 (+16 more)
 
 ### Community 176 - "utils.py"
-Cohesion: 0.12
-Nodes (19): append_python_path(), copyfile(), copytree(), dynamic_import_class(), _make_writable(), processing_phrases(), Any, Path (+11 more)
+Cohesion: 0.11
+Nodes (20): _render_template(), append_python_path(), copyfile(), copytree(), dynamic_import_class(), _make_writable(), processing_phrases(), Any (+12 more)
 
 ### Community 177 - "SpgTypeQueryRequest"
-Cohesion: 0.11
-Nodes (13): object, Sets the spg_type of this SpgTypeQueryRequest.           :param spg_type: The sp, Returns the model properties as a dict, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, NOTE: This class is auto generated by OpenAPI Generator.     Ref: https://openap (+5 more)
+Cohesion: 0.09
+Nodes (15): object, Sets the spg_type of this SpgTypeQueryRequest.           :param spg_type: The sp, Gets the ids of this SpgTypeQueryRequest.  # noqa: E501           :return: The i, Sets the ids of this SpgTypeQueryRequest.           :param ids: The ids of this, Returns the model properties as a dict, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal (+7 more)
 
 ### Community 178 - "UpsertEdgeRequest"
 Cohesion: 0.09
 Nodes (15): object, Sets the upsert_adjacent_vertices of this UpsertEdgeRequest.           :param up, Gets the edges of this UpsertEdgeRequest.  # noqa: E501           :return: The e, Sets the edges of this UpsertEdgeRequest.           :param edges: The edges of t, Returns the model properties as a dict, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal (+7 more)
 
 ### Community 179 - "ToolABC"
-Cohesion: 0.07
-Nodes (7): PathSelect, Ner, Perform named entity recognition.          This method invokes the pre-configure, Entity standardization function.          This function calls a remote service t, Appends official names to entities.          Parameters:         source_entities, SelfCognExecutor, ToolABC
+Cohesion: 0.10
+Nodes (6): Ner, Perform named entity recognition.          This method invokes the pre-configure, Entity standardization function.          This function calls a remote service t, Appends official names to entities.          Parameters:         source_entities, SelfCognExecutor, ToolABC
 
 ### Community 180 - "Methods"
 Cohesion: 0.08
@@ -1810,8 +1825,8 @@ Cohesion: 0.11
 Nodes (12): Input, Output, PropertyName, SubGraph, Maps fields from a record based on the defined property mappings.          Args:, Assembles a sub-graph based on the provided properties and linking strategies., Adds hypernym predicates to the sub-graph based on the provided concept ID., Invokes the mapping process on the given input and returns the resulting sub-gra (+4 more)
 
 ### Community 205 - "MemoryGraph"
-Cohesion: 0.08
-Nodes (13): configure_device(), get_node_unique_id(), MemoryGraph, Get data of the specified entity.          :param biz_id: entity business id。, Get one-hop graph of the specified entity.          :param biz_id: entity busine, Execute DSL query statement.          :param dsl: the query statement         :p, Calculate PageRank scores.          :param target_vertex_type: target vertex typ, Execute vector searching.          :param label: entity label         :param pro (+5 more)
+Cohesion: 0.09
+Nodes (12): configure_device(), get_node_unique_id(), MemoryGraph, Get data of the specified entity.          :param biz_id: entity business id。, Get one-hop graph of the specified entity.          :param biz_id: entity busine, Execute DSL query statement.          :param dsl: the query statement         :p, Calculate PageRank scores.          :param target_vertex_type: target vertex typ, Execute vector searching.          :param label: entity label         :param pro (+4 more)
 
 ### Community 206 - "4. IPv4"
 Cohesion: 0.08
@@ -1871,7 +1886,7 @@ Nodes (13): GraphApi, object, delete_vertex  # noqa: E501          This method m
 
 ### Community 220 - "ShardingInfo"
 Cohesion: 0.10
-Nodes (12): Returns the total number of shards in the world based on the configured sharding, Returns the range of indices that the current shard is responsible for., Checks if the current process is the master process.          Returns:, Checks if the current instance is the master instance.          Returns:, Checks if the current machine is the master machine.          Returns:, Returns a string representation of the ShardingInfo object.          Returns:, Creates a copy of the current ShardingInfo object.          Returns:, Initializes a new instance of the ShardingInfo class.          Args: (+4 more)
+Nodes (17): NaiveRagExtractor, Input, Output, SubGraph, A class for extracting knowledge graph subgraphs from text using a large languag, Initializes the NaiveRagExtractor with the specified parameters.          Args:, Associates a Chunk object with the subgraph, adding it as a node and connecting, Invokes the semantic extractor to process input data.          Args: (+9 more)
 
 ### Community 221 - "Index"
 Cohesion: 0.09
@@ -1891,7 +1906,7 @@ Nodes (10): complex_func(), ComplexGaussian, Depth1_1, Depth1_2, Depth2_1, gen_c
 
 ### Community 225 - "SPGServerBridge"
 Cohesion: 0.08
-Nodes (11): collect_reader_outputs(), init_kag_config(), SPGServerBridge, LLMConfigChecker, object, Check whether the llm config is valid., Check the llm config.          * If the config is valid, return the generated te, A class that checks whether the vectorizer configuration is valid.      This cla (+3 more)
+Nodes (9): collect_reader_outputs(), init_kag_config(), SPGServerBridge, BuilderMain, A class that checks whether the vectorizer configuration is valid.      This cla, Checks the vectorizer configuration.          If the configuration is valid, it, VectorizeModelConfigChecker, LLMCallCcontext (+1 more)
 
 ### Community 226 - "RelationMapping"
 Cohesion: 0.10
@@ -1950,12 +1965,12 @@ Cohesion: 0.09
 Nodes (20): 1. Prerequisites, 2. Reproduction Steps, 1. 前置条件, 2. 复现步骤, KAG 示例：Peaple Realation Query & Answer, Step 1：进入示例目录, Step 2：配置模型, Step 3：初始化项目 (+12 more)
 
 ### Community 240 - "MCPClient"
-Cohesion: 0.11
-Nodes (12): MCPClient, Process user query using LLM and available tools          Args:             quer, Clean up server resources., Enter the async context manager., Exit the async context manager., Initialize the MCP client          Args:             llm: LLMClient instance for, Establish connection to an MCP server instance          Args:             server, List available tools from the server.          Returns:             A list of av (+4 more)
+Cohesion: 0.12
+Nodes (11): MCPClient, Process user query using LLM and available tools          Args:             quer, Clean up server resources., Enter the async context manager., Exit the async context manager., Establish connection to an MCP server instance          Args:             server, List available tools from the server.          Returns:             A list of av, McpExecutor (+3 more)
 
 ### Community 241 - "SPGConceptRuleMarkLang"
-Cohesion: 0.14
-Nodes (12): commit_schema(), Commit local schema and generate schema helper., Register a concept rule according to DSL file., reg_concept_rule(), is_blank(), parse the logic rule from text, Auto generate define statement and append namespace to the entity name, SPG Concept Rule Mark Language Parser     Feature: parse rule script and then al (+4 more)
+Cohesion: 0.21
+Nodes (8): is_blank(), parse the logic rule from text, Auto generate define statement and append namespace to the entity name, SPG Concept Rule Mark Language Parser     Feature: parse rule script and then al, submit the rule definition, make them available for inference, Load and then parse the script file, parse the concept definition, SPGConceptRuleMarkLang
 
 ### Community 242 - "DeleteEdgeRequest"
 Cohesion: 0.11
@@ -2058,12 +2073,12 @@ Cohesion: 0.11
 Nodes (13): object, Sets the nick_name of this UserInfo.           :param nick_name: The nick_name o, Returns the model properties as a dict, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, NOTE: This class is auto generated by OpenAPI Generator.     Ref: https://openap (+5 more)
 
 ### Community 267 - "KagMcpServer"
-Cohesion: 0.18
-Nodes (5): ArgumentParser, Namespace, _SubParsersAction, RunKagMcpServer, Namespace
+Cohesion: 0.14
+Nodes (7): ArgumentParser, Namespace, _SubParsersAction, RunKagMcpServer, KagMcpServer, Namespace, object
 
 ### Community 268 - "KAGBuilderChain"
-Cohesion: 0.08
-Nodes (16): DefaultUnstructuredBuilderChain, DomainKnowledgeInjectChain, Invokes the builder chain to process the input file.          Args:, Construct the builder chain by connecting the external_graph, vectorizer (if ava, A class representing a default unstructured builder chain, used to build a knowl, Processes the input data using the builder chain in parallel and manages checkpo, Initializes the BuilderChainRunner instance.          Args:             scanner, Initializes the BuilderChainRunner instance.          Args:             scanner (+8 more)
+Cohesion: 0.13
+Nodes (9): DefaultUnstructuredBuilderChain, DomainKnowledgeInjectChain, Invokes the builder chain to process the input file.          Args:, Construct the builder chain by connecting the external_graph, vectorizer (if ava, A class representing a default unstructured builder chain, used to build a knowl, Initializes the BuilderChainRunner instance.          Args:             scanner, KAGBuilderChain, KAGBuilderChain is a class that extends the BuilderChainABC and Registrable base (+1 more)
 
 ### Community 269 - "CheckPointer"
 Cohesion: 0.11
@@ -2130,8 +2145,8 @@ Cohesion: 0.16
 Nodes (11): KAGPostProcessor, SubGraph, Performs entity linking based on the given property key and labels.          Arg, Performs entity linking based on similarity.          Args:             graph (S, Performs entity linking based on the user provided external graph.          Args, Invokes the post-processing pipeline on the input subgraph.          Args:, A class that extends the PostProcessorABC base class.     It provides methods to, Initializes the KAGPostProcessor instance.          Args:             similarity (+3 more)
 
 ### Community 286 - "KGWriter"
-Cohesion: 0.05
-Nodes (25): do_report(), DotRefresher, ReporterABC, ChunkRetrievedExecutor, Any, RetrieverABC, Output type specification for executor responses, Function schema definition for OpenAI Function Calling          Returns: (+17 more)
+Cohesion: 0.04
+Nodes (35): RetrievedData, LogicNode, ChunkRetrievedExecutor, Any, RetrieverABC, Output type specification for executor responses, Function schema definition for OpenAI Function Calling          Returns:, FlowComponent (+27 more)
 
 ### Community 287 - "AzureOpenAIVectorizeModel"
 Cohesion: 0.13
@@ -2214,8 +2229,8 @@ Cohesion: 0.13
 Nodes (11): object, QueryVertexResponse, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, NOTE: This class is auto generated by OpenAPI Generator.     Ref: https://openap, QueryVertexResponse - a model defined in OpenAPI (+3 more)
 
 ### Community 307 - "Metrics"
-Cohesion: 0.13
-Nodes (11): Metrics, object, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, NOTE: This class is auto generated by OpenAPI Generator.     Ref: https://openap, Metrics - a model defined in OpenAPI (+3 more)
+Cohesion: 0.15
+Nodes (10): Metrics, object, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, NOTE: This class is auto generated by OpenAPI Generator.     Ref: https://openap, Gets the think_cost of this Metrics.  # noqa: E501           :return: The think_ (+2 more)
 
 ### Community 308 - "SchemaDraft"
 Cohesion: 0.13
@@ -2242,8 +2257,8 @@ Cohesion: 0.13
 Nodes (11): ProjectSchema, object, Returns the string representation of the model, For `print` and `pprint`, Returns true if both objects are equal, Returns true if both objects are not equal, NOTE: This class is auto generated by OpenAPI Generator.     Ref: https://openap, ProjectSchema - a model defined in OpenAPI (+3 more)
 
 ### Community 314 - "ListRegisterInfo"
-Cohesion: 0.08
-Nodes (25): datetime, latency_summary(), percentile(), utc_run_id(), Path, test_canonical_source_requires_source_txt(), test_check_environment_pass_with_monkeypatches(), test_ensure_source_txt_and_create_run_dir() (+17 more)
+Cohesion: 0.07
+Nodes (36): prepare_ragas_rows(), Any, Path, save_ragas_outputs(), save_ragas_placeholder(), summarize_ragas_scores(), aggregate_numeric(), atomic_write_json() (+28 more)
 
 ### Community 315 - "MusiqueCorpusScanner"
 Cohesion: 0.15
@@ -2278,8 +2293,8 @@ Cohesion: 0.10
 Nodes (16): 1. Directory Structure, 2. The company instances (Company.csv), 3. Fund transferring between companies (Company_fundTrans_Company.csv), 4. The Person instances (Person.csv), 5. The industry concepts (Industry.csv), 6. The product concepts (Product.csv), 7. The industry chain events (ProductChainEvent.csv), 8. The index concepts (Index.csv) and the trend concepts (Trend.csv) (+8 more)
 
 ### Community 323 - "ProjectClient"
-Cohesion: 0.16
-Nodes (9): create_project(), list_project(), Create new project with a demo case., Recover project by a project dir path., _recover_project(), _render_template(), restore_project(), update_project() (+1 more)
+Cohesion: 0.11
+Nodes (12): LLMConfigChecker, object, Check whether the llm config is valid., Check the llm config.          * If the config is valid, return the generated te, create_project(), list_project(), Create new project with a demo case., Recover project by a project dir path. (+4 more)
 
 ### Community 324 - "Runnable"
 Cohesion: 0.14
@@ -2290,12 +2305,12 @@ Cohesion: 0.14
 Nodes (4): Environment, PathLike, Get knext config file as a ConfigParser., Return the path to the closest kag_config.yaml file by traversing the current
 
 ### Community 326 - "ThinkerTaskRequest"
-Cohesion: 0.05
-Nodes (25): execute_thinker_job(), Submit asynchronous reasoner jobs to server by providing DSL file or string., Execute a synchronous builder job in local runner., ThinkerClient, object, Gets the project_id of this ThinkerTaskRequest.  # noqa: E501           :return:, Sets the project_id of this ThinkerTaskRequest.           :param project_id: The, Gets the subject of this ThinkerTaskRequest.  # noqa: E501           :return: Th (+17 more)
+Cohesion: 0.07
+Nodes (21): object, Gets the project_id of this ThinkerTaskRequest.  # noqa: E501           :return:, Sets the project_id of this ThinkerTaskRequest.           :param project_id: The, Gets the subject of this ThinkerTaskRequest.  # noqa: E501           :return: Th, Sets the subject of this ThinkerTaskRequest.           :param subject: The subje, Gets the predicate of this ThinkerTaskRequest.  # noqa: E501           :return:, Sets the predicate of this ThinkerTaskRequest.           :param predicate: The p, Gets the object of this ThinkerTaskRequest.  # noqa: E501           :return: The (+13 more)
 
 ### Community 327 - "SPGAligner"
-Cohesion: 0.15
-Nodes (28): build_kag_server_project_config(), _collect_kag_retriever_types(), _dummy_env(), _ensure_kag_imports(), _extract_kag_label_type(), get_adapter(), get_kag_neo4j_config(), _invoke_kag_query_with_trace() (+20 more)
+Cohesion: 0.10
+Nodes (43): CompletedProcess, build_kag_server_project_config(), _classify_kag_query_answer(), _collect_kag_retriever_types(), _dummy_env(), _ensure_kag_imports(), _extract_kag_label_type(), _extract_kag_retriever_errors() (+35 more)
 
 ### Community 328 - "Creating and Using Classes"
 Cohesion: 0.12
@@ -2322,8 +2337,8 @@ Cohesion: 0.12
 Nodes (17): (一) 陈忠岳先生, (七)沈抖先生, (三)王俊治先生, (九)童国华先生, (二) 简勤先生, (五)唐国良先生, (八)李津先生, (六)卢山先生 (+9 more)
 
 ### Community 334 - "WriterGraphRequest"
-Cohesion: 0.06
-Nodes (20): BuilderClient, object, Sets the project_id of this WriterGraphRequest.           :param project_id: The, Gets the operation of this WriterGraphRequest.  # noqa: E501           :return:, Sets the operation of this WriterGraphRequest.           :param operation: The o, Gets the sub_graph of this WriterGraphRequest.  # noqa: E501           :return:, Sets the sub_graph of this WriterGraphRequest.           :param sub_graph: The s, Gets the enable_lead_to of this WriterGraphRequest.  # noqa: E501           :ret (+12 more)
+Cohesion: 0.07
+Nodes (19): object, Sets the project_id of this WriterGraphRequest.           :param project_id: The, Gets the operation of this WriterGraphRequest.  # noqa: E501           :return:, Sets the operation of this WriterGraphRequest.           :param operation: The o, Gets the sub_graph of this WriterGraphRequest.  # noqa: E501           :return:, Sets the sub_graph of this WriterGraphRequest.           :param sub_graph: The s, Gets the enable_lead_to of this WriterGraphRequest.  # noqa: E501           :ret, Sets the enable_lead_to of this WriterGraphRequest.           :param enable_lead (+11 more)
 
 ### Community 335 - "SearchApi"
 Cohesion: 0.14
@@ -2446,8 +2461,8 @@ Cohesion: 0.27
 Nodes (8): Set the configuration for a specific task.          :param task_with_kb_id: Task, do_qa_pipeline(), get_all_placeholders(), get_pipeline_conf(), is_chinese(), load_yaml_files_from_conf_dir(), qa(), replace_placeholders()
 
 ### Community 366 - "KAGAligner"
-Cohesion: 0.06
-Nodes (23): KAGAligner, Input, Output, SubGraph, A class that extends the AlignerABC base class. It is responsible for aligning a, Initializes the KAGAligner instance.          Args:             **kwargs: Arbitr, Merges a list of subgraphs into a single subgraph.          Args:             in, Handles the input by converting it to the appropriate type, invoking the aligner (+15 more)
+Cohesion: 0.15
+Nodes (9): BaseSpgType, Input, Output, Processes a single input and returns a list of outputs.          Args:, Processes a batch of inputs and returns a list of outputs.          Args:, A class that extends the AlignerABC base class. It is responsible for aligning a, Merges a list of SPG records into a single set of records, combining properties, Converts a list of SPG records into a subgraph.          Args:             spg_t (+1 more)
 
 ### Community 367 - "CSVStructuredScanner"
 Cohesion: 0.15
@@ -2514,8 +2529,8 @@ Cohesion: 0.14
 Nodes (12): 1. Precondition, 2. Steps to reproduce, 1. 前置条件, 2. 复现步骤, KAG 示例:  Google Web Search MCP, Step 1：进入示例目录, Step 2：配置模型, Step 3：执行 QA 任务 (+4 more)
 
 ### Community 383 - "3. 导入文档"
-Cohesion: 0.08
-Nodes (24): 1. 前置条件, 2.1 新建项目, 2.2 更新项目（Optional）, 2. 创建知识库, 3. 导入文档, 4. 推理问答, 5. 其他内置案例, KAG 示例 (+16 more)
+Cohesion: 0.14
+Nodes (14): 1. 前置条件, 3. 导入文档, 4. 推理问答, 5. 其他内置案例, KAG 示例, Step 1：进入项目目录, Step 1：进入项目目录, Step 2：编写问答脚本 (+6 more)
 
 ### Community 384 - "2. Steps to reproduce"
 Cohesion: 0.14
@@ -2530,7 +2545,7 @@ Cohesion: 0.16
 Nodes (9): AffairBatchVectorizer, Input, Output, SubGraph, Invokes the generation of embedding vectors for the input SubGraph.          Arg, A class for generating embedding vectors for node attributes in a SubGraph in ba, Initializes the BatchVectorizer with the specified vectorization model and batch, Initializes the vector metadata for the SubGraph.          Returns: (+1 more)
 
 ### Community 388 - "ReasonerClient"
-Cohesion: 0.15
+Cohesion: 0.16
 Nodes (7): execute_reasoner_job(), Submit asynchronous reasoner jobs to server by providing DSL file or string., Execute a synchronous builder job in local runner., Create session for altering schema., Create a new session and load schema information.          - Create a session ob, Generates the graph connection configuration based on environment variables., ReasonerClient
 
 ### Community 389 - "NaiveRagExtractor"
@@ -2630,16 +2645,16 @@ Cohesion: 0.19
 Nodes (8): Mix1, Mix2, MixBase, Sub1, Sub11, Sub2, Type1, Type2
 
 ### Community 413 - "import_modules_from_path"
-Cohesion: 0.15
-Nodes (30): CompletedProcess, prepare_ragas_rows(), Any, Path, save_ragas_outputs(), save_ragas_placeholder(), summarize_ragas_scores(), aggregate_numeric() (+22 more)
+Cohesion: 0.11
+Nodes (13): SPGTypeName, Builds the prompt using the provided variables.          Args:             varia, Creates the schema for extraction prompt based on the project schema., Base class for generating SPG schema-based entity/event extraction prompts., Returns the list of accepted SPG types.          Returns:             List[SpgTy, Builds the prompt using the provided variables.          Args:             varia, Initializes the SPGPrompt instance.          Args:             spg_type_names (L, Returns the list of template variables used in the prompt.          Returns: (+5 more)
 
 ### Community 414 - "FileScanner"
 Cohesion: 0.20
 Nodes (7): FileScanner, Input, Output, A class for reading single file and returning the path, inheriting from `Scanner, Loads data by returning the input file path as a list of strings.          This, download_from_http(), Downloads a file from an HTTP URL and saves it to a temporary directory.      Th
 
 ### Community 415 - "ODPSScanner"
-Cohesion: 0.24
-Nodes (7): add_commands(), _SubParsersAction, add commands to subparsers, setup accept arguments, build_parser(), main(), entry point of script
+Cohesion: 0.15
+Nodes (11): add_commands(), Command, Namespace, _SubParsersAction, add commands to subparsers, return handler of current command, setup accept arguments, function to proces the request. (+3 more)
 
 ### Community 416 - "FuseOpABC"
 Cohesion: 0.26
@@ -2798,20 +2813,24 @@ Cohesion: 0.20
 Nodes (5): extract_box_answer(), extract_specific_tag_content(), search_plan_extraction(), Function schema definition for OpenAI Function Calling          Returns:, to_task_context_str()
 
 ### Community 456 - "GraphClient"
-Cohesion: 0.12
-Nodes (8): Initializes the KGWriter with the specified project ID.          Args:, Client, ABC, Base client class.      This abstract base class is used to derive specific clie, Initialization method to set the connection address and project ID.          Thi, Serialize an object for transmission.          This method uses an instance of r, GraphClient, Calculate and retrieve PageRank scores for the given starting nodes.          Pa
+Cohesion: 0.20
+Nodes (3): Initializes the KGWriter with the specified project ID.          Args:, GraphClient, Calculate and retrieve PageRank scores for the given starting nodes.          Pa
 
 ### Community 457 - ".batch_vector_search"
-Cohesion: 0.25
-Nodes (15): normalize_graph_metrics(), Any, GraphMetrics, load_answers(), load_ragas_scores(), parse_lightrag_outputs(), parse_msgraphrag_outputs(), parse_neo4j_summary() (+7 more)
+Cohesion: 0.19
+Nodes (18): normalize_graph_metrics(), Any, GraphMetrics, load_answers(), load_ragas_scores(), parse_lightrag_outputs(), parse_msgraphrag_outputs(), parse_neo4j_summary() (+10 more)
 
 ### Community 458 - "OllamaClient"
 Cohesion: 0.24
 Nodes (5): OllamaClient, Executes a model request when the object is called and returns the result., A client class for interacting with the Ollama API.      This class provides met, Initializes the OllamaClient instance.          Args:             model (str): T, Executes a model request when the object is called and returns the result.
 
 ### Community 459 - "OutlineChunkRetriever"
-Cohesion: 0.22
-Nodes (9): BuilderChainStreamRunner, dict_abstract(), generate_hash_id_and_abstract(), Processes the input data using the builder chain in parallel and manages checkpo, A class that manages the execution of a KAGBuilderChain with parallel processing, Abstracts a string value by returning the base name if it is a file path, or the, Processes the input data using the builder chain in a streaming fashion., Abstracts each value in a dictionary by converting it to a string and then abstr (+1 more)
+Cohesion: 0.14
+Nodes (10): BuilderChainStreamRunner, Processes the input data using the builder chain in parallel and manages checkpo, A class that manages the execution of a KAGBuilderChain with parallel processing, Initializes the BuilderChainRunner instance.          Args:             scanner, Processes the input data using the builder chain in a streaming fashion., append_python_path(), import_modules_from_path(), PathLike (+2 more)
+
+### Community 460 - ".do_main"
+Cohesion: 0.15
+Nodes (7): Edge, DefaultExternalGraphLoader, ndarray, Node, Creates an instance of DefaultExternalGraphLoader from JSON files containing nod, A default implementation of the ExternalGraphLoaderABC interface.      This clas, Initializes the DefaultExternalGraphLoader with the given nodes, edges, and matc
 
 ### Community 461 - "guide_to_java.md"
 Cohesion: 0.20
@@ -2910,12 +2929,12 @@ Cohesion: 0.27
 Nodes (6): KAGIterativePipeline, MaxIterationsReachedError, Execute the problem-solving process for given query.          Args:, Iterative problem-solving pipeline that decomposes and analyzes problems step-by, Select executor instance by name from available executors.          Args:, Perform planning phase to determine next execution step.          Args:
 
 ### Community 485 - ".to_dict"
-Cohesion: 0.33
-Nodes (4): Namespace, _SubParsersAction, run_benchmark(), RunBenchmark
+Cohesion: 0.17
+Nodes (8): Namespace, Processes the input data using the builder chain in parallel and manages checkpo, CheckpointerManager, Manages the lifecycle of CheckPointer objects.      This class provides a thread, Retrieves or creates a CheckPointer instance based on the provided configuration, Closes all cached CheckPointer instances.          This method iterates through, test_bin_checkpointer(), test_txt_checkpointer()
 
 ### Community 486 - ".to_dict"
-Cohesion: 0.33
-Nodes (5): Initializes the BatchVectorizer with the specified vectorization model and batch, Initializes the vector metadata for the SubGraph.          Returns:, get_sparse_vector_field_name(), get_vector_field_name(), to_snake_case()
+Cohesion: 0.24
+Nodes (10): Initializes the BatchVectorizer with the specified vectorization model and batch, Initializes the vector metadata for the SubGraph.          Returns:, get_sparse_vector_field_name(), get_vector_field_name(), to_snake_case(), get_config(), test_eg(), _test_eg_base() (+2 more)
 
 ### Community 487 - "test_llm.py"
 Cohesion: 0.42
@@ -2961,6 +2980,10 @@ Nodes (9): For Each... Next Loops, _For...Next_ Loops, For...Next Loops with Ste
 Cohesion: 0.22
 Nodes (9): Using the AdvancedSearchComplete and the AdvancedSearchStopped ****Events, Using the ****ItemSend Event, Using the MAPILogonComplete ****Event, Using the ****NewMail ****and NewMailEx Events, Using the OptionsPagesAdd ****Event, Using the Quit Event, Using the Reminder ****Event, Using the Startup Event (+1 more)
 
+### Community 498 - "CsQaEvaluator"
+Cohesion: 0.12
+Nodes (9): BaseTableSplitter, A base class for splitting table data into smaller chunks.      This class inher, Splits a markdown format table into smaller markdown tables.          Args:, Internal method to split a markdown format table into smaller markdown tables., ABC, Input, Output, Abstract base class for splitting a chunk into a list of smaller chunks.      Th (+1 more)
+
 ### Community 499 - "董事会委员会"
 Cohesion: 0.22
 Nodes (9): 可持续发展委员会, 合规及风险委员会, 审计委员会, 履历资料, 提名及公司治理委员会, 董事会委员会, 董事及首席执行官, 薪酬委员会 (+1 more)
@@ -2968,6 +2991,10 @@ Nodes (9): 可持续发展委员会, 合规及风险委员会, 审计委员会, 
 ### Community 500 - "中国联合网络通信股份有限公司 2022 年第三季度报告"
 Cohesion: 0.22
 Nodes (8): 2022 年第三季度公司经营信息, 一、主要财务数据, 三、其他提醒事项, 中国联合网络通信股份有限公司 2022 年第三季度报告, 二、股东信息, 五、下属公司非融资性担保业务情况, 四、季度财务报表, 重要内容提示:
+
+### Community 503 - "SummaryIndexManager"
+Cohesion: 0.15
+Nodes (10): SPGTypeName, Gets a relation of this SPGRecord by name.          Args:             relation_n, Upserts a relation of this SPGRecord.          Args:             relation_name (, Upserts relations of this SPGRecord.          Args:             relations (Dict[, Removes a relation of this SPGRecord.          Args:             relation_name (, Removes relations by given names.          Args:             relation_names (Lis, Initializes a new instance of the SPGRecord class.          Args:             sp, Gets the SPG type name of this SPGRecord.          Returns:             SPGTypeN (+2 more)
 
 ### Community 505 - "SolverPipelineABC"
 Cohesion: 0.13
@@ -2982,8 +3009,8 @@ Cohesion: 0.28
 Nodes (4): Pipeline self cognition pipeline.     Args:         executors (List[ExecutorABC], Generates task plan through LLM-based planning with automatic retry.          Ar, Executes single task with query rewriting and executor invocation.          Args, SelfCognitionPipeline
 
 ### Community 508 - "BuilderApi"
-Cohesion: 0.33
-Nodes (5): append_python_path(), import_modules_from_path(), PathLike, Append the given path to `sys.path`., Import all submodules under the given package.     User can specify their custom
+Cohesion: 0.16
+Nodes (8): BaseSpgType, Commit all altered schemas to server., Query project schema and init SPG types in session., Get SPG type by name from project schema., Add an SPG type in session with `CREATE` operation., Add an SPG type in session with `UPDATE` operation., Add an SPG type in session with `DELETE` operation., SchemaSession
 
 ### Community 509 - "ThinkerApi"
 Cohesion: 0.25
@@ -2992,6 +3019,10 @@ Nodes (5): object, NOTE: This class is auto generated by OpenAPI Generator     R
 ### Community 510 - "关键字段说明"
 Cohesion: 0.22
 Nodes (8): cust_id 客户ID, enable_status 可用状态, lifecycle_status 角色生命周期, reg_from 角色注册来源, role_id 角色ID, role_type 角色类型, 关键字段说明, 背景
+
+### Community 513 - "BuilderMain"
+Cohesion: 0.17
+Nodes (6): BuilderClient, Client, ABC, Base client class.      This abstract base class is used to derive specific clie, Initialization method to set the connection address and project ID.          Thi, Serialize an object for transmission.          This method uses an instance of r
 
 ### Community 514 - "MockVectorizeModel"
 Cohesion: 0.25
@@ -3106,8 +3137,8 @@ Cohesion: 0.25
 Nodes (7): 2021 年首三季度公司经营信息, 一、主要财务数据, 三、其他提醒事项, 中国联合网络通信股份有限公司 2021 年第三季度报告, 二、股东信息, 四、季度财务报表, 重要内容提示:
 
 ### Community 542 - "EvaForNetOperatorQA"
-Cohesion: 0.11
-Nodes (6): qa(), MedicineDemo, EvaForNetOperatorQA, EvaQA, SupplyChainDemo, TraceLogReporter
+Cohesion: 0.09
+Nodes (8): CsQaEvaluator, main(), qa(), MedicineDemo, EvaQA, SupplyChainDemo, TraceLog, TraceLogReporter
 
 ### Community 543 - "utils.py"
 Cohesion: 0.32
@@ -3278,8 +3309,8 @@ Cohesion: 0.29
 Nodes (7): A、净利润指标, A、同业竞争, A、资产、财务、机构方面相互独立, B、关联交易, B、净资产指标, B、高级管理人员、财务人员不存在交叉任职, 关于分拆所属子公司联通智网科技股份有限公 司上市符合《上市公司分拆规则(试行)》的议案
 
 ### Community 588 - "EvaForMusique"
-Cohesion: 0.33
-Nodes (4): Command, Namespace, return handler of current command, function to proces the request.
+Cohesion: 0.21
+Nodes (5): ODPSScanner, Any, Generate rows from ODPS one by one.          Args:             input (str): The, Invoke the scanner to get all data at once.          Args:             input (st, Load all data from ODPS and return as a list.         This method is used by the
 
 ### Community 591 - "Appendix A: Simple Graphical Input and Output"
 Cohesion: 0.33
@@ -3458,8 +3489,12 @@ Cohesion: 0.33
 Nodes (3): AffairQaDemo, get_next_result_filename(), Check if result file exists and automatically increment the number.     Example:
 
 ### Community 639 - "DeduceExtractor"
-Cohesion: 0.73
-Nodes (5): get_config(), test_eg(), _test_eg_base(), _test_eg_dump(), _test_eg_query()
+Cohesion: 0.24
+Nodes (3): KnowledgeUnitPrompt, "No Mediocre Song Details":{           "Content": "\"No Mediocre\" is a song by, "2019年全国全国发电总量与结构": {           "内容": "2019年全国发电总量71422亿千瓦时，同比增长3.5%。其中火电占比72.3%
+
+### Community 640 - "DeduceJudge"
+Cohesion: 0.16
+Nodes (13): canonical_source_path(), load_questions(), load_source_info(), Path, questions_sha256(), Any, QuestionRecord, SourceInfo (+5 more)
 
 ### Community 645 - ".object_spg_type"
 Cohesion: 0.33
@@ -4261,6 +4296,38 @@ Nodes (3): iter_init(), Init a BaseProperty object., Initialize a REST model.
 Cohesion: 0.67
 Nodes (3): Note, Training a regression model on the bike sharing dataset, Training and using regression models
 
+### Community 880 - ".enable_lead_to"
+Cohesion: 0.20
+Nodes (10): 2.1 新建项目, 2.2 更新项目（Optional）, 2. 创建知识库, Step 1：进入 examples 目录, Step 1：进入项目目录, Step 2：编辑项目配置, Step 2：编辑项目配置, Step 3：创建项目（与产品模式中的知识库一一对应） (+2 more)
+
+### Community 881 - ".token"
+Cohesion: 0.27
+Nodes (5): change_new_date(), FundDateProcessComponent, ABC, Input, Output
+
+### Community 884 - ".result_table_result"
+Cohesion: 0.28
+Nodes (5): OpenIEKnowledgeUnitTriplePrompt, check_data(), load_knowIE_data(), load_SPO_data(), modify_knowledge_unit()
+
+### Community 885 - ".result_nodes"
+Cohesion: 0.27
+Nodes (12): _append_error_log(), BenchmarkCompatibilityKgFrRetriever, BenchmarkCompatibilityNer, _diag_path(), _merge_diag(), _normalize_ner_item(), _normalize_task_arguments(), Any (+4 more)
+
+### Community 886 - ".is_dynamic"
+Cohesion: 0.20
+Nodes (16): AlterOperationEnum, BasicTypeEnum, ConstraintTypeEnum, HypernymPredicateEnum, IndexTypeEnum, PropertyGroupEnum, Enum, str (+8 more)
+
+### Community 888 - ".spreadable"
+Cohesion: 0.25
+Nodes (4): Process property name by removing descriptions enclosed in parentheses., Process property names by removing descriptions enclosed in parentheses., Parses the response string into a list of SPG records.          Args:, Parses the response string into a list of SPG records.          Args:
+
+### Community 915 - "ThinkerClient"
+Cohesion: 0.25
+Nodes (4): execute_thinker_job(), Submit asynchronous reasoner jobs to server by providing DSL file or string., Execute a synchronous builder job in local runner., ThinkerClient
+
+### Community 1255 - ".assemble_sub_graph"
+Cohesion: 0.38
+Nodes (4): SubGraph, Associates a Chunk object with the subgraph, adding it as a node and connecting, Integrates entity and triple information into a subgraph, and associates it with, Assembles a subgraph using named entities.          Args:             sub_graph
+
 ### Community 1256 - "_ApiExceptionHandler"
 Cohesion: 0.40
 Nodes (3): _ApiExceptionHandler, Any, Group
@@ -4269,9 +4336,45 @@ Nodes (3): _ApiExceptionHandler, Any, Group
 Cohesion: 0.60
 Nodes (4): do_kag_hybrid(), do_pipeline_kag(), do_static_pipeline_kag(), qa()
 
+### Community 1259 - "runner.py"
+Cohesion: 0.53
+Nodes (5): dict_abstract(), generate_hash_id_and_abstract(), Abstracts a string value by returning the base name if it is a file path, or the, Abstracts each value in a dictionary by converting it to a string and then abstr, str_abstract()
+
 ### Community 1260 - "Support files, eBooks, discount offers, and more"
 Cohesion: 0.67
 Nodes (3): Free access for Packt account holders, Support files, eBooks, discount offers, and more, Why subscribe?
+
+### Community 1261 - ".params"
+Cohesion: 0.33
+Nodes (6): Fragmentation, Mac80211 debugfs, Mac80211 Implementation, Rx Path, Tx Path, Wireless Modes
+
+### Community 1262 - ".result_edges"
+Cohesion: 0.33
+Nodes (3): Returns the string representation of the model.          Returns:             st, Returns this SPGRecord as a dict.          Returns:             dict: This SPGRe, For `print` and `pprint`.          Returns:             str: The string represen
+
+### Community 1267 - "vconfig"
+Cohesion: 0.40
+Nodes (5): Association, Authentication, Reassociation, Scanning, The Management Layer (MLME)
+
+### Community 1271 - "commit_schema"
+Cohesion: 0.40
+Nodes (4): commit_schema(), Commit local schema and generate schema helper., Register a concept rule according to DSL file., reg_concept_rule()
+
+### Community 1272 - ".add_constraint"
+Cohesion: 0.40
+Nodes (3): Gets the constraint of this StandardType.  # noqa: E501           :return: The c, Sets the constraint of this StandardType.           :param constraint: The const, Adds a constraint to this StandardType.           :param type: The type of const
+
+### Community 1273 - "Power Save Mode"
+Cohesion: 0.50
+Nodes (4): Entering Power Save Mode, Exiting Power Save Mode, Handling the Multicast/Broadcast Buffer, Power Save Mode
+
+### Community 1274 - "Mesh Networking (802.11s)"
+Cohesion: 0.67
+Nodes (3): HWMP Protocol, Mesh Networking (802.11s), Setting Up a Mesh Network
+
+### Community 1275 - "Comparing model performance with Spark Streaming"
+Cohesion: 0.67
+Nodes (3): Comparing model performance with Spark Streaming, Online model evaluation, Tip
 
 ## Ambiguous Edges - Review These
 - `drift_reduce_prompt prompt` → `msgraphrag settings`  [AMBIGUOUS]
@@ -4280,18 +4383,18 @@ Nodes (3): Free access for Packt account holders, Support files, eBooks, discoun
 ## Knowledge Gaps
 - **5391 isolated node(s):** `$schema`, `type`, `required`, `type`, `type` (+5386 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **212 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **205 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `drift_reduce_prompt prompt` and `msgraphrag settings`?**
   _Edge tagged AMBIGUOUS (relation: references) - confidence is low._
-- **Why does `Configuration` connect `Configuration` to `__init__.py`, `ApiClient`, `BasicType`, `BaseAdvancedType`, `BaseSpgType`, `ProjectCreateRequest`, `Relation`, `EntityType`, `EventType`, `IndexType`, `SchemaClient`, `Property`, `PropertyRef`, `PropertyAdvancedConfig`, `SubProperty`, `PredicateSemantic`, `DataEdge`, `Node`, `LogicalRule`, `VectorSearchRequest`, `DefineLogicalCausationRequest`, `ReasonerApi`, `EdgeRecordInstance`, `Project`, `RemoveLogicalCausationRequest`, `EdgeRecord`, `WriterGraphRequest`, `ReasonTask`, `StreamData`, `OperatorOverview`, `BaseSemantic`, `ConceptType`, `TextSearchRequest`, `StandardType`, `RefDoc`, `VertexRecordInstance`, `ExpendOneHopRequest`, `GetPageRankScoresRequestStartNodes`, `VertexRecord`, `VertexRecordInstance`, `DataNode`, `BaseOntology`, `BasicInfo`, `SpgTripleIdentifier`, `SpgTypeIdentifier`, `OperatorVersion`, `PropertyRefBasicInfo`, `SubPropertyBasicInfo`, `ParentTypeInfo`, `SpgTypeAdvancedConfig`, `SpgTypeRefBasicInfo`, `StandardTypeBasicInfo`, `IdxRecord`, `OpenSPGReporter`, `SpgTypeQueryRequest`, `UpsertEdgeRequest`, `EdgeTypeName`, `ExpendOneHopResponse`, `GetPageRankScoresRequest`, `PageRankScoreInstance`, `QueryVertexRequest`, `UpsertEdgeRequest`, `ReportPipelineRequest`, `SpgTypeInstance`, `SubGraph`, `TableResult`, `TaskStreamRequest`, `DefineDynamicTaxonomyRequest`, `OperatorCreateRequest`, `MultiVersionConfig`, `CustomSearchRequest`, `ThinkerTaskResponse`, `DeleteEdgeRequest`, `DeleteVertexRequest`, `UpsertVertexRequest`, `DeleteEdgeRequest`, `DeleteVertexRequest`, `LpgPropertyRecord`, `UpsertVertexRequest`, `CaPipeline`, `Edge`, `ReportMarkdownRequest`, `ReasonTaskResponse`, `SchemaAlterRequest`, `RemoveDynamicTaxonomyRequest`, `Constraint`, `EnumConstraint`, `RegularConstraint`, `ConceptIdentifier`, `OperatorIdentifier`, `PredicateIdentifier`, `OntologyId`, `OperatorCreateResponse`, `OperatorVersionRequest`, `OperatorVersionResponse`, `MountedConceptConfig`, `ConceptLayerConfig`, `OperatorKey`, `SpgTypeRef`, `UserInfo`, `BaseConstraintItem`, `BaseSpgIdentifier`, `QueryVertexResponse`, `Metrics`, `SchemaDraft`, `MultiValConstraint`, `NotNullConstraint`, `RuleCode`, `ConceptTaxonomicConfig`, `ProjectSchema`, `ProjectClient`, `ThinkerTaskRequest`, `WriterGraphRequest`, `ReasonerClient`, `SearchClient`, `GraphClient`?**
+- **Why does `Configuration` connect `Configuration` to `BuilderMain`, `__init__.py`, `ApiClient`, `BasicType`, `BaseAdvancedType`, `BaseSpgType`, `ProjectCreateRequest`, `Relation`, `EntityType`, `EventType`, `IndexType`, `SchemaClient`, `Property`, `PropertyRef`, `PropertyAdvancedConfig`, `SubProperty`, `PredicateSemantic`, `DataEdge`, `Node`, `LogicalRule`, `VectorSearchRequest`, `DefineLogicalCausationRequest`, `ReasonerApi`, `EdgeRecordInstance`, `Project`, `RemoveLogicalCausationRequest`, `EdgeRecord`, `WriterGraphRequest`, `ReasonTask`, `StreamData`, `OperatorOverview`, `BaseSemantic`, `ConceptType`, `TextSearchRequest`, `StandardType`, `RefDoc`, `VertexRecordInstance`, `ExpendOneHopRequest`, `GetPageRankScoresRequestStartNodes`, `VertexRecord`, `VertexRecordInstance`, `DataNode`, `BaseOntology`, `BasicInfo`, `SpgTripleIdentifier`, `SpgTypeIdentifier`, `OperatorVersion`, `PropertyRefBasicInfo`, `SubPropertyBasicInfo`, `ParentTypeInfo`, `SpgTypeAdvancedConfig`, `SpgTypeRefBasicInfo`, `StandardTypeBasicInfo`, `IdxRecord`, `OpenSPGReporter`, `SpgTypeQueryRequest`, `UpsertEdgeRequest`, `EdgeTypeName`, `ExpendOneHopResponse`, `GetPageRankScoresRequest`, `PageRankScoreInstance`, `QueryVertexRequest`, `UpsertEdgeRequest`, `ReportPipelineRequest`, `SpgTypeInstance`, `SubGraph`, `TableResult`, `TaskStreamRequest`, `DefineDynamicTaxonomyRequest`, `OperatorCreateRequest`, `MultiVersionConfig`, `CustomSearchRequest`, `ThinkerTaskResponse`, `DeleteEdgeRequest`, `DeleteVertexRequest`, `UpsertVertexRequest`, `DeleteEdgeRequest`, `DeleteVertexRequest`, `LpgPropertyRecord`, `UpsertVertexRequest`, `CaPipeline`, `Edge`, `ReportMarkdownRequest`, `ReasonTaskResponse`, `SchemaAlterRequest`, `RemoveDynamicTaxonomyRequest`, `Constraint`, `EnumConstraint`, `RegularConstraint`, `ConceptIdentifier`, `OperatorIdentifier`, `PredicateIdentifier`, `OntologyId`, `OperatorCreateResponse`, `OperatorVersionRequest`, `OperatorVersionResponse`, `MountedConceptConfig`, `ConceptLayerConfig`, `OperatorKey`, `SpgTypeRef`, `UserInfo`, `BaseConstraintItem`, `BaseSpgIdentifier`, `QueryVertexResponse`, `Metrics`, `SchemaDraft`, `MultiValConstraint`, `NotNullConstraint`, `RuleCode`, `ConceptTaxonomicConfig`, `ProjectSchema`, `ProjectClient`, `ThinkerTaskRequest`, `WriterGraphRequest`, `ReasonerClient`, `ThinkerClient`, `SearchClient`, `GraphClient`?**
   _High betweenness centrality (0.092) - this node is a cross-community bridge._
-- **Why does `Registrable` connect `run_runtime_repair.py` to `KagBaseModule`, `Question Schema Evidence`, `Functor`, `container_runtime_repair.py`, `KAGBuilderChain`, `CheckPointer`, `BuilderChainStreamRunner`, `container_runtime_repair.py`, `RerankModelABC`, `Count`, `Type1`, `KGWriter`, `container_validation.py`, `registrable.py`, `create_kwargs`, `Lazy`, `__init__.py`, `__init__.py`, `ToolABC`, `ExternalGraphLoaderABC`, `.list_available_with_detail`, `EvaForMusique`, `MockModel`, `Command`, `ShardingInfo`, `LFPlan`, `test_registry.py`, `MPBuilderComponentWrapper`, `SparseVectorizeModelABC`, `SolverPipelineABC`, `LFExecutorABC`, `IndexABC`, `KAGIndexManager`?**
+- **Why does `Registrable` connect `run_runtime_repair.py` to `KagBaseModule`, `Question Schema Evidence`, `Functor`, `KAGBuilderChain`, `CheckPointer`, `BuilderChainStreamRunner`, `container_runtime_repair.py`, `RerankModelABC`, `Count`, `Type1`, `KGWriter`, `ODPSScanner`, `container_validation.py`, `registrable.py`, `create_kwargs`, `Lazy`, `__init__.py`, `__init__.py`, `ToolABC`, `ExternalGraphLoaderABC`, `.list_available_with_detail`, `MockModel`, `Command`, `LFPlan`, `test_registry.py`, `MPBuilderComponentWrapper`, `SparseVectorizeModelABC`, `SolverPipelineABC`, `LFExecutorABC`, `IndexABC`, `KAGIndexManager`?**
   _High betweenness centrality (0.034) - this node is a cross-community bridge._
-- **Why does `SubGraph` connect `multilingual-e5-large README` to `AffairBatchVectorizer`, `MemoryGraphWriter`, `KAGPostProcessor`, `FuseOpABC`, `AffairTypeMapping`, `embedding service README`, `OpenSPGReporter`, `__init__.py`, `__init__.py`, `Node`, `ExternalGraphLoaderABC`, `LengthSplitter`, `RefDocSet`, `Property`, `OutlineChunkRetriever`, `SPGTypeMapping`, `DocxReader`, `AtomicQueryExtractor`, `SPOMapping`, `SchemaFreeExtractor`, `EmbeddingVectorManager`, `SPGServerBridge`, `RelationMapping`, `KnowledgeUnitSchemaFreeExtractor`, `SchemaConstraintExtractor`, `KAGAligner`?**
+- **Why does `SubGraph` connect `multilingual-e5-large README` to `AffairBatchVectorizer`, `MemoryGraphWriter`, `KAGPostProcessor`, `FuseOpABC`, `AffairTypeMapping`, `embedding service README`, `OpenSPGReporter`, `__init__.py`, `__init__.py`, `Node`, `ExternalGraphLoaderABC`, `LengthSplitter`, `RefDocSet`, `OutlineChunkRetriever`, `.do_main`, `SPGTypeMapping`, `DocxReader`, `AtomicQueryExtractor`, `SPOMapping`, `SchemaFreeExtractor`, `ShardingInfo`, `EmbeddingVectorManager`, `SPGServerBridge`, `RelationMapping`, `KnowledgeUnitSchemaFreeExtractor`, `SchemaConstraintExtractor`, `SplitterABC`, `KAGAligner`, `.is_dynamic`?**
   _High betweenness centrality (0.028) - this node is a cross-community bridge._
 - **Are the 228 inferred relationships involving `Configuration` (e.g. with `DeleteEdgeRequest` and `.__init__()`) actually correct?**
   _`Configuration` has 228 INFERRED edges - model-reasoned connections that need verification._

@@ -8,7 +8,9 @@ This project uses a GraphRAG-Bench-inspired evaluation, not a full reproduction 
 - `edges_total`: all edges stored by the framework backend.
 - `entities_count`: semantic entities only.
 - `relationships_count`: semantic `Entity -> Entity` relations only.
-- `documents_count`: document-level objects created by the framework.
+- `documents_count`: input documents passed into the benchmark workflow.
+- `input_documents_count`: explicit copy of the benchmark input document count.
+- `backend_document_nodes_count`: document-like backend nodes materialized by the framework storage layer.
 - `chunks_count`: chunk or text-unit objects created by the framework.
 - `communities_count`: community-level objects when the framework exposes them.
 - `isolated_entities_count`: semantic entities with zero semantic degree.
@@ -32,6 +34,7 @@ Technical relations excluded from `relationships_count`:
 
 - framework-internal links between documents, chunks, communities, and support tables
 - attachment edges such as `HAS_CHUNK`, `MENTIONS`, `PART_OF`, and similar non-semantic links
+- opaque numeric OpenSPG relation labels such as `128` until they are mapped with documented semantics
 
 ## Framework-specific counting
 
@@ -54,8 +57,11 @@ Technical relations excluded from `relationships_count`:
 ### OpenSPG KAG
 
 - Reads Neo4j counts and labels directly from the running graph backend.
-- Uses Neo4j label counts for `Document`, `Chunk`, and `Entity`.
-- Uses Neo4j relationship types to separate semantic `Entity -> Entity` relations from technical links.
+- Uses `documents_count=1` for the current single-file benchmark input even if KAG does not materialize `Doc` or `Document` nodes.
+- Stores Neo4j `Doc` or `Document` materialization separately as `backend_document_nodes_count`.
+- Filters Neo4j nodes and relationships strictly to the namespace-specific database and labels of the current run.
+- Audits `SHOW FULLTEXT INDEXES` and `SHOW VECTOR INDEXES` after build, and provisions `_default_text_index` only for the current namespace database if schema-free build omitted it.
+- Uses only semantic `Entity -> Entity` relations for `connected_entities_count`, `connected_entities_ratio`, and `relationships_count`.
 
 ## Context capture
 

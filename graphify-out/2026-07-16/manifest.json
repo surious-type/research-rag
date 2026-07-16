@@ -4250,8 +4250,8 @@
     "semantic_hash": ""
   },
   "research_bench/frameworks.py": {
-    "mtime": 1784181468.339325,
-    "ast_hash": "7a1c5c6705ee7c6c947bd4cec7961e60",
+    "mtime": 1784185027.8709102,
+    "ast_hash": "7492f713c1322b314fdbeed1c1709caf",
     "semantic_hash": ""
   },
   "research_bench/metrics.py": {
@@ -4260,8 +4260,8 @@
     "semantic_hash": ""
   },
   "research_bench/models.py": {
-    "mtime": 1784180339.7632625,
-    "ast_hash": "d229af0dd7886a202d97529b3652f443",
+    "mtime": 1784184220.5957332,
+    "ast_hash": "a74583a756c7584d20faf5377a3e8c86",
     "semantic_hash": ""
   },
   "research_bench/parsers.py": {
@@ -4285,8 +4285,8 @@
     "semantic_hash": ""
   },
   "research_bench/workflow.py": {
-    "mtime": 1784180340.1472673,
-    "ast_hash": "9018e282f8bdf0e7a4de2016a925a418",
+    "mtime": 1784184221.1767404,
+    "ast_hash": "6019cdf70305c323398aafd7ee5e8a0b",
     "semantic_hash": ""
   },
   "scripts/kag/build.py": {
@@ -4295,8 +4295,8 @@
     "semantic_hash": ""
   },
   "tests/test_core.py": {
-    "mtime": 1784180584.2033296,
-    "ast_hash": "7315120b26edaa779fdf7cedae9ab34d",
+    "mtime": 1784185036.6110208,
+    "ast_hash": "ee40aa0e863cafc1efa69a46f187ad9f",
     "semantic_hash": ""
   },
   "README.md": {
@@ -4305,13 +4305,8 @@
     "semantic_hash": ""
   },
   "configs/kag/graph_config.template.yaml": {
-    "mtime": 1784181170.8146248,
-    "ast_hash": "f4e9c43a087516012c5c78058f61e2b4",
-    "semantic_hash": ""
-  },
-  "data/corpus/merged.txt": {
-    "mtime": 1784125654.254375,
-    "ast_hash": "326c85d03f748bf56150b45b0d7296c1",
+    "mtime": 1784184220.7897356,
+    "ast_hash": "a41a20cc3d192e493f434446eb8bbfc9",
     "semantic_hash": ""
   },
   "data/corpus/source.txt": {
@@ -4320,8 +4315,8 @@
     "semantic_hash": ""
   },
   "docs/metric_definitions.md": {
-    "mtime": 1784126641.4887922,
-    "ast_hash": "c6b24deef5088e7c3b7dda54121294a8",
+    "mtime": 1784184220.982738,
+    "ast_hash": "98d280e55f022ab8d60373aec8d2b348",
     "semantic_hash": ""
   },
   "frameworks/kag/.github/ISSUE_TEMPLATE/bug-report.yml": {
@@ -6052,6 +6047,11 @@
   "frameworks/kag/_static/images/star-kag.gif": {
     "mtime": 1783759077.3413818,
     "ast_hash": "df7adda0671779e9a3dbaa4355816278",
+    "semantic_hash": ""
+  },
+  "research_bench/_kag_registry/__init__.py": {
+    "mtime": 1784184531.022631,
+    "ast_hash": "fa2067d5841f3cf37b8a0b5019e0ecef",
     "semantic_hash": ""
   }
 }

@@ -17,6 +17,7 @@ TECHNICAL_NODE_LABELS = {
     "TextUnit",
 }
 TECHNICAL_REL_TYPES = {
+    "128",
     "HAS_CHUNK",
     "HAS_ENTITY",
     "HAS_RELATIONSHIP",
@@ -64,6 +65,8 @@ class GraphMetrics:
     entities_count: int | None = None
     relationships_count: int | None = None
     documents_count: int | None = None
+    input_documents_count: int | None = None
+    backend_document_nodes_count: int | None = None
     chunks_count: int | None = None
     communities_count: int | None = None
     isolated_entities_count: int | None = None
@@ -81,6 +84,8 @@ class GraphMetrics:
 class BuildMetrics:
     build_time_seconds: float | None
     documents_count: int | None
+    input_documents_count: int | None
+    backend_document_nodes_count: int | None
     chunks_count: int | None
     index_size_bytes: int | None
     build_status: str
@@ -126,6 +131,7 @@ class QueryAnswer:
     generation_time_seconds: float | None
     status: str
     error: str | None
+    retriever_errors: list[dict[str, Any]] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, Any]:
         payload = asdict(self)

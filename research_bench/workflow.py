@@ -263,8 +263,32 @@ def _run_ragas(run_dir: Path, answers: list[dict[str, Any]], limit: int | None =
         save_ragas_placeholder(ragas_dir, answers, "no answers available")
         return
 
-    answers_to_score = answers[:limit] if limit is not None else answers
+    eligible_answers = [row for row in answers if row.get("status") == "success" and row.get("contexts")]
+    answers_to_score = eligible_answers[:limit] if limit is not None else eligible_answers
     prepared = prepare_ragas_rows(answers_to_score)
+    score_rows_by_question: dict[str, dict[str, Any]] = {}
+    for answer_row in answers:
+        reason = None
+        if answer_row.get("status") == "degraded":
+            reason = "degraded answer is excluded from ragas"
+        elif answer_row.get("status") == "failed":
+            reason = "failed answer is excluded from ragas"
+        elif not answer_row.get("contexts"):
+            reason = "contextless answer is excluded from ragas"
+        elif answer_row not in answers_to_score:
+            reason = f"skipped after evaluating first {len(answers_to_score)} answer(s)"
+        score_rows_by_question[answer_row["question_id"]] = {
+            "question_id": answer_row["question_id"],
+            "faithfulness": None,
+            "answer_relevancy": None,
+            "context_precision": None,
+            "context_recall": None,
+            "error": reason,
+        }
+
+    if not prepared:
+        save_ragas_outputs(ragas_dir, list(score_rows_by_question.values()), answer_rows=answers)
+        return
     try:
         from ragas import evaluate
         from ragas.llms import LangchainLLMWrapper
@@ -303,31 +327,17 @@ def _run_ragas(run_dir: Path, answers: list[dict[str, Any]], limit: int | None =
     frame = result.to_pandas()
     rows = []
     for answer_row, ragas_row in zip(answers_to_score, frame.to_dict(orient="records"), strict=False):
-        rows.append(
-            {
-                "question_id": answer_row["question_id"],
-                "faithfulness": safe_float(ragas_row.get("faithfulness")),
-                "answer_relevancy": safe_float(ragas_row.get("answer_relevancy")),
-                "context_precision": safe_float(ragas_row.get("context_precision")),
-                "context_recall": safe_float(ragas_row.get("context_recall")),
-                "error": None,
-            }
-        )
-    skipped_ids = {row["question_id"] for row in answers_to_score}
+        score_rows_by_question[answer_row["question_id"]] = {
+            "question_id": answer_row["question_id"],
+            "faithfulness": safe_float(ragas_row.get("faithfulness")),
+            "answer_relevancy": safe_float(ragas_row.get("answer_relevancy")),
+            "context_precision": safe_float(ragas_row.get("context_precision")),
+            "context_recall": safe_float(ragas_row.get("context_recall")),
+            "error": None,
+        }
     for answer_row in answers:
-        if answer_row["question_id"] in skipped_ids:
-            continue
-        rows.append(
-            {
-                "question_id": answer_row["question_id"],
-                "faithfulness": None,
-                "answer_relevancy": None,
-                "context_precision": None,
-                "context_recall": None,
-                "error": f"skipped after evaluating first {len(answers_to_score)} answer(s)",
-            }
-        )
-    save_ragas_outputs(ragas_dir, rows)
+        rows.append(score_rows_by_question[answer_row["question_id"]])
+    save_ragas_outputs(ragas_dir, rows, answer_rows=answers)
 
 
 def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
@@ -368,6 +378,15 @@ def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
         if diagnostics.get("reporter_type") != "trace_log_reporter":
             status = "FAIL"
             issues.append("reporter_type is not trace_log_reporter")
+        if diagnostics.get("fulltext_index", {}).get("name") != "_default_text_index":
+            status = "FAIL"
+            issues.append("missing _default_text_index")
+        if diagnostics.get("fulltext_index", {}).get("state") != "ONLINE":
+            status = "FAIL"
+            issues.append("_default_text_index is not ONLINE")
+        if not diagnostics.get("vector_indexes_online"):
+            status = "FAIL"
+            issues.append("required vector indexes are not ONLINE")
     for row in answers:
         if row["status"] == "success" and not str(row.get("answer", "")).strip():
             status = "FAIL"
@@ -375,7 +394,12 @@ def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
         if row["status"] == "success" and not row.get("contexts"):
             status = "FAIL"
             issues.append(f"missing contexts for {row['question_id']}")
+        if row["status"] != "success":
+            status = "FAIL"
+            issues.append(f"query status is {row['status']} for {row['question_id']}")
     for metric_name, values in ragas_summary.items():
+        if metric_name in {"successful_retrieval_questions", "degraded_questions", "failed_questions", "retrieval_failure_rate"}:
+            continue
         for key in ("mean", "median"):
             value = values.get(key)
             if value is not None and not 0 <= value <= 1:
@@ -384,7 +408,8 @@ def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
         if values.get("valid_count", 0) + values.get("failed_count", 0) != len(answers):
             status = "FAIL"
             issues.append(f"inconsistent counts for {metric_name}")
-    if detected_smoke and not any(values.get("valid_count", 0) > 0 for values in ragas_summary.values()):
+    ragas_metric_names = ("faithfulness", "answer_relevancy", "context_precision", "context_recall")
+    if detected_smoke and not any(ragas_summary.get(metric, {}).get("valid_count", 0) > 0 for metric in ragas_metric_names):
         status = "FAIL"
         issues.append("smoke run has no valid ragas scores")
     if not graph:

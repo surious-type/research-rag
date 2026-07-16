@@ -120,7 +120,7 @@ def test_summarize_kag_namespace_graph_filters_namespace_and_technical_labels() 
         namespace="Kag123",
     )
     graph = parse_neo4j_summary(summary)
-    assert summary["documents_count"] == 1
+    assert summary["backend_document_nodes_count"] == 1
     assert summary["chunks_count"] == 1
     assert graph.entities_count == 2
     assert graph.relationships_count == 1
@@ -254,6 +254,29 @@ def test_normalize_kag_context_from_graph_trace() -> None:
     assert "WORKS_WITH" in contexts[0].text
 
 
+def test_normalize_kag_context_from_retriever_output_chunks_and_docs() -> None:
+    contexts = frameworks_mod._normalize_kag_context(
+        {
+            "decompose": [
+                {
+                    "chunks": [{"content": "Chunk ctx", "document_name": "source.txt", "document_id": "doc-1", "score": 0.7}],
+                    "docs": [{"content": "Doc ctx", "title": "source.txt"}],
+                }
+            ]
+        }
+    )
+    assert [item.text for item in contexts] == ["Chunk ctx", "Doc ctx"]
+
+
+def test_extract_kag_retriever_errors_and_degraded_classification() -> None:
+    trace = {"decompose": [{"retriever_method": "kg_fr_open_spg", "err_msg": "boom", "task": "Task<0>"}]}
+    errors = frameworks_mod._extract_kag_retriever_errors(trace)
+    status, error = frameworks_mod._classify_kag_query_answer("Atlas", [frameworks_mod.ContextItem(rank=1, text="ctx", source="doc")], errors, None)
+    assert errors == [{"retriever_method": "kg_fr_open_spg", "error": "boom", "task": "Task<0>"}]
+    assert status == "degraded"
+    assert "boom" in str(error)
+
+
 def test_prepare_ragas_rows() -> None:
     rows = prepare_ragas_rows(
         [
@@ -263,6 +286,7 @@ def test_prepare_ragas_rows() -> None:
                 "answer": "Answer",
                 "reference_answer": "Reference",
                 "contexts": [{"text": "Context"}],
+                "status": "success",
             }
         ]
     )
@@ -410,6 +434,45 @@ def test_verify_run_failure(tmp_path: Path, monkeypatch) -> None:
     )
     result = workflow_mod.verify_run(run_dir.name)
     assert result["status"] == "FAIL"
+
+
+def test_verify_run_allows_kag_without_backend_doc_nodes(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
+    run_dir = workflow_mod.RESULTS_DIR / "_smoke" / "kag_20260716_183542"
+    for part in ("build", "query", "ragas"):
+        (run_dir / part).mkdir(parents=True)
+    atomic_write_json(run_dir / "manifest.json", {"run_id": run_dir.name})
+    atomic_write_json(
+        run_dir / "build" / "metrics.json",
+        {"build_status": "success", "documents_count": 1, "input_documents_count": 1, "backend_document_nodes_count": 0, "chunks_count": 2},
+    )
+    atomic_write_json(run_dir / "build" / "graph_metrics.json", {"nodes_total": 3, "documents_count": 1, "backend_document_nodes_count": 0})
+    atomic_write_jsonl(
+        run_dir / "query" / "answers.jsonl",
+        [{"question_id": "smoke_q1", "status": "success", "answer": "Atlas", "contexts": [{"text": "ctx"}]}],
+    )
+    atomic_write_json(
+        run_dir / "query" / "diagnostics.json",
+        {
+            "selected_pipeline": "kag_solver_pipeline",
+            "resolved_retriever_types": ["kg_cs_open_spg", "kg_fr_open_spg", "rc_open_spg"],
+            "reporter_type": "trace_log_reporter",
+            "fulltext_index": {"name": "_default_text_index", "state": "ONLINE"},
+            "vector_indexes_online": True,
+        },
+    )
+    atomic_write_json(
+        run_dir / "ragas" / "summary.json",
+        {
+            "faithfulness": {"mean": 0.5, "median": 0.5, "valid_count": 1, "failed_count": 0},
+            "answer_relevancy": {"mean": 0.5, "median": 0.5, "valid_count": 1, "failed_count": 0},
+            "context_precision": {"mean": 0.5, "median": 0.5, "valid_count": 1, "failed_count": 0},
+            "context_recall": {"mean": 0.5, "median": 0.5, "valid_count": 1, "failed_count": 0},
+        },
+    )
+    monkeypatch.setattr(workflow_mod, "load_smoke_questions", lambda: [{"id": "smoke_q1"}])
+    result = workflow_mod.verify_run(run_dir.name)
+    assert result["status"] == "PASS"
 
 
 def test_build_report(tmp_path: Path, monkeypatch) -> None:
@@ -674,7 +737,19 @@ def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path,
     monkeypatch.setattr(adapter, "_create_project", lambda namespace, config_text: {"id": "31", "namespace": namespace})
     sync_calls: list[tuple[str, str]] = []
     monkeypatch.setattr(adapter, "_sync_project_config", lambda project_id, namespace, config_text: sync_calls.append((project_id, namespace)))
-    monkeypatch.setattr(adapter, "_neo4j_summary", lambda namespace, run_dir=None: {"nodes_total": 1, "documents_count": 1, "chunks_count": 1, "entity_rows": [], "relationship_rows": []})
+    monkeypatch.setattr(
+        adapter,
+        "_neo4j_summary",
+        lambda namespace, run_dir=None: {
+            "nodes_total": 1,
+            "documents_count": 0,
+            "backend_document_nodes_count": 0,
+            "chunks_count": 1,
+            "entity_rows": [],
+            "relationship_rows": [],
+            "communities_count": None,
+        },
+    )
     call: dict[str, Any] = {}
 
     def fake_run_command(*args, **kwargs):
@@ -685,9 +760,231 @@ def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path,
     monkeypatch.setattr(frameworks_mod, "run_command", fake_run_command)
     metrics, _ = adapter.build(source_path, run_dir)
     assert metrics.build_status == "success"
+    assert metrics.documents_count == 1
+    assert metrics.input_documents_count == 1
+    assert metrics.backend_document_nodes_count == 0
     assert call["cwd"] == run_dir
     assert (run_dir / "kag_config.yaml").exists()
     assert sync_calls == [("31", "Kag123456789012")]
+
+
+def test_required_vector_indexes_online_filters_namespace() -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    rows = [
+        {"name": "other", "state": "ONLINE", "labelsOrTypes": ["OtherNs.Person"], "properties": ["name"]},
+        {"name": "good", "state": "ONLINE", "labelsOrTypes": ["Kag123.Person"], "properties": ["name"]},
+    ]
+    assert adapter._required_vector_indexes_online(rows, {"Kag123.Person"}) is True
+    assert adapter._required_vector_indexes_online(rows[:1], {"Kag123.Person"}) is False
+
+
+def test_provision_default_text_index_uses_namespace_labels_only(tmp_path: Path, monkeypatch) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    run_dir = tmp_path / "run"
+    (run_dir / "build").mkdir(parents=True)
+    monkeypatch.setenv("KAG_NEO4J_DATABASE", "neo4j")
+
+    class FakeResult:
+        def consume(self):
+            return None
+
+    class FakeSession:
+        def __init__(self):
+            self.queries: list[str] = []
+
+        def run(self, query, **params):
+            self.queries.append(query)
+            if query == "SHOW FULLTEXT INDEXES":
+                return [type("Record", (), {"data": lambda self: {"name": "_default_text_index", "state": "ONLINE"}})()]
+            if "db.schema.nodeTypeProperties" in query:
+                rows = [
+                    {"nodeLabels": ["Kag123.Person"], "propertyName": "name", "propertyTypes": ["String"], "mandatory": False},
+                    {"nodeLabels": ["Other.Person"], "propertyName": "name", "propertyTypes": ["String"], "mandatory": False},
+                ]
+                return [type("Record", (), {"data": lambda self, row=row: row})() for row in rows]
+            if "RETURN labels(n) AS labels, properties(n) AS props" in query:
+                rows = [{"labels": ["Kag123.Person"], "props": {"name": "Atlas"}}]
+                return [type("Record", (), {"data": lambda self, row=row: row})() for row in rows]
+            return FakeResult()
+
+    session = FakeSession()
+    payload = adapter._provision_default_text_index(session, "Kag123", {"Kag123.Person"}, run_dir)
+    assert payload["method"] == "benchmark_post_build_provisioner"
+    ddl = payload["ddl"]
+    assert "Kag123.Person" in ddl
+    assert "Other.Person" not in ddl
+
+
+def test_registry_normalizes_json_string_task_arguments() -> None:
+    import research_bench._kag_registry as kag_registry
+
+    args, normalized, error = kag_registry._normalize_task_arguments('{"query":"Q","logic_form_node":{"type":"x"}}')
+    assert normalized is True
+    assert error is None
+    assert args["query"] == "Q"
+
+
+def test_registry_rejects_invalid_string_task_arguments() -> None:
+    import research_bench._kag_registry as kag_registry
+
+    args, normalized, error = kag_registry._normalize_task_arguments("not-json")
+    assert normalized is False
+    assert args == "not-json"
+    assert "not a JSON object" in str(error)
+
+
+def test_registry_normalize_ner_item_and_diag_helpers(tmp_path: Path, monkeypatch) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q001")
+    item, note = kag_registry._normalize_ner_item("Atlas")
+    assert item == {"name": "Atlas", "category": "Others", "official_name": "Atlas"}
+    assert "normalized plain-string" in str(note)
+    kag_registry._merge_diag({"kg_fr_arguments_type": "str"})
+    kag_registry._append_error_log("boom")
+    diag = json.loads((tmp_path / "query" / "_bench_diag" / "q001.json").read_text(encoding="utf-8"))
+    assert diag["kg_fr_arguments_type"] == "str"
+    assert "boom" in (tmp_path / "query" / "kg_fr_error.log").read_text(encoding="utf-8")
+
+
+def test_registry_compatibility_ner_invoke_normalizes_strings(monkeypatch) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setattr(kag_registry.Ner, "_parse_ner_list", lambda self, query: ["Atlas", {"name": "Orion-128", "category": "Works"}])
+    ner = object.__new__(kag_registry.BenchmarkCompatibilityNer)
+    result = kag_registry.BenchmarkCompatibilityNer.invoke(ner, "query")
+    assert [item.entity_name for item in result] == ["Atlas", "Orion-128"]
+
+
+def test_registry_compatibility_kg_fr_invoke_handles_invalid_arguments(monkeypatch, tmp_path: Path) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q001")
+    retriever = object.__new__(kag_registry.BenchmarkCompatibilityKgFrRetriever)
+    retriever._name = "kg_fr_open_spg"
+    task = type("Task", (), {"arguments": "not-json", "__str__": lambda self: "Task<0>"})()
+    output = kag_registry.BenchmarkCompatibilityKgFrRetriever.invoke(retriever, task)
+    assert output.err_msg
+    diag = json.loads((tmp_path / "query" / "_bench_diag" / "q001.json").read_text(encoding="utf-8"))
+    assert diag["kg_fr_arguments_type"] == "str"
+    assert diag["kg_fr_arguments_normalized"] is False
+
+
+def test_registry_compatibility_kg_fr_invoke_normalizes_json_and_calls_super(monkeypatch, tmp_path: Path) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q002")
+    captured: dict[str, Any] = {}
+
+    def fake_super(self, task, **kwargs):
+        captured["arguments"] = task.arguments
+        return type("Output", (), {"err_msg": "", "retriever_method": "kg_fr_open_spg"})()
+
+    monkeypatch.setattr(kag_registry.KgFreeRetrieverWithOpenSPGRetriever, "invoke", fake_super)
+    retriever = object.__new__(kag_registry.BenchmarkCompatibilityKgFrRetriever)
+    retriever._name = "kg_fr_open_spg"
+    task = type("Task", (), {"arguments": '{"query":"Q","logic_form_node":{"type":"x"}}', "__str__": lambda self: "Task<1>"})()
+    output = kag_registry.BenchmarkCompatibilityKgFrRetriever.invoke(retriever, task)
+    assert output.err_msg == ""
+    assert captured["arguments"]["query"] == "Q"
+    diag = json.loads((tmp_path / "query" / "_bench_diag" / "q002.json").read_text(encoding="utf-8"))
+    assert diag["kg_fr_arguments_normalized"] is True
+
+
+def test_registry_compatibility_kg_fr_invoke_logs_traceback_on_exception(monkeypatch, tmp_path: Path) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q003")
+
+    def fake_super(self, task, **kwargs):
+        raise AttributeError("'str' object has no attribute 'get'")
+
+    monkeypatch.setattr(kag_registry.KgFreeRetrieverWithOpenSPGRetriever, "invoke", fake_super)
+    retriever = object.__new__(kag_registry.BenchmarkCompatibilityKgFrRetriever)
+    retriever._name = "kg_fr_open_spg"
+    task = type("Task", (), {"arguments": {"query": "Q", "logic_form_node": {"type": "x"}}, "__str__": lambda self: "Task<2>"})()
+    try:
+        kag_registry.BenchmarkCompatibilityKgFrRetriever.invoke(retriever, task)
+    except AttributeError as exc:
+        assert "has no attribute 'get'" in str(exc)
+    else:
+        raise AssertionError("Expected retriever exception to be re-raised")
+    log_text = (tmp_path / "query" / "kg_fr_error.log").read_text(encoding="utf-8")
+    assert "AttributeError" in log_text
+
+
+def test_run_ragas_placeholder_when_no_answers(tmp_path: Path) -> None:
+    workflow_mod._run_ragas(tmp_path / "run" / "ragas_base", [])
+    summary = json.loads((tmp_path / "run" / "ragas_base" / "ragas" / "summary.json").read_text(encoding="utf-8"))
+    assert summary["failed_questions"] == 0
+
+
+def test_run_ragas_excludes_degraded_failed_and_contextless_answers(tmp_path: Path, monkeypatch) -> None:
+    captured: dict[str, Any] = {}
+
+    def fake_save(base_dir, rows, answer_rows=None):
+        captured["base_dir"] = base_dir
+        captured["rows"] = rows
+        captured["answer_rows"] = answer_rows
+
+    monkeypatch.setattr(workflow_mod, "save_ragas_outputs", fake_save)
+    workflow_mod._run_ragas(
+        tmp_path / "run",
+        [
+            {"question_id": "q1", "status": "degraded", "answer": "ok", "contexts": [{"text": "ctx"}]},
+            {"question_id": "q2", "status": "failed", "answer": "", "contexts": [{"text": "ctx"}]},
+            {"question_id": "q3", "status": "success", "answer": "ok", "contexts": []},
+        ],
+    )
+    assert len(captured["rows"]) == 3
+    assert all(row["faithfulness"] is None for row in captured["rows"])
+    assert {row["question_id"]: row["error"] for row in captured["rows"]} == {
+        "q1": "degraded answer is excluded from ragas",
+        "q2": "failed answer is excluded from ragas",
+        "q3": "contextless answer is excluded from ragas",
+    }
+
+
+def test_prepare_ragas_rows_skips_degraded_answers() -> None:
+    rows = prepare_ragas_rows(
+        [
+            {
+                "question_id": "q1",
+                "question": "What?",
+                "answer": "Answer",
+                "reference_answer": "Reference",
+                "contexts": [{"text": "Context"}],
+                "status": "degraded",
+            },
+            {
+                "question_id": "q2",
+                "question": "What?",
+                "answer": "Answer",
+                "reference_answer": "Reference",
+                "contexts": [{"text": "Context"}],
+                "status": "success",
+            },
+        ]
+    )
+    assert [row["question_id"] for row in rows] == ["q2"]
+
+
+def test_normalize_graph_metrics_excludes_numeric_relation_without_rules() -> None:
+    graph = normalize_graph_metrics(
+        nodes_total=2,
+        edges_total=1,
+        documents_count=1,
+        chunks_count=0,
+        communities_count=None,
+        entity_rows=[{"type": "Works", "degree": 1}, {"type": "Others", "degree": 1}],
+        relationship_rows=[{"type": "128", "source_type": "Works", "target_type": "Others"}],
+    )
+    assert graph.relationships_count == 0
+    assert "excluded_numeric_relationship_types" in graph.notes
 
 
 def test_sync_project_config_updates_server_with_real_project_id(monkeypatch) -> None:
