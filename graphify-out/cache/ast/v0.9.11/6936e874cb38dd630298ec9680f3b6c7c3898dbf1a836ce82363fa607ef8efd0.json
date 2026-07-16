@@ -1,1 +1,0 @@
-{"nodes": [{"id": "pkg_baidu_map_mcp_server", "label": "baidu-map-mcp-server", "file_type": "code", "type": "package", "ecosystem": "python", "source_file": "frameworks/kag/kag/examples/baidu_map_mcp/pyproject.toml", "source_location": "L1", "version": "0.1.0"}], "edges": []}
