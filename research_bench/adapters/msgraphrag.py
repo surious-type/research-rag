@@ -62,6 +62,11 @@ class MsGraphRAGAdapter:
             env=_dummy_env(),
             stdout_path=run_dir / "build" / "stdout.log",
             stderr_path=run_dir / "build" / "stderr.log",
+            progress_run_dir=run_dir,
+            progress_stage="build",
+            progress_framework=self.name,
+            progress_run_id=run_dir.name,
+            process_name="graphrag index",
         )
         duration = time.perf_counter() - started
         output_dir = project_dir / "output"

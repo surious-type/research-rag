@@ -975,6 +975,11 @@ class KAGAdapter:
             env=self._py_env(),
             stdout_path=run_dir / "build" / "stdout.log",
             stderr_path=run_dir / "build" / "stderr.log",
+            progress_run_dir=run_dir,
+            progress_stage="build",
+            progress_framework=self.name,
+            progress_run_id=run_dir.name,
+            process_name="kag build",
         )
         duration = time.perf_counter() - started
         metrics = BuildMetrics(
