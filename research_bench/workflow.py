@@ -26,6 +26,7 @@ from .data import (
     RESULTS_DIR,
     SOURCE_PATH,
     SMOKE_SOURCE_PATH,
+    SMOKE_QUESTIONS_PATH,
     canonical_source_path,
     load_questions,
     load_smoke_questions,
@@ -37,6 +38,7 @@ from .models import CheckResult
 from .ragas_eval import prepare_ragas_rows, save_ragas_outputs, save_ragas_placeholder
 from .workflows import checks as checks_mod
 from .workflows import ragas_verification as ragas_mod
+from .workflows import run_stages as run_stages_mod
 from .utils import (
     atomic_write_json,
     atomic_write_jsonl,
@@ -117,53 +119,65 @@ def format_checks(rows: list[CheckResult]) -> str:
 
 
 def create_run_dir(framework: str, smoke: bool = False) -> tuple[str, Path]:
-    root = RESULTS_DIR / "_smoke" if smoke else RESULTS_DIR
-    ensure_dir(root)
-    run_id = utc_run_id(framework, existing=[item.name for item in root.iterdir() if item.is_dir()])
-    run_dir = root / run_id
-    for part in ("build", "query", "ragas"):
-        ensure_dir(run_dir / part)
-    return run_id, run_dir
+    return run_stages_mod.create_run_dir(
+        results_dir=RESULTS_DIR,
+        framework=framework,
+        smoke=smoke,
+        ensure_dir_fn=ensure_dir,
+        utc_run_id_fn=utc_run_id,
+    )
 
 
 def _resolve_run_inputs(smoke: bool) -> tuple[Path, list[dict[str, Any]]]:
-    source_path = SMOKE_SOURCE_PATH if smoke else ensure_source_txt()
-    question_rows = load_smoke_questions() if smoke else [row.payload for row in load_questions()]
-    return source_path, question_rows
+    return run_stages_mod.resolve_run_inputs(
+        smoke=smoke,
+        smoke_source_path=SMOKE_SOURCE_PATH,
+        ensure_source_txt_fn=ensure_source_txt,
+        load_smoke_questions_fn=load_smoke_questions,
+        load_questions_fn=load_questions,
+    )
 
 
 def _build_manifest(run_id: str, framework: str, smoke: bool, source_path: Path) -> dict[str, Any]:
-    return {
-        "run_id": run_id,
-        "framework": framework,
-        "smoke": smoke,
-        "source": load_source_info(source_path).to_dict(),
-        "questions_path": str(QUESTIONS_PATH),
-        "questions_sha256": sha256_file(
-            QUESTIONS_PATH if not smoke else Path("output/smoke_tests/data/smoke_questions.json")
-        ),
-    }
+    return run_stages_mod.build_manifest(
+        run_id=run_id,
+        framework=framework,
+        smoke=smoke,
+        source_path=source_path,
+        questions_path=QUESTIONS_PATH,
+        smoke_questions_path=SMOKE_QUESTIONS_PATH,
+        load_source_info_fn=load_source_info,
+        sha256_file_fn=sha256_file,
+    )
 
 
 def _write_build_artifacts(run_dir: Path, build_metrics: Any, graph_metrics: dict[str, Any]) -> None:
-    atomic_write_json(run_dir / "build" / "metrics.json", build_metrics.to_dict())
-    atomic_write_json(run_dir / "build" / "graph_metrics.json", graph_metrics)
+    run_stages_mod.write_build_artifacts(
+        run_dir,
+        build_metrics,
+        graph_metrics,
+        atomic_write_json_fn=atomic_write_json,
+    )
 
 
 def _run_build_stage(adapter: Any, source_path: Path, run_dir: Path) -> tuple[Any, dict[str, Any]]:
-    build_metrics, graph_metrics = adapter.build(source_path, run_dir)
-    _write_build_artifacts(run_dir, build_metrics, graph_metrics)
-    if build_metrics.build_status != "success":
-        atomic_write_json(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "build"})
-        raise RuntimeError(build_metrics.build_error or "build failed")
-    return build_metrics, graph_metrics
+    return run_stages_mod.run_build_stage(
+        adapter,
+        source_path,
+        run_dir,
+        write_build_artifacts_fn=_write_build_artifacts,
+        atomic_write_json_fn=atomic_write_json,
+    )
 
 
 def _write_query_artifacts(run_dir: Path, answers: list[dict[str, Any]]) -> None:
-    atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
-    atomic_write_json(
-        run_dir / "query" / "metrics.json",
-        latency_summary([safe_float(row.get("latency_seconds")) for row in answers]),
+    run_stages_mod.write_query_artifacts(
+        run_dir,
+        answers,
+        atomic_write_json_fn=atomic_write_json,
+        atomic_write_jsonl_fn=atomic_write_jsonl,
+        latency_summary_fn=latency_summary,
+        safe_float_fn=safe_float,
     )
 
 
@@ -173,55 +187,63 @@ def _run_query_stage(
     run_dir: Path,
     question_rows: list[dict[str, Any]],
 ) -> list[dict[str, Any]]:
-    try:
-        answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
-    except Exception as exc:
-        atomic_write_json(
-            run_dir / "verification.json",
-            {"status": "FAIL", "failed_stage": "query", "error": str(exc)},
-        )
-        raise
-    _write_query_artifacts(run_dir, answers)
-    return answers
+    return run_stages_mod.run_query_stage(
+        adapter,
+        run_id,
+        run_dir,
+        question_rows,
+        write_query_artifacts_fn=_write_query_artifacts,
+        atomic_write_json_fn=atomic_write_json,
+    )
 
 
 def _finalize_run(run_id: str, run_dir: Path, smoke: bool, answers: list[dict[str, Any]]) -> None:
-    _run_ragas(run_dir, answers, limit=1 if smoke else None)
-    verification = verify_run(run_id, smoke=smoke)
-    atomic_write_json(run_dir / "verification.json", verification)
+    run_stages_mod.finalize_run(
+        run_id,
+        run_dir,
+        smoke,
+        answers,
+        run_ragas_fn=_run_ragas,
+        verify_run_fn=verify_run,
+        atomic_write_json_fn=atomic_write_json,
+    )
 
 
 def execute_run(framework: str, smoke: bool = False) -> tuple[str, Path]:
-    checks = check_environment()
-    if any(row.status == "FAIL" for row in checks):
-        raise RuntimeError(format_checks(checks))
-
-    run_id, run_dir = create_run_dir(framework, smoke=smoke)
-    source_path, question_rows = _resolve_run_inputs(smoke)
-    adapter = get_adapter(framework)
-
-    manifest = _build_manifest(run_id, framework, smoke, source_path)
-    atomic_write_json(run_dir / "manifest.json", manifest)
-    _run_build_stage(adapter, source_path, run_dir)
-    answers = _run_query_stage(adapter, run_id, run_dir, question_rows)
-    _finalize_run(run_id, run_dir, smoke, answers)
-    return run_id, run_dir
+    return run_stages_mod.execute_run(
+        framework,
+        smoke=smoke,
+        check_environment_fn=check_environment,
+        format_checks_fn=format_checks,
+        create_run_dir_fn=create_run_dir,
+        resolve_run_inputs_fn=_resolve_run_inputs,
+        get_adapter_fn=get_adapter,
+        build_manifest_fn=_build_manifest,
+        atomic_write_json_fn=atomic_write_json,
+        run_build_stage_fn=_run_build_stage,
+        run_query_stage_fn=_run_query_stage,
+        finalize_run_fn=_finalize_run,
+    )
 
 
 def rerun_query_stage(run_id: str) -> Path:
-    run_dir, smoke = find_run_dir(run_id)
-    manifest = load_json(run_dir / "manifest.json")
-    adapter = get_adapter(manifest["framework"])
-    _, question_rows = _resolve_run_inputs(smoke)
-    _run_query_stage(adapter, run_id, run_dir, question_rows)
-    return run_dir
+    return run_stages_mod.rerun_query_stage(
+        run_id,
+        find_run_dir_fn=find_run_dir,
+        load_json_fn=load_json,
+        get_adapter_fn=get_adapter,
+        resolve_run_inputs_fn=_resolve_run_inputs,
+        run_query_stage_fn=_run_query_stage,
+    )
 
 
 def rerun_ragas_stage(run_id: str, limit: int | None = None) -> Path:
-    run_dir, _ = find_run_dir(run_id)
-    answers = [json.loads(line) for line in (run_dir / "query" / "answers.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
-    _run_ragas(run_dir, answers, limit=limit)
-    return run_dir
+    return run_stages_mod.rerun_ragas_stage(
+        run_id,
+        limit=limit,
+        find_run_dir_fn=find_run_dir,
+        run_ragas_fn=_run_ragas,
+    )
 
 
 def _run_ragas(run_dir: Path, answers: list[dict[str, Any]], limit: int | None = None) -> None:
