@@ -21,3 +21,4 @@ rag_storage/
 data/questions/questions.jsonl
 /data/corpus/
 graphify-out
+.codex
