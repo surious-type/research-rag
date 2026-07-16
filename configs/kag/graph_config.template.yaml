@@ -1,80 +1,178 @@
+openie_llm: &openie_llm
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8080/v1
+  model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+  temperature: 0
+  max_tokens: 2048
+  enable_check: false
+
+chat_llm: &chat_llm
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8080/v1
+  model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+  temperature: 0
+  max_tokens: 2048
+  enable_check: false
+
+vectorize_model: &vectorize_model
+  type: openai
+  api_key: local
+  base_url: http://127.0.0.1:8010/v1
+  model: multilingual-e5-large
+  vector_dimensions: 1024
+  enable_check: false
+
+vectorizer: *vectorize_model
+
+log:
+  level: INFO
+
 project:
-  namespace: __PROJECT_NAMESPACE__
-  host_addr: http://127.0.0.1:8887
-  id: __PROJECT_ID__
-  language: en
   biz_scene: default
+  host_addr: http://127.0.0.1:8887
+  id: "__PROJECT_ID__"
+  language: en
+  namespace: __PROJECT_NAMESPACE__
   ckpt_dir: __CKPT_DIR__
-chat_llm:
-  type: openai
-  api_key: local
-  base_url: http://127.0.0.1:8080/v1
-  model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
-  temperature: 0
-  max_tokens: 2048
-  enable_check: false
-llm:
-  type: openai
-  api_key: local
-  base_url: http://127.0.0.1:8080/v1
-  model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
-  temperature: 0
-  max_tokens: 2048
-  enable_check: false
-vectorizer:
-  type: openai
-  api_key: local
-  base_url: http://127.0.0.1:8010/v1
-  model: multilingual-e5-large
-  vector_dimensions: 1024
-  enable_check: false
-vectorize_model:
-  type: openai
-  api_key: local
-  base_url: http://127.0.0.1:8010/v1
-  model: multilingual-e5-large
-  vector_dimensions: 1024
-  enable_check: false
+
+search_api: &search_api
+  type: openspg_search_api
+
+graph_api: &graph_api
+  type: openspg_graph_api
+
+kg_cs: &kg_cs
+  type: kg_cs_open_spg
+  priority: 0
+  path_select:
+    type: exact_one_hop_select
+    graph_api: *graph_api
+    search_api: *search_api
+  entity_linking:
+    type: entity_linking
+    graph_api: *graph_api
+    search_api: *search_api
+    recognition_threshold: 0.9
+    exclude_types:
+      - Chunk
+      - AtomicQuery
+      - KnowledgeUnit
+      - Summary
+      - Outline
+      - Doc
+
+kg_fr: &kg_fr
+  type: kg_fr_open_spg
+  top_k: 10
+  graph_api: *graph_api
+  search_api: *search_api
+  vectorize_model: *vectorize_model
+  path_select:
+    type: fuzzy_one_hop_select
+    llm_client: *openie_llm
+    graph_api: *graph_api
+    search_api: *search_api
+  ppr_chunk_retriever_tool:
+    type: ppr_chunk_retriever
+    llm_client: *chat_llm
+    graph_api: *graph_api
+    search_api: *search_api
+  entity_linking:
+    type: entity_linking
+    graph_api: *graph_api
+    search_api: *search_api
+    recognition_threshold: 0.8
+    exclude_types:
+      - Chunk
+      - AtomicQuery
+      - KnowledgeUnit
+      - Summary
+      - Outline
+      - Doc
+
+rc: &rc
+  type: rc_open_spg
+  vector_chunk_retriever:
+    type: vector_chunk_retriever
+    vectorize_model: *vectorize_model
+    score_threshold: 0.65
+    search_api: *search_api
+  graph_api: *graph_api
+  search_api: *search_api
+  vectorize_model: *vectorize_model
+  top_k: 10
+
+kag_hybrid_executor: &kag_hybrid_executor_conf
+  type: kag_hybrid_retrieval_executor
+  retrievers:
+    - *kg_cs
+    - *kg_fr
+    - *rc
+  merger:
+    type: kag_merger
+  enable_summary: true
+
+kag_output_executor: &kag_output_executor_conf
+  type: kag_output_executor
+  llm_module: *chat_llm
+
+kag_deduce_executor: &kag_deduce_executor_conf
+  type: kag_deduce_executor
+  llm_module: *chat_llm
+
+py_code_based_math_executor: &py_code_based_math_executor_conf
+  type: py_code_based_math_executor
+  llm: *chat_llm
+
+kag_solver_pipeline:
+  type: kag_static_pipeline
+  planner:
+    type: lf_kag_static_planner
+    llm: *chat_llm
+    plan_prompt:
+      type: default_lf_static_planning
+    rewrite_prompt:
+      type: default_rewrite_sub_task_query
+  executors:
+    - *kag_hybrid_executor_conf
+    - *py_code_based_math_executor_conf
+    - *kag_deduce_executor_conf
+    - *kag_output_executor_conf
+  generator:
+    type: llm_index_generator
+    llm_client: *chat_llm
+    generated_prompt:
+      type: default_refer_generator_prompt
+    enable_ref: true
+
 kag_builder_pipeline:
-  type: stream
-  num_chains: 1
   num_threads_per_chain: 1
-  register_path: ./configs/kag/register_pkg
+  num_chains: 1
   scanner:
-    type: file
+    type: file_scanner
   chain:
-    type: unstructured
+    type: unstructured_builder_chain
     reader:
-      type: txt
+      type: txt_reader
     splitter:
-      type: length
+      type: length_splitter
       split_length: 500
       window_length: 50
     extractor:
-      type: schema_constraint_extractor
-      llm:
-        type: openai
-        api_key: local
-        base_url: http://127.0.0.1:8080/v1
-        model: /models/Qwen3.5-35B-A3B-Q4_K_M.gguf
-        temperature: 0
-        max_tokens: 2048
-        enable_check: false
+      type: schema_free_extractor
+      llm: *openie_llm
       ner_prompt:
-        type: spg_entity
+        type: default_ner
       std_prompt:
         type: default_std
       triple_prompt:
-        type: spg_relation
+        type: default_triple
+    post_processor:
+      type: kag_post_processor
     vectorizer:
-      type: batch
-      vectorize_model:
-        type: openai
-        api_key: local
-        base_url: http://127.0.0.1:8010/v1
-        model: multilingual-e5-large
-        vector_dimensions: 1024
-        enable_check: false
-      batch_size: 8
+      type: batch_vectorizer
+      vectorize_model: *vectorize_model
     writer:
-      type: kg
+      type: kg_writer

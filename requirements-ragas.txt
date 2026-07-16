@@ -1,0 +1,7 @@
+ragas==0.2.15
+langchain-openai==0.3.29
+datasets==4.0.0
+neo4j==5.28.1
+pytest==8.4.1
+pytest-cov==6.2.1
+matplotlib==3.10.5

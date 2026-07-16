@@ -1,0 +1,1291 @@
+{
+  "nodes": [
+    {
+      "id": "_codex_skills_graphify_skill_graphify",
+      "label": "graphify Skill",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_skill_fast_path_existing_graph",
+      "label": "Fast Path Existing Graph",
+      "file_type": "rationale",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "When graphify-out/graph.json already exists and the user is asking a codebase question, the workflow should skip rebuild steps and run graph traversal directly for speed and scope control."
+    },
+    {
+      "id": "_codex_skills_graphify_references_add_watch_add_watch",
+      "label": "Add URL and Watch Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/add-watch.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_exports_exports",
+      "label": "Exports Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/exports.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_extraction_spec_extraction_subagent_prompt",
+      "label": "Extraction Subagent Prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/extraction-spec.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_github_and_merge_github_merge",
+      "label": "GitHub Clone and Merge Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/github-and-merge.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_hooks_hooks",
+      "label": "Hooks and CLAUDE Integration Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/hooks.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_query_query",
+      "label": "Query Path Explain Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/query.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_query_query_vocab_expansion",
+      "label": "Vocabulary-Constrained Query Expansion",
+      "file_type": "rationale",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/query.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "Traversal should expand user questions only with tokens already present in graph vocabulary so search remains auditable and grounded in corpus labels."
+    },
+    {
+      "id": "_codex_skills_graphify_references_transcribe_transcribe",
+      "label": "Transcribe Video and Audio Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/transcribe.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "_codex_skills_graphify_references_update_incremental_update",
+      "label": "Incremental Update Reference",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/update.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "agents_graphify_policy",
+      "label": "Project Graphify Policy",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/AGENTS.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "data_corpus_d0_source_cad_manual",
+      "label": "CAD Manual Baseline",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D0/source.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "data_corpus_d1_add_source_cad_manual_update",
+      "label": "CAD Manual Added Revision",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D1_add/source.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "data_corpus_d2_edit_source_cad_manual_edit",
+      "label": "CAD Manual Edited Revision",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D2_edit/source.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "data_corpus_d3_delete_source_cad_manual_delete",
+      "label": "CAD Manual Deletion Revision",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D3_delete/source.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_kag_docker_compose_west_kag_stack",
+      "label": "KAG Docker Compose Stack",
+      "file_type": "code",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/kag/docker-compose-west.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_lightrag_docker_compose_lightrag_stack",
+      "label": "LightRAG Docker Compose Stack",
+      "file_type": "code",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/lightrag/docker-compose.yml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_input_d0_cad_manual",
+      "label": "MSGraphRAG CAD Input",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/input/D0.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_basic_search_system_prompt_basic_search_prompt",
+      "label": "Basic Search System Prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/basic_search_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_basic_search_system_prompt_grounded_answering",
+      "label": "Grounded Table-Based Answering",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/basic_search_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_community_report_graph_document",
+      "label": "community_report_graph prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_graph.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_community_report_graph_cad_domain_prompting",
+      "label": "CAD-domain community report prompting",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_graph.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt specializes community reporting for Russian-language CAD documentation, emphasizing UI, navigation, parameters, and workflow grounding."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_community_report_text_document",
+      "label": "community_report_text prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_text.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_community_report_text_community_report_generation",
+      "label": "Community report generation",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_text.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt defines a JSON report with title, summary, rating, findings, and date range, grounded in entities, relationships, claims, and source dates."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_drift_reduce_prompt_document",
+      "label": "drift_reduce_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_reduce_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_drift_reduce_prompt_grounded_report_summarization",
+      "label": "Grounded report summarization",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_reduce_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt reduces multiple reports into a grounded markdown answer with references, score, and follow-up queries."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_drift_search_system_prompt_document",
+      "label": "drift_search_system_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_search_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_drift_search_system_prompt_report_qa",
+      "label": "Report-grounded question answering",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_search_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt answers user questions from provided reports, preserving citations and optionally separating unsupported general knowledge."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_extract_claims_document",
+      "label": "extract_claims prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/extract_claims.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_extract_claims_claim_extraction",
+      "label": "Claim extraction",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/extract_claims.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt extracts subject-object claims with type, status, dates, descriptions, and supporting source text."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_extract_graph_document",
+      "label": "extract_graph prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/extract_graph.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction",
+      "label": "CAD entity and relationship extraction",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/extract_graph.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt extracts Russian CAD entities and typed relationships covering windows, ribbons, parameters, documents, objects, and operations."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_document",
+      "label": "global_search_knowledge_system_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_knowledge_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_verified_external_knowledge",
+      "label": "Verified external knowledge annotation",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_knowledge_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt requires any real-world knowledge beyond the dataset to be explicitly tagged with [LLM: verify]."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_global_search_map_system_prompt_document",
+      "label": "global_search_map_system_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_map_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_global_search_map_system_prompt_ranked_key_points",
+      "label": "Ranked key-point mapping",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_map_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The prompt maps data tables into JSON key points with importance scores and preserved modal verbs."
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_global_search_reduce_system_prompt_document",
+      "label": "global_search_reduce_system_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_reduce_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_local_search_system_prompt_document",
+      "label": "local_search_system_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/local_search_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_question_gen_system_prompt_document",
+      "label": "question_gen_system_prompt prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/question_gen_system_prompt.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_prompts_summarize_descriptions_document",
+      "label": "summarize_descriptions prompt",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/summarize_descriptions.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_settings_document",
+      "label": "msgraphrag settings",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "frameworks_msgraphrag_settings_default_completion_model",
+      "label": "Default completion model",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The configuration routes completion calls to a local OpenAI-compatible endpoint at 127.0.0.1:8080 using a Qwen GGUF model."
+    },
+    {
+      "id": "frameworks_msgraphrag_settings_default_embedding_model",
+      "label": "Default embedding model",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The configuration routes embedding calls to a local OpenAI-compatible endpoint at 127.0.0.1:8010 using multilingual-e5-large."
+    },
+    {
+      "id": "frameworks_msgraphrag_settings_graphrag_workflow_configuration",
+      "label": "GraphRAG workflow configuration",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The file configures chunking, storage, extraction, summarization, community reports, and local/global/drift/basic query pipelines."
+    },
+    {
+      "id": "models_embeddings_multilingual_e5_large_readme_document",
+      "label": "multilingual-e5-large README",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/models/embeddings/multilingual-e5-large/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "models_embeddings_multilingual_e5_large_readme_multilingual_e5_large",
+      "label": "multilingual-e5-large embedding model",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/models/embeddings/multilingual-e5-large/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The README identifies multilingual-e5-large as a multilingual sentence-transformer style embedding model with MTEB evaluation results."
+    },
+    {
+      "id": "output_debug_preflight_extraction_response_document",
+      "label": "preflight extraction response",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/output/debug/preflight/extraction_response.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "output_debug_preflight_extraction_response_rag_orchestrator_graph",
+      "label": "RAG orchestrator graph fragment",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/output/debug/preflight/extraction_response.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The debug output contains extracted entities and relationships for a RAG system including an orchestrator, tool layer, validation module, database, API, and document generator."
+    },
+    {
+      "id": "services_embeddings_readme_document",
+      "label": "embedding service README",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_embeddings_readme_embedding_service",
+      "label": "OpenAI-compatible embedding service",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/README.md",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The README defines a local embeddings service with /v1/embeddings, E5 query/passage prefix handling, CPU execution, 512-token max length, and normalized outputs."
+    },
+    {
+      "id": "services_embeddings_requirements_document",
+      "label": "embedding service requirements",
+      "file_type": "document",
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/requirements.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null
+    },
+    {
+      "id": "services_embeddings_requirements_runtime_dependencies",
+      "label": "Embedding service runtime dependencies",
+      "file_type": "concept",
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/requirements.txt",
+      "source_location": null,
+      "source_url": null,
+      "captured_at": null,
+      "author": null,
+      "contributor": null,
+      "rationale": "The requirements file declares the FastAPI, orjson, transformers, and uvicorn packages needed to run the local embedding service."
+    }
+  ],
+  "edges": [
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_skill_fast_path_existing_graph",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_references_github_and_merge_github_merge",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_references_transcribe_transcribe",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_references_extraction_spec_extraction_subagent_prompt",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_references_query_query",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_references_update_incremental_update",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_skill_graphify",
+      "target": "_codex_skills_graphify_references_exports_exports",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_graphify_policy",
+      "target": "_codex_skills_graphify_skill_graphify",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_graphify_policy",
+      "target": "_codex_skills_graphify_references_query_query",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "agents_graphify_policy",
+      "target": "_codex_skills_graphify_references_update_incremental_update",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/AGENTS.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_references_query_query",
+      "target": "_codex_skills_graphify_references_query_query_vocab_expansion",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/query.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_references_hooks_hooks",
+      "target": "agents_graphify_policy",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/hooks.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_references_extraction_spec_extraction_subagent_prompt",
+      "target": "frameworks_msgraphrag_prompts_basic_search_system_prompt_basic_search_prompt",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/extraction-spec.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "_codex_skills_graphify_references_query_query_vocab_expansion",
+      "target": "frameworks_msgraphrag_prompts_basic_search_system_prompt_grounded_answering",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/references/query.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_basic_search_system_prompt_basic_search_prompt",
+      "target": "frameworks_msgraphrag_prompts_basic_search_system_prompt_grounded_answering",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/basic_search_system_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "data_corpus_d1_add_source_cad_manual_update",
+      "target": "data_corpus_d0_source_cad_manual",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D1_add/source.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "data_corpus_d2_edit_source_cad_manual_edit",
+      "target": "data_corpus_d0_source_cad_manual",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D2_edit/source.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "data_corpus_d3_delete_source_cad_manual_delete",
+      "target": "data_corpus_d0_source_cad_manual",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D3_delete/source.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "data_corpus_d1_add_source_cad_manual_update",
+      "target": "data_corpus_d2_edit_source_cad_manual_edit",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D1_add/source.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_input_d0_cad_manual",
+      "target": "data_corpus_d0_source_cad_manual",
+      "relation": "shares_data_with",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/input/D0.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_kag_docker_compose_west_kag_stack",
+      "target": "frameworks_lightrag_docker_compose_lightrag_stack",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/kag/docker-compose-west.yml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_kag_docker_compose_west_kag_stack",
+      "target": "frameworks_msgraphrag_input_d0_cad_manual",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.55,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/kag/docker-compose-west.yml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_lightrag_docker_compose_lightrag_stack",
+      "target": "frameworks_msgraphrag_input_d0_cad_manual",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.55,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/lightrag/docker-compose.yml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_community_report_graph_document",
+      "target": "frameworks_msgraphrag_prompts_community_report_graph_cad_domain_prompting",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_graph.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_community_report_text_document",
+      "target": "frameworks_msgraphrag_prompts_community_report_text_community_report_generation",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_text.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_drift_reduce_prompt_document",
+      "target": "frameworks_msgraphrag_prompts_drift_reduce_prompt_grounded_report_summarization",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_reduce_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_drift_search_system_prompt_document",
+      "target": "frameworks_msgraphrag_prompts_drift_search_system_prompt_report_qa",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_search_system_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_extract_claims_document",
+      "target": "frameworks_msgraphrag_prompts_extract_claims_claim_extraction",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/extract_claims.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_extract_graph_document",
+      "target": "frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/extract_graph.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_document",
+      "target": "frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_verified_external_knowledge",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_knowledge_system_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_global_search_map_system_prompt_document",
+      "target": "frameworks_msgraphrag_prompts_global_search_map_system_prompt_ranked_key_points",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/global_search_map_system_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_settings_default_completion_model",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_settings_default_embedding_model",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_settings_graphrag_workflow_configuration",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_extract_graph_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_summarize_descriptions_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_extract_claims_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_community_report_graph_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_community_report_text_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_local_search_system_prompt_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_global_search_map_system_prompt_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_global_search_reduce_system_prompt_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_drift_search_system_prompt_document",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_document",
+      "target": "frameworks_msgraphrag_prompts_drift_reduce_prompt_document",
+      "relation": "references",
+      "confidence": "AMBIGUOUS",
+      "confidence_score": 0.2,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_default_embedding_model",
+      "target": "models_embeddings_multilingual_e5_large_readme_multilingual_e5_large",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "services_embeddings_readme_document",
+      "target": "services_embeddings_readme_embedding_service",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "services_embeddings_requirements_document",
+      "target": "services_embeddings_requirements_runtime_dependencies",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/requirements.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "models_embeddings_multilingual_e5_large_readme_document",
+      "target": "models_embeddings_multilingual_e5_large_readme_multilingual_e5_large",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/models/embeddings/multilingual-e5-large/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "output_debug_preflight_extraction_response_document",
+      "target": "output_debug_preflight_extraction_response_rag_orchestrator_graph",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/output/debug/preflight/extraction_response.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "services_embeddings_readme_embedding_service",
+      "target": "models_embeddings_multilingual_e5_large_readme_multilingual_e5_large",
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/README.md",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "services_embeddings_requirements_runtime_dependencies",
+      "target": "services_embeddings_readme_embedding_service",
+      "relation": "implements",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/requirements.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_settings_default_embedding_model",
+      "target": "services_embeddings_readme_embedding_service",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction",
+      "target": "output_debug_preflight_extraction_response_rag_orchestrator_graph",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/home/surious-type/projects/research-rag/output/debug/preflight/extraction_response.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_community_report_graph_cad_domain_prompting",
+      "target": "frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_graph.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_drift_search_system_prompt_report_qa",
+      "target": "frameworks_msgraphrag_prompts_local_search_system_prompt_document",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_search_system_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_drift_reduce_prompt_grounded_report_summarization",
+      "target": "frameworks_msgraphrag_prompts_global_search_reduce_system_prompt_document",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/drift_reduce_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_community_report_text_community_report_generation",
+      "target": "frameworks_msgraphrag_prompts_global_search_reduce_system_prompt_document",
+      "relation": "semantically_similar_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/community_report_text.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_question_gen_system_prompt_document",
+      "target": "frameworks_msgraphrag_prompts_drift_search_system_prompt_report_qa",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.65,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/question_gen_system_prompt.txt",
+      "source_location": null,
+      "weight": 1.0
+    },
+    {
+      "source": "frameworks_msgraphrag_prompts_summarize_descriptions_document",
+      "target": "frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction",
+      "relation": "conceptually_related_to",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/prompts/summarize_descriptions.txt",
+      "source_location": null,
+      "weight": 1.0
+    }
+  ],
+  "hyperedges": [
+    {
+      "id": "graphify_operational_guides",
+      "label": "Graphify Operational Guides",
+      "nodes": [
+        "_codex_skills_graphify_skill_graphify",
+        "_codex_skills_graphify_references_query_query",
+        "_codex_skills_graphify_references_update_incremental_update",
+        "_codex_skills_graphify_references_transcribe_transcribe"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/home/surious-type/projects/research-rag/.codex/skills/graphify/SKILL.md"
+    },
+    {
+      "id": "cad_manual_variants",
+      "label": "CAD Manual Variant Corpus",
+      "nodes": [
+        "data_corpus_d0_source_cad_manual",
+        "data_corpus_d1_add_source_cad_manual_update",
+        "data_corpus_d2_edit_source_cad_manual_edit",
+        "data_corpus_d3_delete_source_cad_manual_delete",
+        "frameworks_msgraphrag_input_d0_cad_manual"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/data/corpus/D0/source.txt"
+    },
+    {
+      "id": "local_graphrag_frameworks",
+      "label": "Local GraphRAG Framework Assets",
+      "nodes": [
+        "frameworks_kag_docker_compose_west_kag_stack",
+        "frameworks_lightrag_docker_compose_lightrag_stack",
+        "frameworks_msgraphrag_prompts_basic_search_system_prompt_basic_search_prompt"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.75,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/kag/docker-compose-west.yml"
+    },
+    {
+      "id": "global_search_prompt_suite",
+      "label": "Global Search Prompt Suite",
+      "nodes": [
+        "frameworks_msgraphrag_prompts_global_search_map_system_prompt_document",
+        "frameworks_msgraphrag_prompts_global_search_reduce_system_prompt_document",
+        "frameworks_msgraphrag_prompts_global_search_knowledge_system_prompt_document"
+      ],
+      "relation": "participate_in",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml"
+    },
+    {
+      "id": "embedding_stack_alignment",
+      "label": "Embedding Stack Alignment",
+      "nodes": [
+        "frameworks_msgraphrag_settings_default_embedding_model",
+        "models_embeddings_multilingual_e5_large_readme_multilingual_e5_large",
+        "services_embeddings_readme_embedding_service"
+      ],
+      "relation": "form",
+      "confidence": "INFERRED",
+      "confidence_score": 0.95,
+      "source_file": "/home/surious-type/projects/research-rag/services/embeddings/README.md"
+    },
+    {
+      "id": "cad_extraction_reporting_chain",
+      "label": "CAD Extraction and Reporting Chain",
+      "nodes": [
+        "frameworks_msgraphrag_prompts_extract_graph_cad_entity_relationship_extraction",
+        "frameworks_msgraphrag_prompts_summarize_descriptions_document",
+        "frameworks_msgraphrag_prompts_community_report_graph_cad_domain_prompting"
+      ],
+      "relation": "participate_in",
+      "confidence": "INFERRED",
+      "confidence_score": 0.85,
+      "source_file": "/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml"
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

@@ -1,0 +1,8 @@
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[tool.coverage.run]
+branch = true
+source = ["research_bench"]
+omit = ["research_bench/frameworks.py", "research_bench/cli.py"]
