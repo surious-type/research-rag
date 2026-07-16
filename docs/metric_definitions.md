@@ -61,10 +61,56 @@ Technical relations excluded from `relationships_count`:
 - Stores Neo4j `Doc` or `Document` materialization separately as `backend_document_nodes_count`.
 - Filters Neo4j nodes and relationships strictly to the namespace-specific database and labels of the current run.
 - Audits `SHOW FULLTEXT INDEXES` and `SHOW VECTOR INDEXES` after build, and provisions `_default_text_index` only for the current namespace database if schema-free build omitted it.
+- Uses both raw vector index metadata and real OpenSPG `SearchClient.search_vector()` probes when deciding whether vector retrieval is healthy.
 - Uses only semantic `Entity -> Entity` relations for `connected_entities_count`, `connected_entities_ratio`, and `relationships_count`.
+
+### KAG vector retrieval verification
+
+The repository distinguishes between raw index visibility and real retrieval behavior.
+
+- `fulltext_index`: diagnostic snapshot of `_default_text_index` when present.
+- `vector_indexes`: raw rows returned by `SHOW VECTOR INDEXES`.
+- `vector_search_probes`: benchmark probes executed against OpenSPG search.
+- `vector_search_probe_status`: summarized probe verdict used by verification.
+
+Probe statuses mean:
+
+- `PASS`: at least one expected vector probe returned a valid result.
+- `WARN`: vector query executed successfully but the smoke corpus returned no match.
+- `FAIL`: vector query failed with a technical/server error.
+
+Verification does not rely on `SHOW VECTOR INDEXES` alone. A run can still be usable when raw index rows are incomplete but real OpenSPG vector search works.
+
+### KAG retriever diagnostics
+
+Per-question KAG diagnostics can include:
+
+- `retriever_results`: separate status for `kg_cs_open_spg`, `kg_fr_open_spg`, and `rc_open_spg`
+- `ppr_requested_doc_ids`
+- `ppr_loaded_doc_ids`
+- `ppr_missing_doc_ids`
+- `ppr_chunk_properties`
+- `ppr_errors`
+
+These fields exist to separate three different failure classes:
+
+- PPR document loading problems
+- OpenSPG vector retrieval problems
+- absence of relevant data in a valid retrieval path
 
 ## Context capture
 
 - Microsoft GraphRAG: contexts come from the actual local-search callback payload returned during answer generation.
 - LightRAG: contexts come from the same hybrid query result object that also returns the generated answer.
 - KAG: contexts come from the solver trace or evidence payload returned by the runtime.
+
+For KAG, a successful answer is expected to have non-empty real contexts extracted from trace/evidence payloads rather than synthetic placeholder contexts.
+
+## Progress artifacts
+
+Every benchmark run may emit progress artifacts alongside stage outputs:
+
+- `progress.log`: human-readable timeline
+- `progress.jsonl`: machine-readable stage/process events
+
+These are operational diagnostics rather than evaluation metrics, but they are part of the benchmark observability layer and are useful when long-running local experiments need to be inspected without interruption.
