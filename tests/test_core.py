@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import asyncio
 import json
 import sys
+import types
 from datetime import datetime
 from pathlib import Path
 
@@ -135,6 +137,121 @@ def test_get_kag_neo4j_config_defaults(monkeypatch) -> None:
     config = frameworks_mod.get_kag_neo4j_config()
     assert config["uri"] == "bolt://127.0.0.1:17687"
     assert config["database"] == "neo4j"
+
+
+def test_resolve_kag_neo4j_database_prefers_namespace() -> None:
+    assert frameworks_mod._resolve_kag_neo4j_database("Kag260716095410", "neo4j") == "kag260716095410"
+    assert frameworks_mod._resolve_kag_neo4j_database("", "neo4j") == "neo4j"
+
+
+def test_build_kag_server_project_config_has_no_mock_vectorizer() -> None:
+    template = """
+llm:
+  type: openai
+  base_url: http://127.0.0.1:8080/v1
+vectorize_model:
+  type: openai
+  base_url: http://127.0.0.1:8010/v1
+  model: multilingual-e5-large
+  vector_dimensions: 1024
+vectorizer:
+  type: openai
+  base_url: http://127.0.0.1:8010/v1
+  model: multilingual-e5-large
+  vector_dimensions: 1024
+"""
+    config = frameworks_mod.build_kag_server_project_config(template)
+    assert config["vectorize_model"]["type"] == "openai"
+    assert config["vectorize_model"]["base_url"] == "http://multilingual-e5-server/v1"
+    assert config["vectorizer"]["type"] == "openai"
+    assert config["vectorizer"]["base_url"] == "http://multilingual-e5-server/v1"
+
+
+def test_resolve_kag_query_diagnostics_uses_expected_pipeline_and_retrievers() -> None:
+    config = {
+        "kag_solver_pipeline": {
+            "type": "kag_static_pipeline",
+            "executors": [
+                {
+                    "type": "kag_hybrid_retrieval_executor",
+                    "retrievers": [
+                        {"type": "kg_cs_open_spg"},
+                        {"type": "kg_fr_open_spg"},
+                        {"type": "rc_open_spg"},
+                    ],
+                }
+            ],
+        }
+    }
+    _, diagnostics = frameworks_mod._resolve_kag_query_diagnostics(config, {"id": "24", "namespace": "KagNs"})
+    assert diagnostics["selected_pipeline"] == "kag_solver_pipeline"
+    assert diagnostics["resolved_retriever_types"] == ["kg_cs_open_spg", "kg_fr_open_spg", "rc_open_spg"]
+
+
+def test_resolve_kag_query_diagnostics_fails_on_empty_retrievers() -> None:
+    config = {"kag_solver_pipeline": {"type": "kag_static_pipeline", "executors": []}}
+    try:
+        frameworks_mod._resolve_kag_query_diagnostics(config, {"id": "24", "namespace": "KagNs"})
+    except RuntimeError as exc:
+        assert "resolved_retriever_types is empty" in str(exc)
+    else:
+        raise AssertionError("Expected empty KAG retriever resolution to fail")
+
+
+def test_prepare_kag_query_environment_calls_init_env(tmp_path: Path, monkeypatch) -> None:
+    run_dir = tmp_path / "run"
+    run_dir.mkdir()
+    (run_dir / "project.json").write_text(json.dumps({"id": "26", "namespace": "KagNs"}), encoding="utf-8")
+    (run_dir / "generated_kag_config.yaml").write_text(
+        "kag_builder_pipeline:\n  register_path: /tmp/fake-kag\n",
+        encoding="utf-8",
+    )
+    called: dict[str, str] = {}
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.common.conf",
+        types.SimpleNamespace(init_env=lambda path: called.setdefault("config_path", path)),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.common.registry",
+        types.SimpleNamespace(import_modules_from_path=lambda path: called.setdefault("register_path", path)),
+    )
+    project, config, config_path = frameworks_mod._prepare_kag_query_environment(run_dir)
+    assert project["id"] == "26"
+    assert config_path == run_dir / "generated_kag_config.yaml"
+    assert called["config_path"] == str(config_path)
+    assert called["register_path"] == "/tmp/fake-kag"
+    assert config["kag_builder_pipeline"]["register_path"] == "/tmp/fake-kag"
+
+
+def test_normalize_kag_context_from_chunk_trace() -> None:
+    contexts = frameworks_mod._normalize_kag_context(
+        {
+            "decompose": [
+                {
+                    "chunk_datas": [
+                        {
+                            "content": "Chunk text",
+                            "document_id": "doc-1",
+                            "document_name": "source.txt",
+                            "score": 0.8,
+                        }
+                    ]
+                }
+            ]
+        }
+    )
+    assert len(contexts) == 1
+    assert contexts[0].text == "Chunk text"
+    assert contexts[0].metadata["document_id"] == "doc-1"
+
+
+def test_normalize_kag_context_from_graph_trace() -> None:
+    contexts = frameworks_mod._normalize_kag_context({"decompose": [{"graph_data": ["Person[A] -WORKS_WITH-> Org[B]"]}]})
+    assert len(contexts) == 1
+    assert contexts[0].source == "graph"
+    assert "WORKS_WITH" in contexts[0].text
 
 
 def test_prepare_ragas_rows() -> None:
@@ -538,12 +655,168 @@ def test_kag_build_skips_neo4j_on_failed_subprocess(tmp_path: Path, monkeypatch)
     (run_dir / "build").mkdir(parents=True)
     monkeypatch.setattr(frameworks_mod, "_normalize_kag_namespace", lambda _run_dir: "Kag123456789012")
     monkeypatch.setattr(adapter, "_create_project", lambda namespace, config_text: {"id": "1", "namespace": namespace})
+    monkeypatch.setattr(adapter, "_sync_project_config", lambda project_id, namespace, config_text: None)
     monkeypatch.setattr(frameworks_mod, "run_command", lambda *args, **kwargs: type("Proc", (), {"returncode": 9})())
     monkeypatch.setattr(adapter, "_neo4j_summary", lambda namespace: (_ for _ in ()).throw(AssertionError("should not query neo4j on failed build")))
     metrics, graph = adapter.build(source_path, run_dir)
     assert metrics.build_status == "failed"
     assert metrics.build_error == "kag build exit code 9"
     assert graph == {}
+
+
+def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path, monkeypatch) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("data", encoding="utf-8")
+    run_dir = tmp_path / "run"
+    (run_dir / "build").mkdir(parents=True)
+    monkeypatch.setattr(frameworks_mod, "_normalize_kag_namespace", lambda _run_dir: "Kag123456789012")
+    monkeypatch.setattr(adapter, "_create_project", lambda namespace, config_text: {"id": "31", "namespace": namespace})
+    sync_calls: list[tuple[str, str]] = []
+    monkeypatch.setattr(adapter, "_sync_project_config", lambda project_id, namespace, config_text: sync_calls.append((project_id, namespace)))
+    monkeypatch.setattr(adapter, "_neo4j_summary", lambda namespace, run_dir=None: {"nodes_total": 1, "documents_count": 1, "chunks_count": 1, "entity_rows": [], "relationship_rows": []})
+    call: dict[str, Any] = {}
+
+    def fake_run_command(*args, **kwargs):
+        call["cwd"] = kwargs["cwd"]
+        call["cmd"] = args[0]
+        return type("Proc", (), {"returncode": 0})()
+
+    monkeypatch.setattr(frameworks_mod, "run_command", fake_run_command)
+    metrics, _ = adapter.build(source_path, run_dir)
+    assert metrics.build_status == "success"
+    assert call["cwd"] == run_dir
+    assert (run_dir / "kag_config.yaml").exists()
+    assert sync_calls == [("31", "Kag123456789012")]
+
+
+def test_sync_project_config_updates_server_with_real_project_id(monkeypatch) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    calls: list[dict[str, Any]] = []
+
+    class FakeProjectClient:
+        def __init__(self, host_addr):
+            calls.append({"host_addr": host_addr})
+
+        def update(self, id, namespace, config, visibility=None, tag=None, userNo=None):
+            calls.append({"id": id, "namespace": namespace, "config": config})
+
+    monkeypatch.setattr(frameworks_mod, "_ensure_kag_imports", lambda: None)
+    monkeypatch.setitem(sys.modules, "knext.project.client", types.SimpleNamespace(ProjectClient=FakeProjectClient))
+    adapter._sync_project_config(
+        "42",
+        "Kag420000000000",
+        """
+project:
+  id: "42"
+  namespace: Kag420000000000
+vectorize_model:
+  type: openai
+  base_url: http://127.0.0.1:8010/v1
+""",
+    )
+    assert calls[0]["host_addr"] == frameworks_mod.KAG_LOCAL_HOST_ADDR
+    assert calls[1]["id"] == "42"
+    assert calls[1]["namespace"] == "Kag420000000000"
+    assert calls[1]["config"]["project"]["id"] == "42"
+
+
+def test_invoke_kag_query_with_trace_uses_trace_reporter(monkeypatch) -> None:
+    events: list[str] = []
+
+    class FakeTraceReporter:
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
+
+        async def start(self):
+            events.append("start")
+
+        async def stop(self):
+            events.append("stop")
+
+        def add_report_line(self, segment, tag_name, content, status, **kwargs):
+            events.append(f"{segment}:{status}")
+
+        def generate_report_data(self):
+            return (
+                type(
+                    "TracePayload",
+                    (),
+                    {
+                        "to_dict": lambda self: {
+                            "decompose": [{"chunk_datas": [{"content": "ctx", "document_name": "doc.txt", "document_id": "doc-1"}]}],
+                            "answer": "Atlas",
+                        }
+                    },
+                )(),
+                "FINISH",
+            )
+
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.common.conf",
+        types.SimpleNamespace(KAG_PROJECT_CONF=types.SimpleNamespace(host_addr="", language="en")),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.solver.main_solver",
+        types.SimpleNamespace(
+            do_qa_pipeline=lambda use_pipeline, query, qa_config, reporter, task_id, kb_project_ids: asyncio.sleep(0, result="Atlas"),
+            is_chinese=lambda text: True,
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.solver.reporter.trace_log_reporter",
+        types.SimpleNamespace(TraceLogReporter=FakeTraceReporter),
+    )
+    payload = asyncio.run(
+        frameworks_mod._invoke_kag_query_with_trace(
+            run_id="kag_20260716_090000",
+            question="Как называется главный модуль проекта?",
+            config={"kag_solver_pipeline": {}},
+            project={"id": "26", "namespace": "KagNs"},
+        )
+    )
+    assert payload["answer"] == "Atlas"
+    assert payload["trace"]["decompose"][0]["chunk_datas"][0]["content"] == "ctx"
+    assert events[0] == "start"
+    assert "answer:FINISH" in events
+
+
+def test_execute_run_stops_before_query_when_build_failed(tmp_path: Path, monkeypatch) -> None:
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("content", encoding="utf-8")
+    monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
+    monkeypatch.setattr(workflow_mod, "ensure_source_txt", lambda: source_path)
+    monkeypatch.setattr(workflow_mod, "check_environment", lambda: [])
+    monkeypatch.setattr(workflow_mod, "load_questions", lambda: [type("Q", (), {"payload": {"id": "q001", "question": "Q", "reference_answer": "A"}})()])
+
+    class DummyAdapter:
+        def build(self, source_path, run_dir):
+            return (
+                type(
+                    "BM",
+                    (),
+                    {
+                        "build_status": "failed",
+                        "build_error": "empty namespace",
+                        "to_dict": lambda self: {"build_status": "failed", "build_error": "empty namespace", "documents_count": 0, "chunks_count": 0},
+                    },
+                )(),
+                {"nodes_total": 0, "chunks_count": 0},
+            )
+
+        def query(self, run_id, run_dir, question_rows):
+            raise AssertionError("query must not run after failed build")
+
+    monkeypatch.setattr(workflow_mod, "get_adapter", lambda framework: DummyAdapter())
+    try:
+        workflow_mod.execute_run("kag")
+    except RuntimeError as exc:
+        assert "empty namespace" in str(exc)
+    else:
+        raise AssertionError("Expected failed KAG build to stop workflow")
 
 
 def test_cli_check_returns_nonzero_on_fail(monkeypatch, capsys) -> None:

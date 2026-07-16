@@ -12,7 +12,6 @@ TECHNICAL_NODE_LABELS = {
     "Community",
     "Doc",
     "Document",
-    "KnowledgeUnit",
     "Outline",
     "Summary",
     "TextUnit",

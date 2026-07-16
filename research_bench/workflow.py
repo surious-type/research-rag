@@ -226,7 +226,11 @@ def execute_run(framework: str, smoke: bool = False) -> tuple[str, Path]:
         atomic_write_json(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "build"})
         raise RuntimeError(build_metrics.build_error or "build failed")
 
-    answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
+    try:
+        answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
+    except Exception as exc:
+        atomic_write_json(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "query", "error": str(exc)})
+        raise
     atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
     atomic_write_json(run_dir / "query" / "metrics.json", latency_summary([safe_float(row.get("latency_seconds")) for row in answers]))
     _run_ragas(run_dir, answers, limit=1 if smoke else None)
@@ -333,6 +337,8 @@ def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
     graph = load_json(base / "build" / "graph_metrics.json")
     answers = [json.loads(line) for line in (base / "query" / "answers.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
     ragas_summary = load_json(base / "ragas" / "summary.json")
+    diagnostics_path = base / "query" / "diagnostics.json"
+    diagnostics = load_json(diagnostics_path) if diagnostics_path.exists() else {}
     status = "PASS"
     issues = []
 
@@ -352,6 +358,16 @@ def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
     if len({row["question_id"] for row in answers}) != len(answers):
         status = "FAIL"
         issues.append("duplicate question_id")
+    if diagnostics:
+        if diagnostics.get("selected_pipeline") != "kag_solver_pipeline":
+            status = "FAIL"
+            issues.append("selected_pipeline is not kag_solver_pipeline")
+        if not diagnostics.get("resolved_retriever_types"):
+            status = "FAIL"
+            issues.append("resolved_retriever_types is empty")
+        if diagnostics.get("reporter_type") != "trace_log_reporter":
+            status = "FAIL"
+            issues.append("reporter_type is not trace_log_reporter")
     for row in answers:
         if row["status"] == "success" and not str(row.get("answer", "")).strip():
             status = "FAIL"

@@ -60,7 +60,6 @@ kg_cs: &kg_cs
     exclude_types:
       - Chunk
       - AtomicQuery
-      - KnowledgeUnit
       - Summary
       - Outline
       - Doc
@@ -89,7 +88,6 @@ kg_fr: &kg_fr
     exclude_types:
       - Chunk
       - AtomicQuery
-      - KnowledgeUnit
       - Summary
       - Outline
       - Doc

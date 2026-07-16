@@ -19,8 +19,14 @@ Technical nodes excluded from `entities_count`:
 
 - `Chunk`
 - `Document`
+- `Doc`
 - `TextUnit`
 - `Community`
+- `AtomicQuery`
+- `Summary`
+- `Outline`
+
+`KnowledgeUnit` is treated as a semantic KAG node for metrics in this repository. When present in the namespace-scoped Neo4j snapshot, it contributes to `entities_count` and is also recorded as `knowledge_units_count` in the raw KAG namespace summary.
 
 Technical relations excluded from `relationships_count`:
 

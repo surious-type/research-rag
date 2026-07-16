@@ -4240,18 +4240,18 @@
     "semantic_hash": ""
   },
   "research_bench/cli.py": {
-    "mtime": 1784126677.9492512,
-    "ast_hash": "86b095306fce0c9fe3c0af3d9df50c68",
+    "mtime": 1784180340.34527,
+    "ast_hash": "58dc503ad81b33caf8b126107e7013c3",
     "semantic_hash": ""
   },
   "research_bench/data.py": {
-    "mtime": 1784126638.8597589,
-    "ast_hash": "a632b5c9a52c575f7722e6ddaf436f99",
+    "mtime": 1784180339.9512649,
+    "ast_hash": "9ea9bd8a6c239c8f48d3773156234daf",
     "semantic_hash": ""
   },
   "research_bench/frameworks.py": {
-    "mtime": 1784140680.6751735,
-    "ast_hash": "177dde1e76e5f0c059c07d075516a769",
+    "mtime": 1784181468.339325,
+    "ast_hash": "7a1c5c6705ee7c6c947bd4cec7961e60",
     "semantic_hash": ""
   },
   "research_bench/metrics.py": {
@@ -4260,8 +4260,8 @@
     "semantic_hash": ""
   },
   "research_bench/models.py": {
-    "mtime": 1784126638.3417525,
-    "ast_hash": "05f0998954a5b7820a05434a53b5a6dc",
+    "mtime": 1784180339.7632625,
+    "ast_hash": "d229af0dd7886a202d97529b3652f443",
     "semantic_hash": ""
   },
   "research_bench/parsers.py": {
@@ -4285,8 +4285,8 @@
     "semantic_hash": ""
   },
   "research_bench/workflow.py": {
-    "mtime": 1784140067.248508,
-    "ast_hash": "09053a7687edc4d858f785503c54a619",
+    "mtime": 1784180340.1472673,
+    "ast_hash": "9018e282f8bdf0e7a4de2016a925a418",
     "semantic_hash": ""
   },
   "scripts/kag/build.py": {
@@ -4295,8 +4295,8 @@
     "semantic_hash": ""
   },
   "tests/test_core.py": {
-    "mtime": 1784127035.2807517,
-    "ast_hash": "ca7df12f72e0aa46799401596cdbe208",
+    "mtime": 1784180584.2033296,
+    "ast_hash": "7315120b26edaa779fdf7cedae9ab34d",
     "semantic_hash": ""
   },
   "README.md": {
@@ -4305,8 +4305,8 @@
     "semantic_hash": ""
   },
   "configs/kag/graph_config.template.yaml": {
-    "mtime": 1784140636.5325906,
-    "ast_hash": "734f57ded62e24834bc6059dd72a8517",
+    "mtime": 1784181170.8146248,
+    "ast_hash": "f4e9c43a087516012c5c78058f61e2b4",
     "semantic_hash": ""
   },
   "data/corpus/merged.txt": {
@@ -5905,8 +5905,8 @@
     "semantic_hash": ""
   },
   "requirements-ragas.txt": {
-    "mtime": 1784126641.7487953,
-    "ast_hash": "4af37d2f1825c7ec7db2c8caef041631",
+    "mtime": 1784180814.8021975,
+    "ast_hash": "f9432d4d8b029f31f6057e8825f07770",
     "semantic_hash": ""
   },
   "frameworks/kag/kag/examples/NetOperatorQA/README_en.md": {
