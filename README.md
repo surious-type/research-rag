@@ -13,11 +13,31 @@ The workflow uses one shared corpus in [data/corpus/source.txt](/home/surious-ty
 - [experiment.py](/home/surious-type/projects/research-rag/experiment.py): main CLI entrypoint
 - [research_bench](/home/surious-type/projects/research-rag/research_bench): benchmark implementation
 - [tests](/home/surious-type/projects/research-rag/tests): unit tests for local workflow code
+- [docs/project_map.md](/home/surious-type/projects/research-rag/docs/project_map.md): high-level codebase map
+- [docs/architecture.md](/home/surious-type/projects/research-rag/docs/architecture.md): architecture summary
+- [docs/workflow.md](/home/surious-type/projects/research-rag/docs/workflow.md): benchmark run lifecycle
+- [docs/adapters.md](/home/surious-type/projects/research-rag/docs/adapters.md): adapter responsibilities
+- [docs/reading_order.md](/home/surious-type/projects/research-rag/docs/reading_order.md): recommended onboarding order
 - [frameworks/msgraphrag/settings.yaml](/home/surious-type/projects/research-rag/frameworks/msgraphrag/settings.yaml): GraphRAG base config
 - [frameworks/lightrag/docker-compose.yml](/home/surious-type/projects/research-rag/frameworks/lightrag/docker-compose.yml): LightRAG runtime reference
 - [configs/kag/graph_config.template.yaml](/home/surious-type/projects/research-rag/configs/kag/graph_config.template.yaml): KAG config template
 - [scripts/kag/build.py](/home/surious-type/projects/research-rag/scripts/kag/build.py): KAG build entrypoint
 - [docs/metric_definitions.md](/home/surious-type/projects/research-rag/docs/metric_definitions.md): graph metric rules
+
+## Recommended reading order
+
+If you are new to the repository, read in this order:
+
+1. [README.md](/home/surious-type/projects/research-rag/README.md)
+2. [docs/project_map.md](/home/surious-type/projects/research-rag/docs/project_map.md)
+3. [docs/architecture.md](/home/surious-type/projects/research-rag/docs/architecture.md)
+4. [docs/workflow.md](/home/surious-type/projects/research-rag/docs/workflow.md)
+5. [experiment.py](/home/surious-type/projects/research-rag/experiment.py)
+6. [research_bench/cli.py](/home/surious-type/projects/research-rag/research_bench/cli.py)
+7. [research_bench/workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py)
+8. [docs/adapters.md](/home/surious-type/projects/research-rag/docs/adapters.md)
+9. [research_bench/frameworks.py](/home/surious-type/projects/research-rag/research_bench/frameworks.py)
+10. [tests/test_core.py](/home/surious-type/projects/research-rag/tests/test_core.py)
 
 ## Environment check
 

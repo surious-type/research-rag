@@ -1,5 +1,18 @@
 from __future__ import annotations
 
+"""High-level benchmark workflow orchestration.
+
+Reading guide:
+1. `check_environment()` validates local prerequisites.
+2. `execute_run()` coordinates the benchmark stages for one framework.
+3. `rerun_query_stage()` / `rerun_ragas_stage()` replay individual stages.
+4. `verify_run()` validates the final artifacts.
+
+The module intentionally keeps the public workflow contract stable for the CLI
+and tests, while the internal helpers are organized by stage to make the flow
+easier to follow.
+"""
+
 import json
 import os
 import shutil
@@ -199,43 +212,85 @@ def create_run_dir(framework: str, smoke: bool = False) -> tuple[str, Path]:
     return run_id, run_dir
 
 
+def _resolve_run_inputs(smoke: bool) -> tuple[Path, list[dict[str, Any]]]:
+    source_path = SMOKE_SOURCE_PATH if smoke else ensure_source_txt()
+    question_rows = load_smoke_questions() if smoke else [row.payload for row in load_questions()]
+    return source_path, question_rows
+
+
+def _build_manifest(run_id: str, framework: str, smoke: bool, source_path: Path) -> dict[str, Any]:
+    return {
+        "run_id": run_id,
+        "framework": framework,
+        "smoke": smoke,
+        "source": load_source_info(source_path).to_dict(),
+        "questions_path": str(QUESTIONS_PATH),
+        "questions_sha256": sha256_file(
+            QUESTIONS_PATH if not smoke else Path("output/smoke_tests/data/smoke_questions.json")
+        ),
+    }
+
+
+def _write_build_artifacts(run_dir: Path, build_metrics: Any, graph_metrics: dict[str, Any]) -> None:
+    atomic_write_json(run_dir / "build" / "metrics.json", build_metrics.to_dict())
+    atomic_write_json(run_dir / "build" / "graph_metrics.json", graph_metrics)
+
+
+def _run_build_stage(adapter: Any, source_path: Path, run_dir: Path) -> tuple[Any, dict[str, Any]]:
+    build_metrics, graph_metrics = adapter.build(source_path, run_dir)
+    _write_build_artifacts(run_dir, build_metrics, graph_metrics)
+    if build_metrics.build_status != "success":
+        atomic_write_json(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "build"})
+        raise RuntimeError(build_metrics.build_error or "build failed")
+    return build_metrics, graph_metrics
+
+
+def _write_query_artifacts(run_dir: Path, answers: list[dict[str, Any]]) -> None:
+    atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
+    atomic_write_json(
+        run_dir / "query" / "metrics.json",
+        latency_summary([safe_float(row.get("latency_seconds")) for row in answers]),
+    )
+
+
+def _run_query_stage(
+    adapter: Any,
+    run_id: str,
+    run_dir: Path,
+    question_rows: list[dict[str, Any]],
+) -> list[dict[str, Any]]:
+    try:
+        answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
+    except Exception as exc:
+        atomic_write_json(
+            run_dir / "verification.json",
+            {"status": "FAIL", "failed_stage": "query", "error": str(exc)},
+        )
+        raise
+    _write_query_artifacts(run_dir, answers)
+    return answers
+
+
+def _finalize_run(run_id: str, run_dir: Path, smoke: bool, answers: list[dict[str, Any]]) -> None:
+    _run_ragas(run_dir, answers, limit=1 if smoke else None)
+    verification = verify_run(run_id, smoke=smoke)
+    atomic_write_json(run_dir / "verification.json", verification)
+
+
 def execute_run(framework: str, smoke: bool = False) -> tuple[str, Path]:
     checks = check_environment()
     if any(row.status == "FAIL" for row in checks):
         raise RuntimeError(format_checks(checks))
 
     run_id, run_dir = create_run_dir(framework, smoke=smoke)
-    source_path = SMOKE_SOURCE_PATH if smoke else ensure_source_txt()
-    question_rows = load_smoke_questions() if smoke else [row.payload for row in load_questions()]
+    source_path, question_rows = _resolve_run_inputs(smoke)
     adapter = get_adapter(framework)
 
-    manifest = {
-        "run_id": run_id,
-        "framework": framework,
-        "smoke": smoke,
-        "source": load_source_info(source_path).to_dict(),
-        "questions_path": str(QUESTIONS_PATH),
-        "questions_sha256": sha256_file(QUESTIONS_PATH if not smoke else Path("output/smoke_tests/data/smoke_questions.json")),
-    }
+    manifest = _build_manifest(run_id, framework, smoke, source_path)
     atomic_write_json(run_dir / "manifest.json", manifest)
-
-    build_metrics, graph_metrics = adapter.build(source_path, run_dir)
-    atomic_write_json(run_dir / "build" / "metrics.json", build_metrics.to_dict())
-    atomic_write_json(run_dir / "build" / "graph_metrics.json", graph_metrics)
-    if build_metrics.build_status != "success":
-        atomic_write_json(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "build"})
-        raise RuntimeError(build_metrics.build_error or "build failed")
-
-    try:
-        answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
-    except Exception as exc:
-        atomic_write_json(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "query", "error": str(exc)})
-        raise
-    atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
-    atomic_write_json(run_dir / "query" / "metrics.json", latency_summary([safe_float(row.get("latency_seconds")) for row in answers]))
-    _run_ragas(run_dir, answers, limit=1 if smoke else None)
-    verification = verify_run(run_id, smoke=smoke)
-    atomic_write_json(run_dir / "verification.json", verification)
+    _run_build_stage(adapter, source_path, run_dir)
+    answers = _run_query_stage(adapter, run_id, run_dir, question_rows)
+    _finalize_run(run_id, run_dir, smoke, answers)
     return run_id, run_dir
 
 
@@ -243,10 +298,8 @@ def rerun_query_stage(run_id: str) -> Path:
     run_dir, smoke = find_run_dir(run_id)
     manifest = load_json(run_dir / "manifest.json")
     adapter = get_adapter(manifest["framework"])
-    question_rows = load_smoke_questions() if smoke else [row.payload for row in load_questions()]
-    answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
-    atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
-    atomic_write_json(run_dir / "query" / "metrics.json", latency_summary([safe_float(row.get("latency_seconds")) for row in answers]))
+    _, question_rows = _resolve_run_inputs(smoke)
+    _run_query_stage(adapter, run_id, run_dir, question_rows)
     return run_dir
 
 
