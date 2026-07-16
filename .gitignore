@@ -19,6 +19,4 @@ work/
 workspace/
 rag_storage/
 data/questions/questions.jsonl
-data/corpus/*
-
 /data/corpus/
