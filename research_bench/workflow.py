@@ -384,9 +384,10 @@ def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
         if diagnostics.get("fulltext_index", {}).get("state") != "ONLINE":
             status = "FAIL"
             issues.append("_default_text_index is not ONLINE")
-        if not diagnostics.get("vector_indexes_online"):
+        vector_probe_status = str(diagnostics.get("vector_search_probe_status") or "").upper()
+        if vector_probe_status == "FAIL":
             status = "FAIL"
-            issues.append("required vector indexes are not ONLINE")
+            issues.append("vector search probes failed")
     for row in answers:
         if row["status"] == "success" and not str(row.get("answer", "")).strip():
             status = "FAIL"

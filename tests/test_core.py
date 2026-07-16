@@ -458,7 +458,8 @@ def test_verify_run_allows_kag_without_backend_doc_nodes(tmp_path: Path, monkeyp
             "resolved_retriever_types": ["kg_cs_open_spg", "kg_fr_open_spg", "rc_open_spg"],
             "reporter_type": "trace_log_reporter",
             "fulltext_index": {"name": "_default_text_index", "state": "ONLINE"},
-            "vector_indexes_online": True,
+            "vector_indexes_online": False,
+            "vector_search_probe_status": "PASS",
         },
     )
     atomic_write_json(
@@ -473,6 +474,35 @@ def test_verify_run_allows_kag_without_backend_doc_nodes(tmp_path: Path, monkeyp
     monkeypatch.setattr(workflow_mod, "load_smoke_questions", lambda: [{"id": "smoke_q1"}])
     result = workflow_mod.verify_run(run_dir.name)
     assert result["status"] == "PASS"
+
+
+def test_verify_run_fails_on_vector_probe_error(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
+    run_dir = workflow_mod.RESULTS_DIR / "_smoke" / "kag_20260716_183600"
+    for part in ("build", "query", "ragas"):
+        (run_dir / part).mkdir(parents=True)
+    atomic_write_json(run_dir / "manifest.json", {"run_id": run_dir.name})
+    atomic_write_json(run_dir / "build" / "metrics.json", {"build_status": "success", "documents_count": 1, "chunks_count": 1})
+    atomic_write_json(run_dir / "build" / "graph_metrics.json", {"nodes_total": 1})
+    atomic_write_jsonl(run_dir / "query" / "answers.jsonl", [{"question_id": "smoke_q1", "status": "success", "answer": "ok", "contexts": [{"text": "ctx"}]}])
+    atomic_write_json(
+        run_dir / "query" / "diagnostics.json",
+        {
+            "selected_pipeline": "kag_solver_pipeline",
+            "resolved_retriever_types": ["kg_cs_open_spg"],
+            "reporter_type": "trace_log_reporter",
+            "fulltext_index": {"name": "_default_text_index", "state": "ONLINE"},
+            "vector_search_probe_status": "FAIL",
+        },
+    )
+    atomic_write_json(
+        run_dir / "ragas" / "summary.json",
+        {metric: {"mean": 0.5, "median": 0.5, "valid_count": 1, "failed_count": 0} for metric in ("faithfulness", "answer_relevancy", "context_precision", "context_recall")},
+    )
+    monkeypatch.setattr(workflow_mod, "load_smoke_questions", lambda: [{"id": "smoke_q1"}])
+    result = workflow_mod.verify_run(run_dir.name)
+    assert result["status"] == "FAIL"
+    assert "vector search probes failed" in result["issues"]
 
 
 def test_build_report(tmp_path: Path, monkeypatch) -> None:
@@ -771,11 +801,71 @@ def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path,
 def test_required_vector_indexes_online_filters_namespace() -> None:
     adapter = frameworks_mod.KAGAdapter()
     rows = [
-        {"name": "other", "state": "ONLINE", "labelsOrTypes": ["OtherNs.Person"], "properties": ["name"]},
-        {"name": "good", "state": "ONLINE", "labelsOrTypes": ["Kag123.Person"], "properties": ["name"]},
+        {"name": "other", "state": "ONLINE", "labelsOrTypes": ["OtherNs.Person"], "properties": ["_name_vector"]},
+        {"name": "good", "state": "ONLINE", "labelsOrTypes": ["Kag123.Person"], "properties": ["_content_vector"]},
     ]
     assert adapter._required_vector_indexes_online(rows, {"Kag123.Person"}) is True
     assert adapter._required_vector_indexes_online(rows[:1], {"Kag123.Person"}) is False
+
+
+def test_summarize_vector_probe_status() -> None:
+    assert frameworks_mod._summarize_vector_probe_status([{"status": "WARN"}]) == "WARN"
+    assert frameworks_mod._summarize_vector_probe_status([{"status": "PASS"}, {"status": "WARN"}]) == "PASS"
+    assert frameworks_mod._summarize_vector_probe_status([{"status": "PASS"}, {"status": "FAIL"}]) == "FAIL"
+
+
+def test_build_vector_search_probes_statuses(monkeypatch, tmp_path: Path) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("Орион-128\nАтлас\n", encoding="utf-8")
+
+    class FakeSearchClient:
+        def __init__(self, host_addr=None, project_id=None):
+            self.calls = []
+
+        def search_vector(self, label, property_key, query_vector, topk=3, ef_search=21):
+            self.calls.append((label, property_key))
+            if property_key == "name":
+                return [{"score": 0.9, "node": {"id": "e1", "name": "Атлас"}}]
+            return []
+
+    monkeypatch.setattr(adapter, "_vectorize_probe_query", lambda query: [0.1, 0.2])
+    monkeypatch.setitem(sys.modules, "knext.search.client", types.SimpleNamespace(SearchClient=FakeSearchClient))
+    monkeypatch.setitem(sys.modules, "knext.schema.client", types.SimpleNamespace(CHUNK_TYPE="Chunk"))
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.interface.solver.model.schema_utils",
+        types.SimpleNamespace(SchemaUtils=lambda config: types.SimpleNamespace(get_label_within_prefix=lambda label: "Kag123.Chunk")),
+    )
+    monkeypatch.setitem(sys.modules, "kag.common.config", types.SimpleNamespace(LogicFormConfiguration=lambda payload: payload))
+    probes = adapter._build_vector_search_probes("36", source_path, "Kag123")
+    assert probes[0]["status"] == "PASS"
+    assert probes[1]["status"] == "WARN"
+
+
+def test_build_vector_search_probes_fail_on_exception(monkeypatch, tmp_path: Path) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("Орион-128\n", encoding="utf-8")
+
+    class FakeSearchClient:
+        def __init__(self, host_addr=None, project_id=None):
+            return None
+
+        def search_vector(self, label, property_key, query_vector, topk=3, ef_search=21):
+            raise RuntimeError("server boom")
+
+    monkeypatch.setattr(adapter, "_vectorize_probe_query", lambda query: [0.1, 0.2])
+    monkeypatch.setitem(sys.modules, "knext.search.client", types.SimpleNamespace(SearchClient=FakeSearchClient))
+    monkeypatch.setitem(sys.modules, "knext.schema.client", types.SimpleNamespace(CHUNK_TYPE="Chunk"))
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.interface.solver.model.schema_utils",
+        types.SimpleNamespace(SchemaUtils=lambda config: types.SimpleNamespace(get_label_within_prefix=lambda label: "Kag123.Chunk")),
+    )
+    monkeypatch.setitem(sys.modules, "kag.common.config", types.SimpleNamespace(LogicFormConfiguration=lambda payload: payload))
+    probes = adapter._build_vector_search_probes("36", source_path, "Kag123")
+    assert all(probe["status"] == "FAIL" for probe in probes)
 
 
 def test_provision_default_text_index_uses_namespace_labels_only(tmp_path: Path, monkeypatch) -> None:
@@ -848,6 +938,14 @@ def test_registry_normalize_ner_item_and_diag_helpers(tmp_path: Path, monkeypatc
     assert "boom" in (tmp_path / "query" / "kg_fr_error.log").read_text(encoding="utf-8")
 
 
+def test_registry_chunk_title_from_node() -> None:
+    import research_bench._kag_registry as kag_registry
+
+    assert kag_registry._chunk_title_from_node({"title": "Atlas"}, "chunk-1") == "Atlas"
+    assert kag_registry._chunk_title_from_node({"document_name": "doc.txt"}, "chunk-1") == "doc.txt"
+    assert kag_registry._chunk_title_from_node({}, "chunk-1") == "chunk-1"
+
+
 def test_registry_compatibility_ner_invoke_normalizes_strings(monkeypatch) -> None:
     import research_bench._kag_registry as kag_registry
 
@@ -915,6 +1013,63 @@ def test_registry_compatibility_kg_fr_invoke_logs_traceback_on_exception(monkeyp
         raise AssertionError("Expected retriever exception to be re-raised")
     log_text = (tmp_path / "query" / "kg_fr_error.log").read_text(encoding="utf-8")
     assert "AttributeError" in log_text
+
+
+def test_registry_benchmark_ppr_retriever_handles_missing_name_and_none_results(monkeypatch, tmp_path: Path) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q004")
+    retriever = object.__new__(kag_registry.BenchmarkCompatibilityPprChunkRetriever)
+    retriever.graph_api = types.SimpleNamespace(
+        get_entity_prop_by_id=lambda label, biz_id: (
+            types.SimpleNamespace(items=lambda: {"content": "Chunk body", "title": "Atlas"}.items())
+            if biz_id == "chunk-1"
+            else None
+        )
+    )
+    retriever.schema_helper = types.SimpleNamespace(get_label_within_prefix=lambda label: "Kag123.Chunk")
+    docs = kag_registry.BenchmarkCompatibilityPprChunkRetriever.get_all_docs_by_id(
+        retriever,
+        ["query"],
+        [("chunk-1", 0.8), ("chunk-2", 0.2), None],
+        3,
+    )
+    assert len(docs) == 1
+    assert docs[0].title == "Atlas"
+    assert docs[0].content == "Chunk body"
+    diag = json.loads((tmp_path / "query" / "_bench_diag" / "q004.json").read_text(encoding="utf-8"))
+    assert diag["ppr_requested_doc_ids"] == ["chunk-1", "chunk-2"]
+    assert diag["ppr_loaded_doc_ids"] == ["chunk-1"]
+    assert "chunk-2" in diag["ppr_missing_doc_ids"]
+
+
+def test_registry_benchmark_ppr_retriever_uses_chunk_id_as_title(monkeypatch, tmp_path: Path) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q005")
+    retriever = object.__new__(kag_registry.BenchmarkCompatibilityPprChunkRetriever)
+    retriever.graph_api = types.SimpleNamespace(
+        get_entity_prop_by_id=lambda label, biz_id: types.SimpleNamespace(items=lambda: {"content": "Chunk body"}.items())
+    )
+    retriever.schema_helper = types.SimpleNamespace(get_label_within_prefix=lambda label: "Kag123.Chunk")
+    docs = kag_registry.BenchmarkCompatibilityPprChunkRetriever.get_all_docs_by_id(retriever, ["query"], [("chunk-9", 0.5)], 1)
+    assert docs[0].title == "chunk-9"
+    diag = json.loads((tmp_path / "query" / "_bench_diag" / "q005.json").read_text(encoding="utf-8"))
+    assert diag["ppr_chunk_properties"]["chunk-9"]["title"] == "chunk-9"
+
+
+def test_registry_record_retriever_result(monkeypatch, tmp_path: Path) -> None:
+    import research_bench._kag_registry as kag_registry
+
+    monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
+    monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q006")
+    output = type("Output", (), {"chunks": [1], "graphs": [], "err_msg": ""})()
+    kag_registry._record_retriever_result("rc_open_spg", output)
+    diag = json.loads((tmp_path / "query" / "_bench_diag" / "q006.json").read_text(encoding="utf-8"))
+    assert diag["retriever_results"]["rc_open_spg"]["status"] == "ok"
+    assert diag["retriever_results"]["rc_open_spg"]["chunks_count"] == 1
 
 
 def test_run_ragas_placeholder_when_no_answers(tmp_path: Path) -> None:

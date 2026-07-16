@@ -43,6 +43,11 @@ KAG_LOCAL_HOST_ADDR = "http://127.0.0.1:8887"
 KAG_SELECTED_PIPELINE = "kag_solver_pipeline"
 KAG_EXPECTED_RETRIEVER_TYPES = ("kg_cs_open_spg", "kg_fr_open_spg", "rc_open_spg")
 KAG_REQUIRED_VECTOR_INDEX_PROPERTIES = {"name", "description", "content"}
+KAG_VECTOR_PROPERTY_ALIASES = {
+    "name": {"name", "_name_vector"},
+    "desc": {"desc", "description", "_desc_vector", "_description_vector"},
+    "content": {"content", "_content_vector"},
+}
 KAG_PROXY_ENV_KEYS = (
     "ALL_PROXY",
     "all_proxy",
@@ -274,6 +279,15 @@ def _augment_retriever_errors(question_diag: dict[str, Any], retriever_errors: l
     if kg_fr_error and not any(row.get("retriever_method") == "kg_fr_open_spg" and row.get("error") == kg_fr_error for row in augmented):
         augmented.append({"retriever_method": "kg_fr_open_spg", "error": kg_fr_error})
     return augmented
+
+
+def _summarize_vector_probe_status(probes: list[dict[str, Any]]) -> str:
+    statuses = [str(probe.get("status") or "").upper() for probe in probes]
+    if any(status == "FAIL" for status in statuses):
+        return "FAIL"
+    if any(status == "PASS" for status in statuses):
+        return "PASS"
+    return "WARN"
 
 
 def _prepare_kag_query_environment(run_dir: Path) -> tuple[dict[str, Any], dict[str, Any], Path]:
@@ -617,7 +631,8 @@ class KAGAdapter:
             for row in online_rows
             for prop in (row.get("properties") or row.get("propertyKeys") or [])
         }
-        return bool(indexed_props & KAG_REQUIRED_VECTOR_INDEX_PROPERTIES)
+        expected_aliases = set().union(*KAG_VECTOR_PROPERTY_ALIASES.values())
+        return bool(indexed_props & expected_aliases)
 
     def _run_neo4j_rows(self, session: Any, query: str, **params: Any) -> list[dict[str, Any]]:
         return [record.data() for record in session.run(query, **params)]
@@ -736,6 +751,58 @@ class KAGAdapter:
                 last_error = {"method": "knext.search.client.SearchClient.search_text", "query": term, "error": str(exc)}
         return last_error  # type: ignore[name-defined]
 
+    def _vectorize_probe_query(self, query: str) -> list[float]:
+        _ensure_kag_imports()
+        from kag.interface import VectorizeModelABC
+
+        config = yaml.safe_load((ROOT / "configs" / "kag" / "graph_config.template.yaml").read_text(encoding="utf-8"))
+        model = VectorizeModelABC.from_config(config["vectorize_model"])
+        return list(model.vectorize(query))
+
+    def _build_vector_search_probes(self, project_id: str, source_path: Path, namespace: str) -> list[dict[str, Any]]:
+        _ensure_kag_imports()
+        from knext.schema.client import CHUNK_TYPE
+        from knext.search.client import SearchClient
+        from kag.interface.solver.model.schema_utils import SchemaUtils
+        from kag.common.config import LogicFormConfiguration
+
+        client = SearchClient(host_addr=KAG_LOCAL_HOST_ADDR, project_id=int(project_id))
+        schema_helper = SchemaUtils(
+            LogicFormConfiguration({"KAG_PROJECT_ID": project_id, "KAG_PROJECT_HOST_ADDR": KAG_LOCAL_HOST_ADDR})
+        )
+        chunk_label = schema_helper.get_label_within_prefix(CHUNK_TYPE)
+        probe_queries = _extract_text_probe_terms(source_path)
+        entity_query = next((term for term in probe_queries if any(ch.isalpha() for ch in term)), source_path.stem)
+        chunk_query = source_path.read_text(encoding="utf-8", errors="ignore").strip().splitlines()[0][:200] if source_path.exists() else entity_query
+        probe_specs = [
+            {"logical_label": "Entity", "label": "Entity", "property_key": "name", "query": entity_query},
+            {"logical_label": "Chunk", "label": chunk_label, "property_key": "content", "query": chunk_query},
+        ]
+        probes: list[dict[str, Any]] = []
+        for spec in probe_specs:
+            probe = dict(spec)
+            try:
+                query_vector = self._vectorize_probe_query(str(spec["query"]))
+                rows = client.search_vector(
+                    label=str(spec["label"]),
+                    property_key=str(spec["property_key"]),
+                    query_vector=query_vector,
+                    topk=3,
+                    ef_search=21,
+                )
+                response_sample = rows[:1]
+                probe["response_count"] = len(rows)
+                probe["response_sample"] = response_sample
+                probe["error"] = None
+                probe["status"] = "PASS" if rows else "WARN"
+            except Exception as exc:
+                probe["response_count"] = 0
+                probe["response_sample"] = []
+                probe["error"] = str(exc)
+                probe["status"] = "FAIL"
+            probes.append(probe)
+        return probes
+
     def _inspect_namespace_indexes(
         self,
         session: Any,
@@ -765,12 +832,16 @@ class KAGAdapter:
             atomic_write_json(run_dir / "build" / "neo4j_vector_indexes.json", {"indexes": vector_rows})
             fulltext_index = self._index_rows_by_name(fulltext_rows).get("_default_text_index")
         probe = self._probe_kag_search_api(str(project_info["id"]), source_path)
+        vector_probes = self._build_vector_search_probes(str(project_info["id"]), source_path, namespace)
         atomic_write_json(run_dir / "build" / "neo4j_search_probe.json", probe)
+        atomic_write_json(run_dir / "build" / "vector_search_probes.json", {"probes": vector_probes})
         return {
             "fulltext_index": fulltext_index,
             "fulltext_indexes": fulltext_rows,
             "vector_indexes": vector_rows,
             "vector_indexes_online": self._required_vector_indexes_online(vector_rows, namespace_labels),
+            "vector_search_probes": vector_probes,
+            "vector_search_probe_status": _summarize_vector_probe_status(vector_probes),
             "index_provisioning": provisioning
             or {"method": "existing", "ddl": None, "error": None, "index": fulltext_index},
             "search_probe": probe,
@@ -870,6 +941,8 @@ class KAGAdapter:
                 "fulltext_indexes": summary.get("fulltext_indexes"),
                 "vector_indexes": summary.get("vector_indexes"),
                 "vector_indexes_online": summary.get("vector_indexes_online"),
+                "vector_search_probes": summary.get("vector_search_probes"),
+                "vector_search_probe_status": summary.get("vector_search_probe_status"),
                 "index_provisioning": summary.get("index_provisioning"),
                 "search_probe": summary.get("search_probe"),
             },
@@ -1041,7 +1114,10 @@ class KAGAdapter:
                 question_diag = load_json(question_diag_path) if question_diag_path.exists() else {}
                 per_question_diags[row["id"]] = question_diag
                 retriever_errors = _augment_retriever_errors(question_diag, _extract_kag_retriever_errors(trace))
+                if isinstance(trace, dict):
+                    trace["benchmark_diagnostics"] = question_diag
                 payload["retriever_errors"] = retriever_errors
+                payload["diagnostics"] = question_diag
                 atomic_write_json(run_dir / "query" / "traces" / f"{row['id']}.json", payload)
                 status, error = _classify_kag_query_answer(answer_text, contexts, retriever_errors, None)
             except Exception as exc:
@@ -1076,6 +1152,7 @@ class KAGAdapter:
                 "kg_fr_arguments_type": {question_id: payload.get("kg_fr_arguments_type") for question_id, payload in per_question_diags.items()},
                 "kg_fr_arguments_normalized": {question_id: payload.get("kg_fr_arguments_normalized") for question_id, payload in per_question_diags.items()},
                 "kg_fr_error": {question_id: payload.get("kg_fr_error") for question_id, payload in per_question_diags.items()},
+                "question_diagnostics": per_question_diags,
             },
         )
         return answers

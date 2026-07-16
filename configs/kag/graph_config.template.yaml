@@ -76,7 +76,7 @@ kg_fr: &kg_fr
     graph_api: *graph_api
     search_api: *search_api
   ppr_chunk_retriever_tool:
-    type: ppr_chunk_retriever
+    type: benchmark_ppr_chunk_retriever
     llm_client: *chat_llm
     graph_api: *graph_api
     search_api: *search_api
