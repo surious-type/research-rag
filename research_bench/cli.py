@@ -8,10 +8,12 @@ from pathlib import Path
 from .data import RESULTS_DIR
 from .models import FRAMEWORKS, SMOKE_FRAMEWORKS
 from .reporting import build_report
-from .workflow import (
+from .workflows.check_workflow import (
     check_environment,
-    execute_run,
     format_checks,
+)
+from .workflows.run_workflow import (
+    execute_run,
     rerun_query_stage,
     rerun_ragas_stage,
     verify_run,
