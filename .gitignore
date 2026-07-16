@@ -3,6 +3,7 @@ reports/
 output/
 .pytest_cache/
 .coverage
+.env
 htmlcov/
 __pycache__/
 *.pyc

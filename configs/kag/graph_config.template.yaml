@@ -16,6 +16,8 @@ chat_llm: &chat_llm
   max_tokens: 2048
   enable_check: false
 
+llm: *chat_llm
+
 vectorize_model: &vectorize_model
   type: openai
   api_key: local
@@ -150,6 +152,7 @@ kag_solver_pipeline:
 kag_builder_pipeline:
   num_threads_per_chain: 1
   num_chains: 1
+  register_path: __KAG_REGISTER_PATH__
   scanner:
     type: file_scanner
   chain:

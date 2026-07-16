@@ -6,7 +6,17 @@ from typing import Any
 
 FRAMEWORKS = ("msgraphrag", "lightrag", "kag")
 SMOKE_FRAMEWORKS = ("msgraphrag", "lightrag", "kag", "all")
-TECHNICAL_NODE_LABELS = {"Chunk", "Document", "TextUnit", "Community"}
+TECHNICAL_NODE_LABELS = {
+    "AtomicQuery",
+    "Chunk",
+    "Community",
+    "Doc",
+    "Document",
+    "KnowledgeUnit",
+    "Outline",
+    "Summary",
+    "TextUnit",
+}
 TECHNICAL_REL_TYPES = {
     "HAS_CHUNK",
     "HAS_ENTITY",
@@ -122,4 +132,3 @@ class QueryAnswer:
         payload = asdict(self)
         payload["contexts"] = [context.to_dict() for context in self.contexts]
         return payload
-

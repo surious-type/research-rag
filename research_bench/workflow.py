@@ -38,12 +38,21 @@ from .utils import (
 
 
 def ensure_source_txt() -> Path:
-    if SOURCE_PATH.exists():
-        return SOURCE_PATH
-    source_path = canonical_source_path()
-    if source_path != SOURCE_PATH:
-        copy_file(source_path, SOURCE_PATH)
-    return SOURCE_PATH
+    return canonical_source_path()
+
+
+def find_run_dir(run_id: str, smoke: bool | None = None) -> tuple[Path, bool]:
+    candidates = []
+    if smoke is True:
+        candidates.append((RESULTS_DIR / "_smoke" / run_id, True))
+    elif smoke is False:
+        candidates.append((RESULTS_DIR / run_id, False))
+    else:
+        candidates.extend(((RESULTS_DIR / run_id, False), (RESULTS_DIR / "_smoke" / run_id, True)))
+    for path, detected_smoke in candidates:
+        if path.exists():
+            return path, detected_smoke
+    raise FileNotFoundError(f"Run not found: {run_id}")
 
 
 def check_environment() -> list[CheckResult]:
@@ -63,6 +72,7 @@ def check_environment() -> list[CheckResult]:
     results.extend(_check_llm())
     results.extend(_check_embeddings())
     results.extend(_check_frameworks())
+    results.extend(_check_kag_neo4j())
     results.extend(_check_docker())
     results.extend(_check_storage())
     return results
@@ -121,6 +131,28 @@ def _check_frameworks() -> list[CheckResult]:
             exists = (Path("frameworks/kag")).exists()
         results.append(CheckResult(name, "PASS" if exists else "FAIL", "available" if exists else "missing"))
     return results
+
+
+def _check_kag_neo4j() -> list[CheckResult]:
+    try:
+        from neo4j import GraphDatabase
+    except Exception as exc:
+        return [CheckResult("kag neo4j", "FAIL", str(exc))]
+
+    uri = os.getenv("KAG_NEO4J_URI", "bolt://127.0.0.1:17687")
+    user = os.getenv("KAG_NEO4J_USER", "neo4j")
+    password = os.getenv("KAG_NEO4J_PASSWORD", "neo4j@openspg")
+    database = os.getenv("KAG_NEO4J_DATABASE", "neo4j")
+    driver = GraphDatabase.driver(uri, auth=(user, password))
+    try:
+        driver.verify_connectivity()
+        with driver.session(database=database) as session:
+            value = session.run("RETURN 1 AS value").single()["value"]
+    except Exception as exc:
+        return [CheckResult("kag neo4j", "FAIL", str(exc))]
+    finally:
+        driver.close()
+    return [CheckResult("kag neo4j", "PASS", f"{uri} database={database} probe={value}")]
 
 
 def _check_docker() -> list[CheckResult]:
@@ -197,18 +229,38 @@ def execute_run(framework: str, smoke: bool = False) -> tuple[str, Path]:
     answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
     atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
     atomic_write_json(run_dir / "query" / "metrics.json", latency_summary([safe_float(row.get("latency_seconds")) for row in answers]))
-    if smoke:
-        save_ragas_placeholder(run_dir / "ragas", answers, "skipped for smoke run")
-    else:
-        _run_ragas(run_dir, answers)
+    _run_ragas(run_dir, answers, limit=1 if smoke else None)
     verification = verify_run(run_id, smoke=smoke)
     atomic_write_json(run_dir / "verification.json", verification)
     return run_id, run_dir
 
 
-def _run_ragas(run_dir: Path, answers: list[dict[str, Any]]) -> None:
+def rerun_query_stage(run_id: str) -> Path:
+    run_dir, smoke = find_run_dir(run_id)
+    manifest = load_json(run_dir / "manifest.json")
+    adapter = get_adapter(manifest["framework"])
+    question_rows = load_smoke_questions() if smoke else [row.payload for row in load_questions()]
+    answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
+    atomic_write_jsonl(run_dir / "query" / "answers.jsonl", answers)
+    atomic_write_json(run_dir / "query" / "metrics.json", latency_summary([safe_float(row.get("latency_seconds")) for row in answers]))
+    return run_dir
+
+
+def rerun_ragas_stage(run_id: str, limit: int | None = None) -> Path:
+    run_dir, _ = find_run_dir(run_id)
+    answers = [json.loads(line) for line in (run_dir / "query" / "answers.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    _run_ragas(run_dir, answers, limit=limit)
+    return run_dir
+
+
+def _run_ragas(run_dir: Path, answers: list[dict[str, Any]], limit: int | None = None) -> None:
     ragas_dir = run_dir / "ragas"
-    prepared = prepare_ragas_rows(answers)
+    if not answers:
+        save_ragas_placeholder(ragas_dir, answers, "no answers available")
+        return
+
+    answers_to_score = answers[:limit] if limit is not None else answers
+    prepared = prepare_ragas_rows(answers_to_score)
     try:
         from ragas import evaluate
         from ragas.llms import LangchainLLMWrapper
@@ -246,7 +298,7 @@ def _run_ragas(run_dir: Path, answers: list[dict[str, Any]]) -> None:
     )
     frame = result.to_pandas()
     rows = []
-    for answer_row, ragas_row in zip(answers, frame.to_dict(orient="records"), strict=False):
+    for answer_row, ragas_row in zip(answers_to_score, frame.to_dict(orient="records"), strict=False):
         rows.append(
             {
                 "question_id": answer_row["question_id"],
@@ -257,11 +309,25 @@ def _run_ragas(run_dir: Path, answers: list[dict[str, Any]]) -> None:
                 "error": None,
             }
         )
+    skipped_ids = {row["question_id"] for row in answers_to_score}
+    for answer_row in answers:
+        if answer_row["question_id"] in skipped_ids:
+            continue
+        rows.append(
+            {
+                "question_id": answer_row["question_id"],
+                "faithfulness": None,
+                "answer_relevancy": None,
+                "context_precision": None,
+                "context_recall": None,
+                "error": f"skipped after evaluating first {len(answers_to_score)} answer(s)",
+            }
+        )
     save_ragas_outputs(ragas_dir, rows)
 
 
-def verify_run(run_id: str, smoke: bool = False) -> dict[str, Any]:
-    base = (RESULTS_DIR / "_smoke" if smoke else RESULTS_DIR) / run_id
+def verify_run(run_id: str, smoke: bool | None = None) -> dict[str, Any]:
+    base, detected_smoke = find_run_dir(run_id, smoke=smoke)
     manifest = load_json(base / "manifest.json")
     build = load_json(base / "build" / "metrics.json")
     graph = load_json(base / "build" / "graph_metrics.json")
@@ -279,7 +345,7 @@ def verify_run(run_id: str, smoke: bool = False) -> dict[str, Any]:
     if not build.get("chunks_count"):
         status = "FAIL"
         issues.append("chunks_count is zero")
-    expected_questions = len(load_smoke_questions()) if smoke else 100
+    expected_questions = len(load_smoke_questions()) if detected_smoke else 100
     if len(answers) != expected_questions:
         status = "FAIL"
         issues.append(f"expected {expected_questions} answers, got {len(answers)}")
@@ -302,6 +368,9 @@ def verify_run(run_id: str, smoke: bool = False) -> dict[str, Any]:
         if values.get("valid_count", 0) + values.get("failed_count", 0) != len(answers):
             status = "FAIL"
             issues.append(f"inconsistent counts for {metric_name}")
+    if detected_smoke and not any(values.get("valid_count", 0) > 0 for values in ragas_summary.values()):
+        status = "FAIL"
+        issues.append("smoke run has no valid ragas scores")
     if not graph:
         status = "FAIL"
         issues.append("missing graph metrics")

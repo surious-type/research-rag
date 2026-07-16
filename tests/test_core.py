@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import json
+import sys
 from datetime import datetime
 from pathlib import Path
 
 import pandas as pd
 
+import research_bench.cli as cli_mod
 import research_bench.data as data_mod
+import research_bench.frameworks as frameworks_mod
 import research_bench.reporting as reporting_mod
 import research_bench.workflow as workflow_mod
 from research_bench.data import load_questions, load_source_info
@@ -91,6 +94,49 @@ def test_parse_neo4j_summary() -> None:
     assert graph.relationships_count == 1
 
 
+def test_extract_kag_label_type() -> None:
+    assert frameworks_mod._extract_kag_label_type(["Kag123.Person"], "Kag123") == "Person"
+    assert frameworks_mod._extract_kag_label_type(["Kag123.Chunk"], "Kag123") == "Chunk"
+    assert frameworks_mod._extract_kag_label_type(["Other.Person"], "Kag123") is None
+
+
+def test_summarize_kag_namespace_graph_filters_namespace_and_technical_labels() -> None:
+    summary = frameworks_mod.summarize_kag_namespace_graph(
+        node_rows=[
+            {"node_id": "1", "labels": ["Kag123.Person"]},
+            {"node_id": "2", "labels": ["Kag123.Organization"]},
+            {"node_id": "3", "labels": ["Kag123.Chunk"]},
+            {"node_id": "4", "labels": ["Kag123.Doc"]},
+            {"node_id": "5", "labels": ["Other.Person"]},
+            {"node_id": "6", "labels": ["Kag123.AtomicQuery"]},
+        ],
+        edge_rows=[
+            {"source_id": "1", "target_id": "2", "source_labels": ["Kag123.Person"], "target_labels": ["Kag123.Organization"], "type": "WORKS_WITH"},
+            {"source_id": "1", "target_id": "3", "source_labels": ["Kag123.Person"], "target_labels": ["Kag123.Chunk"], "type": "MENTIONS"},
+            {"source_id": "1", "target_id": "5", "source_labels": ["Kag123.Person"], "target_labels": ["Other.Person"], "type": "CROSS_NS"},
+        ],
+        namespace="Kag123",
+    )
+    graph = parse_neo4j_summary(summary)
+    assert summary["documents_count"] == 1
+    assert summary["chunks_count"] == 1
+    assert graph.entities_count == 2
+    assert graph.relationships_count == 1
+    assert graph.connected_entities_count == 2
+    assert graph.connected_entities_ratio == 1.0
+    assert graph.entity_types == {"Person": 1, "Organization": 1}
+
+
+def test_get_kag_neo4j_config_defaults(monkeypatch) -> None:
+    monkeypatch.delenv("KAG_NEO4J_URI", raising=False)
+    monkeypatch.delenv("KAG_NEO4J_USER", raising=False)
+    monkeypatch.delenv("KAG_NEO4J_PASSWORD", raising=False)
+    monkeypatch.delenv("KAG_NEO4J_DATABASE", raising=False)
+    config = frameworks_mod.get_kag_neo4j_config()
+    assert config["uri"] == "bolt://127.0.0.1:17687"
+    assert config["database"] == "neo4j"
+
+
 def test_prepare_ragas_rows() -> None:
     rows = prepare_ragas_rows(
         [
@@ -127,12 +173,22 @@ def test_load_source_info_and_questions(tmp_path: Path, monkeypatch) -> None:
     ]
     questions_path.write_text("".join(json.dumps(row, ensure_ascii=False) + "\n" for row in rows), encoding="utf-8")
     monkeypatch.setattr(data_mod, "SOURCE_PATH", source_path)
-    monkeypatch.setattr(data_mod, "MERGED_PATH", source_path)
     monkeypatch.setattr(data_mod, "QUESTIONS_PATH", questions_path)
     source = load_source_info(source_path)
     questions = load_questions(questions_path)
     assert source.words_count == 3
     assert len(questions) == 100
+
+
+def test_canonical_source_requires_source_txt(tmp_path: Path, monkeypatch) -> None:
+    source_path = tmp_path / "source.txt"
+    monkeypatch.setattr(data_mod, "SOURCE_PATH", source_path)
+    try:
+        data_mod.canonical_source_path()
+    except FileNotFoundError as exc:
+        assert "source.txt" in str(exc)
+    else:
+        raise AssertionError("Expected source.txt lookup to fail without fallback")
 
 
 def test_load_questions_rejects_duplicates(tmp_path: Path) -> None:
@@ -262,16 +318,15 @@ def test_build_report(tmp_path: Path, monkeypatch) -> None:
 
 
 def test_ensure_source_txt_and_create_run_dir(tmp_path: Path, monkeypatch) -> None:
-    source_path = tmp_path / "merged.txt"
+    source_path = tmp_path / "source.txt"
     source_path.write_text("content", encoding="utf-8")
-    target_path = tmp_path / "source.txt"
-    monkeypatch.setattr(workflow_mod, "SOURCE_PATH", target_path)
+    monkeypatch.setattr(workflow_mod, "SOURCE_PATH", source_path)
     monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
     monkeypatch.setattr(workflow_mod, "canonical_source_path", lambda: source_path)
     ensured = workflow_mod.ensure_source_txt()
     run_id, run_dir = workflow_mod.create_run_dir("msgraphrag")
-    assert ensured == target_path
-    assert target_path.read_text(encoding="utf-8") == "content"
+    assert ensured == source_path
+    assert source_path.read_text(encoding="utf-8") == "content"
     assert run_id.startswith("msgraphrag_")
     assert run_dir.exists()
 
@@ -288,7 +343,7 @@ def test_execute_run_success(tmp_path: Path, monkeypatch) -> None:
     monkeypatch.setattr(workflow_mod, "ensure_source_txt", lambda: source_path)
     monkeypatch.setattr(workflow_mod, "load_questions", lambda: [type("Q", (), {"payload": row})() for row in rows])
     monkeypatch.setattr(workflow_mod, "check_environment", lambda: [])
-    monkeypatch.setattr(workflow_mod, "_run_ragas", lambda run_dir, answers: atomic_write_json(run_dir / "ragas" / "summary.json", {metric: {"mean": 0.5, "median": 0.5, "valid_count": 100, "failed_count": 0} for metric in ("faithfulness", "answer_relevancy", "context_precision", "context_recall")}))
+    monkeypatch.setattr(workflow_mod, "_run_ragas", lambda run_dir, answers, limit=None: atomic_write_json(run_dir / "ragas" / "summary.json", {metric: {"mean": 0.5, "median": 0.5, "valid_count": 100, "failed_count": 0} for metric in ("faithfulness", "answer_relevancy", "context_precision", "context_recall")}))
     monkeypatch.setattr(workflow_mod, "verify_run", lambda run_id, smoke=False: {"status": "PASS", "issues": []})
 
     class DummyAdapter:
@@ -327,6 +382,69 @@ def test_execute_run_success(tmp_path: Path, monkeypatch) -> None:
     assert (run_dir / "manifest.json").exists()
 
 
+def test_smoke_run_requires_one_valid_ragas_score(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
+    run_dir = workflow_mod.RESULTS_DIR / "_smoke" / "msgraphrag_20260715_183542"
+    for part in ("build", "query", "ragas"):
+        (run_dir / part).mkdir(parents=True)
+    atomic_write_json(run_dir / "manifest.json", {"run_id": run_dir.name})
+    atomic_write_json(run_dir / "build" / "metrics.json", {"build_status": "success", "documents_count": 1, "chunks_count": 1})
+    atomic_write_json(run_dir / "build" / "graph_metrics.json", {"nodes_total": 1})
+    atomic_write_jsonl(
+        run_dir / "query" / "answers.jsonl",
+        [
+            {"question_id": "smoke_q1", "status": "success", "answer": "ok", "contexts": [{"text": "ctx"}]},
+            {"question_id": "smoke_q2", "status": "success", "answer": "ok", "contexts": [{"text": "ctx"}]},
+        ],
+    )
+    atomic_write_json(
+        run_dir / "ragas" / "summary.json",
+        {metric: {"mean": None, "median": None, "valid_count": 0, "failed_count": 2} for metric in ("faithfulness", "answer_relevancy", "context_precision", "context_recall")},
+    )
+    monkeypatch.setattr(workflow_mod, "load_smoke_questions", lambda: [{"id": "smoke_q1"}, {"id": "smoke_q2"}])
+    result = workflow_mod.verify_run(run_dir.name)
+    assert result["status"] == "FAIL"
+    assert "smoke run has no valid ragas scores" in result["issues"]
+
+
+def test_find_run_dir_prefers_non_smoke_then_smoke(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
+    non_smoke = workflow_mod.RESULTS_DIR / "run_1"
+    smoke = workflow_mod.RESULTS_DIR / "_smoke" / "run_2"
+    non_smoke.mkdir(parents=True)
+    smoke.mkdir(parents=True)
+    assert workflow_mod.find_run_dir("run_1") == (non_smoke, False)
+    assert workflow_mod.find_run_dir("run_2") == (smoke, True)
+
+
+def test_rerun_query_and_ragas_stage(tmp_path: Path, monkeypatch) -> None:
+    monkeypatch.setattr(workflow_mod, "RESULTS_DIR", tmp_path / "results")
+    run_dir = workflow_mod.RESULTS_DIR / "msgraphrag_20260715_183542"
+    for part in ("build", "query", "ragas"):
+        (run_dir / part).mkdir(parents=True)
+    atomic_write_json(run_dir / "manifest.json", {"framework": "msgraphrag"})
+    monkeypatch.setattr(workflow_mod, "load_questions", lambda: [type("Q", (), {"payload": {"id": "q001", "question": "Q", "reference_answer": "A"}})()])
+
+    class DummyAdapter:
+        def query(self, run_id, current_run_dir, question_rows):
+            assert run_id == run_dir.name
+            assert current_run_dir == run_dir
+            return [
+                type(
+                    "Answer",
+                    (),
+                    {"to_dict": lambda self: {"question_id": "q001", "question": "Q", "reference_answer": "A", "answer": "ok", "contexts": [{"text": "ctx"}], "latency_seconds": 1.0, "status": "success"}},
+                )()
+            ]
+
+    monkeypatch.setattr(workflow_mod, "get_adapter", lambda framework: DummyAdapter())
+    monkeypatch.setattr(workflow_mod, "_run_ragas", lambda current_run_dir, answers, limit=None: atomic_write_json(current_run_dir / "ragas" / "summary.json", {"faithfulness": {"mean": 0.5, "median": 0.5, "valid_count": 1, "failed_count": 0}}))
+    assert workflow_mod.rerun_query_stage(run_dir.name) == run_dir
+    assert (run_dir / "query" / "answers.jsonl").exists()
+    assert workflow_mod.rerun_ragas_stage(run_dir.name) == run_dir
+    assert (run_dir / "ragas" / "summary.json").exists()
+
+
 def test_check_environment_pass_with_monkeypatches(tmp_path: Path, monkeypatch) -> None:
     source_path = tmp_path / "source.txt"
     source_path.write_text("content", encoding="utf-8")
@@ -340,6 +458,7 @@ def test_check_environment_pass_with_monkeypatches(tmp_path: Path, monkeypatch) 
     monkeypatch.setattr(workflow_mod, "_check_llm", lambda: [workflow_mod.CheckResult("llm", "PASS", "ok")])
     monkeypatch.setattr(workflow_mod, "_check_embeddings", lambda: [workflow_mod.CheckResult("emb", "PASS", "ok")])
     monkeypatch.setattr(workflow_mod, "_check_frameworks", lambda: [workflow_mod.CheckResult("fw", "PASS", "ok")])
+    monkeypatch.setattr(workflow_mod, "_check_kag_neo4j", lambda: [workflow_mod.CheckResult("kag neo4j", "PASS", "ok")])
     monkeypatch.setattr(workflow_mod, "_check_docker", lambda: [workflow_mod.CheckResult("docker", "PASS", "ok")])
     monkeypatch.setattr(workflow_mod, "_check_storage", lambda: [workflow_mod.CheckResult("storage", "PASS", "ok")])
     results = workflow_mod.check_environment()
@@ -371,3 +490,64 @@ def test_check_helpers(monkeypatch) -> None:
     )
     results = workflow_mod._check_llm() + workflow_mod._check_embeddings() + workflow_mod._check_docker()
     assert any(row.name == "llm model" and row.status == "PASS" for row in results)
+
+
+def test_check_kag_neo4j(monkeypatch) -> None:
+    calls: list[tuple[str, tuple[str, str]]] = []
+
+    class DummySession:
+        def __enter__(self):
+            return self
+
+        def __exit__(self, exc_type, exc, tb):
+            return None
+
+        def run(self, query):
+            assert query == "RETURN 1 AS value"
+            return type("Result", (), {"single": lambda self: {"value": 1}})()
+
+    class DummyDriver:
+        def verify_connectivity(self):
+            return None
+
+        def session(self, database):
+            assert database == "neo4j"
+            return DummySession()
+
+        def close(self):
+            return None
+
+    class DummyGraphDatabase:
+        @staticmethod
+        def driver(uri, auth):
+            calls.append((uri, auth))
+            return DummyDriver()
+
+    monkeypatch.setenv("KAG_NEO4J_URI", "bolt://127.0.0.1:17687")
+    monkeypatch.setitem(sys.modules, "neo4j", type("Neo4jModule", (), {"GraphDatabase": DummyGraphDatabase})())
+    results = workflow_mod._check_kag_neo4j()
+    assert results[0].status == "PASS"
+    assert calls == [("bolt://127.0.0.1:17687", ("neo4j", "neo4j@openspg"))]
+
+
+def test_kag_build_skips_neo4j_on_failed_subprocess(tmp_path: Path, monkeypatch) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("data", encoding="utf-8")
+    run_dir = tmp_path / "run"
+    (run_dir / "build").mkdir(parents=True)
+    monkeypatch.setattr(frameworks_mod, "_normalize_kag_namespace", lambda _run_dir: "Kag123456789012")
+    monkeypatch.setattr(adapter, "_create_project", lambda namespace, config_text: {"id": "1", "namespace": namespace})
+    monkeypatch.setattr(frameworks_mod, "run_command", lambda *args, **kwargs: type("Proc", (), {"returncode": 9})())
+    monkeypatch.setattr(adapter, "_neo4j_summary", lambda namespace: (_ for _ in ()).throw(AssertionError("should not query neo4j on failed build")))
+    metrics, graph = adapter.build(source_path, run_dir)
+    assert metrics.build_status == "failed"
+    assert metrics.build_error == "kag build exit code 9"
+    assert graph == {}
+
+
+def test_cli_check_returns_nonzero_on_fail(monkeypatch, capsys) -> None:
+    monkeypatch.setattr(cli_mod, "check_environment", lambda: [workflow_mod.CheckResult("source.txt", "FAIL", "missing")])
+    exit_code = cli_mod.main(["check"])
+    assert exit_code == 1
+    assert "FAIL" in capsys.readouterr().out

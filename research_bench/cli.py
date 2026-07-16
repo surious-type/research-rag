@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import argparse
-import code
 import json
 import subprocess
 from pathlib import Path
@@ -11,15 +10,15 @@ from .models import FRAMEWORKS, SMOKE_FRAMEWORKS
 from .reporting import build_report
 from .workflow import (
     check_environment,
-    ensure_source_txt,
     execute_run,
     format_checks,
+    rerun_query_stage,
+    rerun_ragas_stage,
     verify_run,
 )
 
 
 def main(argv: list[str] | None = None) -> int:
-    ensure_source_txt()
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest="command", required=True)
 
@@ -47,8 +46,9 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     if args.command == "check":
-        print(format_checks(check_environment()))
-        return 0
+        checks = check_environment()
+        print(format_checks(checks))
+        return 1 if any(row.status == "FAIL" for row in checks) else 0
 
     if args.command == "test":
         process = subprocess.run(
@@ -70,7 +70,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "run-all":
-        print("run-all is implemented but intentionally not executed automatically.")
+        for framework in FRAMEWORKS:
+            run_id, _ = execute_run(framework, smoke=False)
+            print(run_id)
         return 0
 
     if args.command == "report":
@@ -79,15 +81,15 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "query":
-        run_dir = RESULTS_DIR / args.run_id
+        run_dir = rerun_query_stage(args.run_id)
         answers_path = run_dir / "query" / "answers.jsonl"
         payload = [json.loads(line) for line in answers_path.read_text(encoding="utf-8").splitlines() if line.strip()]
-        shell = code.InteractiveConsole(locals={"answers": payload, "run_id": args.run_id})
-        shell.interact("answers is available; inspect the loaded query results.")
+        print(json.dumps(payload, ensure_ascii=False, indent=2))
         return 0
 
     if args.command == "ragas":
-        print((RESULTS_DIR / args.run_id / "ragas" / "summary.json").read_text(encoding="utf-8"))
+        run_dir = rerun_ragas_stage(args.run_id)
+        print((run_dir / "ragas" / "summary.json").read_text(encoding="utf-8"))
         return 0
 
     if args.command == "verify":

@@ -11,7 +11,6 @@ from .utils import sha256_file, word_count
 ROOT = Path(__file__).resolve().parents[1]
 DATA_DIR = ROOT / "data"
 SOURCE_PATH = DATA_DIR / "corpus" / "source.txt"
-MERGED_PATH = DATA_DIR / "corpus" / "merged.txt"
 QUESTIONS_PATH = DATA_DIR / "questions" / "questions.jsonl"
 SMOKE_SOURCE_PATH = ROOT / "output" / "smoke_tests" / "data" / "smoke_document.txt"
 SMOKE_QUESTIONS_PATH = ROOT / "output" / "smoke_tests" / "data" / "smoke_questions.json"
@@ -22,8 +21,6 @@ REPORTS_DIR = ROOT / "reports"
 def canonical_source_path() -> Path:
     if SOURCE_PATH.exists():
         return SOURCE_PATH
-    if MERGED_PATH.exists():
-        return MERGED_PATH
     raise FileNotFoundError(f"Source corpus not found: {SOURCE_PATH}")
 
 
@@ -83,4 +80,3 @@ def load_smoke_questions() -> list[dict[str, Any]]:
     if isinstance(payload, dict):
         return payload.get("questions", [])
     return payload
-
