@@ -17,6 +17,7 @@ frameworks/msgraphrag/logs/
 tmp/
 work/
 workspace/
+.worktrees/
 rag_storage/
 data/questions/questions.jsonl
 /data/corpus/
