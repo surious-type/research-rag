@@ -34,10 +34,11 @@ If you are new to the repository, read in this order:
 4. [docs/workflow.md](/home/surious-type/projects/research-rag/docs/workflow.md)
 5. [experiment.py](/home/surious-type/projects/research-rag/experiment.py)
 6. [research_bench/cli.py](/home/surious-type/projects/research-rag/research_bench/cli.py)
-7. [research_bench/workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py)
-8. [docs/adapters.md](/home/surious-type/projects/research-rag/docs/adapters.md)
-9. [research_bench/frameworks.py](/home/surious-type/projects/research-rag/research_bench/frameworks.py)
-10. [tests/test_core.py](/home/surious-type/projects/research-rag/tests/test_core.py)
+7. [research_bench/workflows/run_stages.py](/home/surious-type/projects/research-rag/research_bench/workflows/run_stages.py)
+8. [research_bench/workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py)
+9. [docs/adapters.md](/home/surious-type/projects/research-rag/docs/adapters.md)
+10. [research_bench/adapters/kag.py](/home/surious-type/projects/research-rag/research_bench/adapters/kag.py)
+11. [tests/workflows/test_runtime.py](/home/surious-type/projects/research-rag/tests/workflows/test_runtime.py)
 
 ## Environment check
 

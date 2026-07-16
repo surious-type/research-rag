@@ -37,7 +37,10 @@ Files:
 - Runs RAGAS
 - Verifies final artifacts
 
-File:
+Files:
+- [research_bench/workflows/run_stages.py](/home/surious-type/projects/research-rag/research_bench/workflows/run_stages.py)
+- [research_bench/workflows/checks.py](/home/surious-type/projects/research-rag/research_bench/workflows/checks.py)
+- [research_bench/workflows/ragas_verification.py](/home/surious-type/projects/research-rag/research_bench/workflows/ragas_verification.py)
 - [research_bench/workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py)
 
 ## Framework adapters
@@ -47,7 +50,12 @@ Each adapter implements the same conceptual interface:
 - `build(source_path, run_dir)`
 - `query(run_id, run_dir, questions)`
 
-File:
+Files:
+- [research_bench/adapters/base.py](/home/surious-type/projects/research-rag/research_bench/adapters/base.py)
+- [research_bench/adapters/registry.py](/home/surious-type/projects/research-rag/research_bench/adapters/registry.py)
+- [research_bench/adapters/msgraphrag.py](/home/surious-type/projects/research-rag/research_bench/adapters/msgraphrag.py)
+- [research_bench/adapters/lightrag.py](/home/surious-type/projects/research-rag/research_bench/adapters/lightrag.py)
+- [research_bench/adapters/kag.py](/home/surious-type/projects/research-rag/research_bench/adapters/kag.py)
 - [research_bench/frameworks.py](/home/surious-type/projects/research-rag/research_bench/frameworks.py)
 
 ## Evaluation helpers
@@ -63,6 +71,19 @@ Files:
 - [research_bench/ragas_eval.py](/home/surious-type/projects/research-rag/research_bench/ragas_eval.py)
 - [research_bench/reporting.py](/home/surious-type/projects/research-rag/research_bench/reporting.py)
 
+## Shared infrastructure
+
+- atomic artifact writes
+- subprocess execution
+- progress logging
+- trace path helpers
+
+Files:
+- [research_bench/shared/io.py](/home/surious-type/projects/research-rag/research_bench/shared/io.py)
+- [research_bench/shared/subprocess.py](/home/surious-type/projects/research-rag/research_bench/shared/subprocess.py)
+- [research_bench/diagnostics/logging.py](/home/surious-type/projects/research-rag/research_bench/diagnostics/logging.py)
+- [research_bench/diagnostics/traces.py](/home/surious-type/projects/research-rag/research_bench/diagnostics/traces.py)
+
 ## External boundary
 
 The repository intentionally treats these as external systems:
@@ -76,17 +97,18 @@ The repository intentionally treats these as external systems:
 
 The benchmark code should orchestrate them, not modify their upstream behavior.
 
-## Current hotspot
+## Current hotspots
 
-The main architectural hotspot is [research_bench/frameworks.py](/home/surious-type/projects/research-rag/research_bench/frameworks.py).
+- The heaviest framework-specific module is [research_bench/adapters/kag.py](/home/surious-type/projects/research-rag/research_bench/adapters/kag.py).
+- The public compatibility surface is still centered on [research_bench/workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py) and [research_bench/frameworks.py](/home/surious-type/projects/research-rag/research_bench/frameworks.py).
 
-It currently combines:
+`adapters/kag.py` currently combines:
 
 - adapter definitions
 - KAG project creation
 - schema diagnostics
 - Neo4j diagnostics
 - context normalization
-- adapter registry
+- query-time KAG helpers
 
-That is the best candidate for phase 2 decomposition after the workflow layer has been made easier to read.
+That is the strongest candidate for a later phase if we continue decomposing by responsibility.

@@ -13,9 +13,18 @@ The CLI dispatches to workflow functions instead of implementing run logic itsel
 
 ## Main run stages
 
-The primary orchestration function is:
+The public workflow entrypoints live in:
 
-- [execute_run() in workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py)
+- [research_bench/workflows/check_workflow.py](/home/surious-type/projects/research-rag/research_bench/workflows/check_workflow.py)
+- [research_bench/workflows/run_workflow.py](/home/surious-type/projects/research-rag/research_bench/workflows/run_workflow.py)
+
+The main stage orchestration lives in:
+
+- [research_bench/workflows/run_stages.py](/home/surious-type/projects/research-rag/research_bench/workflows/run_stages.py)
+
+The compatibility facade remains in:
+
+- [research_bench/workflow.py](/home/surious-type/projects/research-rag/research_bench/workflow.py)
 
 The logical stages are:
 
@@ -27,6 +36,11 @@ The logical stages are:
 6. `adapter.query`
 7. `run ragas`
 8. `verify_run`
+
+Each stage writes normalized artifacts under the run directory and appends progress events to:
+
+- `progress.log`
+- `progress.jsonl`
 
 ## Build stage
 
@@ -75,11 +89,13 @@ These use:
 - `rerun_query_stage()`
 - `rerun_ragas_stage()`
 
+They also append progress events so long-running reruns can be inspected without stopping the process.
+
 ## Where to extend
 
 If you add a new framework:
 
 1. add its adapter contract implementation
-2. register it in the framework list
+2. register it in [research_bench/adapters/registry.py](/home/surious-type/projects/research-rag/research_bench/adapters/registry.py)
 3. make sure it produces normalized `BuildMetrics` and `QueryAnswer` rows
 4. verify that report and RAGAS consumers work without framework-specific branches
