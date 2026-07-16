@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "sessions": {
+    "omx-1784197338085-e6yi9u": {
+      "session_id": "omx-1784197338085-e6yi9u",
+      "leader_thread_id": "019f6a72-d7fc-7ea2-a5c1-6d09ba7d88f1",
+      "updated_at": "2026-07-16T10:22:24.087Z",
+      "threads": {
+        "019f6a72-d7fc-7ea2-a5c1-6d09ba7d88f1": {
+          "thread_id": "019f6a72-d7fc-7ea2-a5c1-6d09ba7d88f1",
+          "kind": "leader",
+          "first_seen_at": "2026-07-16T10:22:24.087Z",
+          "last_seen_at": "2026-07-16T10:22:24.087Z",
+          "last_turn_id": "019f6a72-d88a-7f02-8e5f-7bc6caf8209a",
+          "completed_at": "2026-07-16T10:22:24.087Z",
+          "last_completed_turn_id": "019f6a72-d88a-7f02-8e5f-7bc6caf8209a",
+          "turn_count": 1,
+          "completion_source": "notify-fallback-watcher",
+          "status": "closed"
+        }
+      }
+    },
+    "omx-1784197466318-5mhwpi": {
+      "session_id": "omx-1784197466318-5mhwpi",
+      "leader_thread_id": "019f6a74-ec69-7313-b24c-4618affa2a2a",
+      "updated_at": "2026-07-16T10:31:44.009Z",
+      "threads": {
+        "019f6a74-ec69-7313-b24c-4618affa2a2a": {
+          "thread_id": "019f6a74-ec69-7313-b24c-4618affa2a2a",
+          "kind": "leader",
+          "first_seen_at": "2026-07-16T10:27:17.723Z",
+          "last_seen_at": "2026-07-16T10:27:17.723Z",
+          "last_turn_id": "019f6a77-2517-7a91-b3b2-3143dc24e7fe",
+          "completed_at": "2026-07-16T10:27:17.723Z",
+          "last_completed_turn_id": "019f6a77-2517-7a91-b3b2-3143dc24e7fe",
+          "turn_count": 1,
+          "completion_source": "notify-fallback-watcher",
+          "status": "closed"
+        },
+        "019f6972-b8d3-7b40-8d08-2eb58f64fc23": {
+          "thread_id": "019f6972-b8d3-7b40-8d08-2eb58f64fc23",
+          "kind": "subagent",
+          "first_seen_at": "2026-07-16T10:27:24.980Z",
+          "last_seen_at": "2026-07-16T10:28:40.229Z",
+          "last_turn_id": "019f6a78-88b4-7e12-b75e-b8842d1129c7",
+          "completed_at": "2026-07-16T10:28:40.229Z",
+          "last_completed_turn_id": "019f6a78-88b4-7e12-b75e-b8842d1129c7",
+          "turn_count": 2,
+          "completion_source": "notify-fallback-watcher",
+          "status": "closed"
+        },
+        "019f6633-8b67-7502-95bf-6041df199705": {
+          "thread_id": "019f6633-8b67-7502-95bf-6041df199705",
+          "kind": "subagent",
+          "first_seen_at": "2026-07-16T10:29:06.311Z",
+          "last_seen_at": "2026-07-16T10:31:44.009Z",
+          "last_turn_id": "019f6a7b-4eec-7d81-bf69-cfafe9de4d67",
+          "completed_at": "2026-07-16T10:31:44.009Z",
+          "last_completed_turn_id": "019f6a7b-4eec-7d81-bf69-cfafe9de4d67",
+          "turn_count": 2,
+          "completion_source": "notify-fallback-watcher",
+          "status": "closed"
+        }
+      }
+    }
+  },
+  "pending_role_intents": []
+}

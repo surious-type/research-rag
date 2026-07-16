@@ -117,6 +117,14 @@ def _chunk_title_from_node(node_dict: dict[str, Any], chunk_id: str) -> str:
 
 
 def _record_retriever_result(name: str, output: RetrieverOutput) -> None:
+    graph_spo: list[str] = []
+    for graph in getattr(output, "graphs", []) or []:
+        get_all_spo = getattr(graph, "get_all_spo", None)
+        if callable(get_all_spo):
+            try:
+                graph_spo.extend(str(item) for item in (get_all_spo() or []))
+            except Exception:
+                continue
     retriever_results = {}
     path = _diag_path()
     if path and path.exists():
@@ -125,6 +133,8 @@ def _record_retriever_result(name: str, output: RetrieverOutput) -> None:
         "status": "error" if str(getattr(output, "err_msg", "") or "").strip() else "ok",
         "chunks_count": len(getattr(output, "chunks", []) or []),
         "graphs_count": len(getattr(output, "graphs", []) or []),
+        "graph_spo_count": len(set(graph_spo)),
+        "graph_spo_sample": list(dict.fromkeys(graph_spo))[:5],
         "error": str(getattr(output, "err_msg", "") or "").strip() or None,
     }
     _merge_diag({"retriever_results": retriever_results})

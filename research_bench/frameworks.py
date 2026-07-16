@@ -9,7 +9,9 @@ import logging
 import os
 import re
 import shlex
+import shutil
 import sys
+import tempfile
 import time
 from collections import Counter
 from pathlib import Path
@@ -60,6 +62,9 @@ KAG_PROXY_ENV_KEYS = (
     "WSS_PROXY",
     "wss_proxy",
 )
+KAG_REQUIRED_SCHEMA_PROPERTIES = {
+    "Chunk": {"id", "name", "content"},
+}
 
 
 def _kag_register_path() -> str:
@@ -115,6 +120,16 @@ def _rewrite_kag_server_config(value: Any) -> Any:
 
 def build_kag_server_project_config(config_text: str) -> dict[str, Any]:
     return _rewrite_kag_server_config(yaml.safe_load(config_text))
+
+
+@contextmanager
+def _pushd(path: Path):
+    previous = Path.cwd()
+    os.chdir(path)
+    try:
+        yield
+    finally:
+        os.chdir(previous)
 
 
 @contextmanager
@@ -288,6 +303,135 @@ def _summarize_vector_probe_status(probes: list[dict[str, Any]]) -> str:
     if any(status == "PASS" for status in statuses):
         return "PASS"
     return "WARN"
+
+
+def _enum_name(value: Any) -> str | None:
+    if value is None:
+        return None
+    if hasattr(value, "name"):
+        return str(value.name)
+    if hasattr(value, "value"):
+        return str(value.value)
+    text = str(value).strip()
+    return text or None
+
+
+def _schema_property_snapshot(prop: Any) -> dict[str, Any]:
+    return {
+        "name": str(getattr(prop, "name", "") or ""),
+        "type": str(getattr(prop, "object_type_name", "") or ""),
+        "index_type": _enum_name(getattr(prop, "index_type", None)),
+    }
+
+
+def _schema_relation_snapshot(rel: Any) -> dict[str, Any]:
+    return {
+        "name": str(getattr(rel, "name", "") or ""),
+        "type": str(getattr(rel, "object_type_name", "") or ""),
+    }
+
+
+def _schema_type_snapshot(type_name: str, spg_type: Any) -> dict[str, Any]:
+    return {
+        "type_name": type_name,
+        "spg_type": _enum_name(getattr(spg_type, "spg_type_enum", None)),
+        "properties": sorted(
+            [_schema_property_snapshot(prop) for prop in getattr(spg_type, "properties", {}).values()],
+            key=lambda row: (row["name"], row["type"]),
+        ),
+        "relations": sorted(
+            [_schema_relation_snapshot(rel) for rel in getattr(spg_type, "relations", {}).values()],
+            key=lambda row: (row["name"], row["type"]),
+        ),
+    }
+
+
+def _find_schema_type(schema_snapshot: dict[str, Any], type_name: str) -> dict[str, Any] | None:
+    return next((row for row in schema_snapshot.get("types", []) if row.get("type_name") == type_name), None)
+
+
+def _schema_property_map(type_snapshot: dict[str, Any] | None) -> dict[str, dict[str, Any]]:
+    if not type_snapshot:
+        return {}
+    return {
+        str(row.get("name")): row
+        for row in type_snapshot.get("properties", [])
+        if str(row.get("name") or "").strip()
+    }
+
+
+def _validate_required_schema(schema_snapshot: dict[str, Any]) -> list[str]:
+    issues: list[str] = []
+    for type_name, required_props in KAG_REQUIRED_SCHEMA_PROPERTIES.items():
+        type_snapshot = _find_schema_type(schema_snapshot, type_name)
+        if type_snapshot is None:
+            issues.append(f"missing schema type {type_name}")
+            continue
+        properties = _schema_property_map(type_snapshot)
+        missing_props = sorted(prop for prop in required_props if prop not in properties)
+        for prop_name in missing_props:
+            issues.append(f"missing schema property {type_name}.{prop_name}")
+    chunk_snapshot = _find_schema_type(schema_snapshot, "Chunk")
+    chunk_properties = _schema_property_map(chunk_snapshot)
+    chunk_content = chunk_properties.get("content")
+    if str((chunk_content or {}).get("index_type") or "").upper() not in {"VECTOR", "TEXTANDVECTOR", "TEXT_AND_VECTOR"}:
+        issues.append("missing vector index metadata for Chunk.content")
+
+    entity_types = [row for row in schema_snapshot.get("types", []) if str(row.get("spg_type") or "").upper() == "ENTITY"]
+    if not entity_types:
+        issues.append("missing schema type Entity")
+        return issues
+    entity_with_id_name = [
+        row for row in entity_types if {"id", "name"} <= set(_schema_property_map(row))
+    ]
+    if not entity_with_id_name:
+        issues.append("missing schema property Entity.id")
+        issues.append("missing schema property Entity.name")
+        return issues
+    entity_vector_ok = False
+    for row in entity_with_id_name:
+        properties = _schema_property_map(row)
+        for prop_name in ("name", "desc", "description"):
+            prop = properties.get(prop_name)
+            index_type = str((prop or {}).get("index_type") or "").upper()
+            if index_type in {"VECTOR", "TEXTANDVECTOR", "TEXT_AND_VECTOR"}:
+                entity_vector_ok = True
+                break
+        if entity_vector_ok:
+            break
+    if not entity_vector_ok:
+        issues.append("missing vector index metadata for Entity.name")
+    return issues
+
+
+def _schema_diff(before: dict[str, Any], after: dict[str, Any]) -> dict[str, Any]:
+    before_types = {row["type_name"]: row for row in before.get("types", [])}
+    after_types = {row["type_name"]: row for row in after.get("types", [])}
+    added_types = sorted(set(after_types) - set(before_types))
+    removed_types = sorted(set(before_types) - set(after_types))
+    changed_types: list[dict[str, Any]] = []
+    for type_name in sorted(set(before_types) & set(after_types)):
+        before_props = _schema_property_map(before_types[type_name])
+        after_props = _schema_property_map(after_types[type_name])
+        if before_props == after_props and before_types[type_name].get("relations") == after_types[type_name].get("relations"):
+            continue
+        changed_types.append(
+            {
+                "type_name": type_name,
+                "added_properties": sorted(set(after_props) - set(before_props)),
+                "removed_properties": sorted(set(before_props) - set(after_props)),
+                "changed_properties": sorted(
+                    prop_name
+                    for prop_name in set(before_props) & set(after_props)
+                    if before_props[prop_name] != after_props[prop_name]
+                ),
+            }
+        )
+    return {
+        "added_types": added_types,
+        "removed_types": removed_types,
+        "changed_types": changed_types,
+    }
 
 
 def _prepare_kag_query_environment(run_dir: Path) -> tuple[dict[str, Any], dict[str, Any], Path]:
@@ -595,6 +739,116 @@ class KAGAdapter:
             project = client.create(name=namespace, namespace=namespace, config=build_kag_server_project_config(config_text))
         return {"id": project.id, "namespace": project.namespace}
 
+    def _load_schema_snapshot(self, project_id: str) -> dict[str, Any]:
+        _ensure_kag_imports()
+        from knext.schema.client import SchemaClient
+        from knext.schema.model.base import BaseSpgType, SpgTypeEnum
+
+        client = SchemaClient(host_addr=KAG_LOCAL_HOST_ADDR, project_id=int(project_id))
+        project_schema = client._rest_client.schema_query_project_schema_get(int(project_id))
+        schema: dict[str, Any] = {}
+        for rest_model in project_schema.spg_types:
+            if rest_model.spg_type_enum not in (
+                SpgTypeEnum.Concept,
+                SpgTypeEnum.Entity,
+                SpgTypeEnum.Event,
+                SpgTypeEnum.Index,
+            ):
+                continue
+            spg_type_name = rest_model.basic_info.name.name
+            type_class = BaseSpgType.by_type_enum(rest_model.spg_type_enum)
+            kwargs = {"name": spg_type_name, "rest_model": rest_model}
+            if rest_model.spg_type_enum == SpgTypeEnum.Concept:
+                kwargs["hypernym_predicate"] = rest_model.concept_layer_config.hypernym_predicate
+            schema[spg_type_name.split(".")[-1]] = type_class(**kwargs)
+        types = [_schema_type_snapshot(type_name, spg_type) for type_name, spg_type in sorted(schema.items())]
+        return {"project_id": str(project_id), "types": types}
+
+    def _create_supported_project_scaffold(
+        self,
+        run_dir: Path,
+        namespace: str,
+        project_id: str,
+        config_path: Path,
+    ) -> Path:
+        _ensure_kag_imports()
+        from knext.command.sub_command.project import _render_template
+
+        workspace = ensure_dir(run_dir / "_kag_project_create")
+        if (workspace / namespace).exists():
+            shutil.rmtree(workspace / namespace)
+        with _pushd(workspace):
+            _render_template(
+                namespace=namespace,
+                tmpl="default",
+                id=project_id,
+                with_server=True,
+                host_addr=KAG_LOCAL_HOST_ADDR,
+                name=namespace,
+                config_path=str(config_path),
+                delete_cfg=False,
+            )
+        return workspace / namespace
+
+    def _commit_supported_schema(self, project_id: str, namespace: str, scaffold_dir: Path) -> None:
+        _ensure_kag_imports()
+        from kag.indexer import KAGIndexManager
+        from knext.schema.marklang.schema_ml import SPGSchemaMarkLang
+
+        schema_file = scaffold_dir / "schema" / f"{namespace}.schema"
+        ml = (
+            SPGSchemaMarkLang(str(schema_file), host_addr=KAG_LOCAL_HOST_ADDR, project_id=int(project_id))
+            if schema_file.exists()
+            else None
+        )
+        index_ml = None
+        for index_manager_name in KAGIndexManager.list_available():
+            index_mgr = KAGIndexManager.from_config(
+                {"type": index_manager_name, "llm_config": None, "vectorize_model_config": None}
+            )
+            schema_str = getattr(index_mgr, "schema", "")
+            if not schema_str:
+                continue
+            cur_index_ml = SPGSchemaMarkLang(
+                filename="",
+                script_data_str=f"namespace {namespace}\n{schema_str}",
+                host_addr=KAG_LOCAL_HOST_ADDR,
+                project_id=int(project_id),
+            )
+            if index_ml is None:
+                index_ml = cur_index_ml
+            else:
+                index_ml.types.update(cur_index_ml.types)
+        if ml is None and index_ml is None:
+            raise RuntimeError(f"no supported schema sources found for namespace {namespace}")
+        if ml is None:
+            ml = index_ml
+        elif index_ml is not None:
+            ml.types.update(index_ml.types)
+        ml.sync_schema()
+
+    def _create_supported_project(
+        self,
+        run_dir: Path,
+        namespace: str,
+        bootstrap_config_text: str,
+        config_path: Path,
+    ) -> tuple[dict[str, Any], dict[str, Any]]:
+        project = self._create_project(namespace, bootstrap_config_text)
+        direct_schema = self._load_schema_snapshot(str(project["id"]))
+        scaffold_dir = self._create_supported_project_scaffold(run_dir, namespace, str(project["id"]), config_path)
+        self._commit_supported_schema(str(project["id"]), namespace, scaffold_dir)
+        official_schema = self._load_schema_snapshot(str(project["id"]))
+        comparison = {
+            "creation_method": "direct_rest_create_plus_supported_schema_commit",
+            "project_id": str(project["id"]),
+            "namespace": namespace,
+            "direct_rest_schema": direct_schema,
+            "official_cli_schema": official_schema,
+            "schema_diff": _schema_diff(direct_schema, official_schema),
+        }
+        return project, comparison
+
     def _sync_project_config(self, project_id: str, namespace: str, config_text: str) -> None:
         _ensure_kag_imports()
         from knext.project.client import ProjectClient
@@ -847,6 +1101,17 @@ class KAGAdapter:
             "search_probe": probe,
         }
 
+    def _write_schema_artifacts(
+        self,
+        run_dir: Path,
+        project_id: str,
+        comparison: dict[str, Any],
+    ) -> dict[str, Any]:
+        schema_before_build = comparison.get("official_cli_schema") or self._load_schema_snapshot(project_id)
+        atomic_write_json(run_dir / "build" / "schema_before_build.json", schema_before_build)
+        atomic_write_json(run_dir / "build" / "project_creation_comparison.json", comparison)
+        return schema_before_build
+
     def build(self, source_path: Path, run_dir: Path) -> tuple[BuildMetrics, dict[str, Any]]:
         config_template = (ROOT / "configs" / "kag" / "graph_config.template.yaml").read_text(encoding="utf-8")
         namespace = _normalize_kag_namespace(run_dir)
@@ -856,7 +1121,11 @@ class KAGAdapter:
             .replace("__CKPT_DIR__", str(run_dir / "ckpt"))
             .replace("__KAG_REGISTER_PATH__", _kag_register_path())
         )
-        project_info = self._create_project(namespace, config_text)
+        config_path = run_dir / "generated_kag_config.yaml"
+        from .utils import atomic_write_text
+
+        atomic_write_text(config_path, config_text)
+        project_info, comparison = self._create_supported_project(run_dir, namespace, config_text, config_path)
         os.environ["KAG_PROJECT_ID"] = str(project_info["id"])
         os.environ["KAG_PROJECT_NAMESPACE"] = project_info["namespace"]
         os.environ["KAG_PROJECT_HOST_ADDR"] = KAG_LOCAL_HOST_ADDR
@@ -866,16 +1135,15 @@ class KAGAdapter:
             .replace("__CKPT_DIR__", str(run_dir / "ckpt"))
             .replace("__KAG_REGISTER_PATH__", _kag_register_path())
         )
-        config_path = run_dir / "generated_kag_config.yaml"
         server_config = build_kag_server_project_config(config_text)
         atomic_write_json(run_dir / "project.json", project_info)
-        from .utils import atomic_write_text
-
         atomic_write_text(config_path, config_text)
         atomic_write_text(run_dir / "kag_config.yaml", config_text)
         atomic_write_json(run_dir / "server_project_config.json", server_config)
         atomic_write_json(run_dir / "runtime_project_config.json", yaml.safe_load(config_text))
         self._sync_project_config(str(project_info["id"]), project_info["namespace"], config_text)
+        schema_before_build = self._write_schema_artifacts(run_dir, str(project_info["id"]), comparison)
+        schema_issues = _validate_required_schema(schema_before_build)
         manifest_path = run_dir / "manifest.json"
         if manifest_path.exists():
             manifest = load_json(manifest_path)
@@ -887,6 +1155,20 @@ class KAGAdapter:
                 "runtime_vectorize_model_base_url": yaml.safe_load(config_text).get("vectorize_model", {}).get("base_url"),
             }
             atomic_write_json(manifest_path, manifest)
+        if schema_issues:
+            metrics = BuildMetrics(
+                build_time_seconds=0.0,
+                documents_count=1 if source_path.exists() else 0,
+                input_documents_count=1 if source_path.exists() else 0,
+                backend_document_nodes_count=None,
+                chunks_count=None,
+                index_size_bytes=None,
+                build_status="failed",
+                build_error="; ".join(schema_issues),
+            )
+            atomic_write_json(run_dir / "build" / "schema_validation.json", {"status": "FAIL", "issues": schema_issues})
+            return metrics, {}
+        atomic_write_json(run_dir / "build" / "schema_validation.json", {"status": "PASS", "issues": []})
         started = time.perf_counter()
         process = run_command(
             [str(ROOT / ".venv" / "bin" / "python"), str(ROOT / "scripts" / "kag" / "build.py"), "--config", str(config_path), "--input", str(source_path)],
@@ -909,6 +1191,7 @@ class KAGAdapter:
         if process.returncode != 0:
             return metrics, {}
         summary = self._neo4j_summary(project_info["namespace"], run_dir=run_dir)
+        atomic_write_json(run_dir / "build" / "schema_after_build.json", self._load_schema_snapshot(str(project_info["id"])))
         input_documents_count = 1 if source_path.exists() else 0
         metrics.input_documents_count = input_documents_count
         metrics.documents_count = input_documents_count

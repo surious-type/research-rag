@@ -747,9 +747,17 @@ def test_kag_build_skips_neo4j_on_failed_subprocess(tmp_path: Path, monkeypatch)
     run_dir = tmp_path / "run"
     (run_dir / "build").mkdir(parents=True)
     monkeypatch.setattr(frameworks_mod, "_normalize_kag_namespace", lambda _run_dir: "Kag123456789012")
-    monkeypatch.setattr(adapter, "_create_project", lambda namespace, config_text: {"id": "1", "namespace": namespace})
+    monkeypatch.setattr(
+        adapter,
+        "_create_supported_project",
+        lambda run_dir, namespace, bootstrap_config_text, config_path: (
+            {"id": "1", "namespace": namespace},
+            {"official_cli_schema": {"types": [{"type_name": "Chunk", "properties": [{"name": "id", "index_type": None}, {"name": "name", "index_type": None}, {"name": "content", "index_type": "TEXT_AND_VECTOR"}]}, {"type_name": "Person", "spg_type": "Entity", "properties": [{"name": "id", "index_type": None}, {"name": "name", "index_type": None}, {"name": "desc", "index_type": "TEXT_AND_VECTOR"}]}]}},
+        ),
+    )
     monkeypatch.setattr(adapter, "_sync_project_config", lambda project_id, namespace, config_text: None)
     monkeypatch.setattr(frameworks_mod, "run_command", lambda *args, **kwargs: type("Proc", (), {"returncode": 9})())
+    monkeypatch.setattr(adapter, "_load_schema_snapshot", lambda project_id: {"types": []})
     monkeypatch.setattr(adapter, "_neo4j_summary", lambda namespace: (_ for _ in ()).throw(AssertionError("should not query neo4j on failed build")))
     metrics, graph = adapter.build(source_path, run_dir)
     assert metrics.build_status == "failed"
@@ -764,7 +772,14 @@ def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path,
     run_dir = tmp_path / "run"
     (run_dir / "build").mkdir(parents=True)
     monkeypatch.setattr(frameworks_mod, "_normalize_kag_namespace", lambda _run_dir: "Kag123456789012")
-    monkeypatch.setattr(adapter, "_create_project", lambda namespace, config_text: {"id": "31", "namespace": namespace})
+    monkeypatch.setattr(
+        adapter,
+        "_create_supported_project",
+        lambda run_dir, namespace, bootstrap_config_text, config_path: (
+            {"id": "31", "namespace": namespace},
+            {"official_cli_schema": {"types": [{"type_name": "Chunk", "properties": [{"name": "id", "index_type": None}, {"name": "name", "index_type": None}, {"name": "content", "index_type": "TEXT_AND_VECTOR"}]}, {"type_name": "Person", "spg_type": "Entity", "properties": [{"name": "id", "index_type": None}, {"name": "name", "index_type": None}, {"name": "desc", "index_type": "TEXT_AND_VECTOR"}]}]}},
+        ),
+    )
     sync_calls: list[tuple[str, str]] = []
     monkeypatch.setattr(adapter, "_sync_project_config", lambda project_id, namespace, config_text: sync_calls.append((project_id, namespace)))
     monkeypatch.setattr(
@@ -788,6 +803,7 @@ def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path,
         return type("Proc", (), {"returncode": 0})()
 
     monkeypatch.setattr(frameworks_mod, "run_command", fake_run_command)
+    monkeypatch.setattr(adapter, "_load_schema_snapshot", lambda project_id: {"types": []})
     metrics, _ = adapter.build(source_path, run_dir)
     assert metrics.build_status == "success"
     assert metrics.documents_count == 1
@@ -796,6 +812,86 @@ def test_kag_build_runs_from_run_dir_and_writes_canonical_config(tmp_path: Path,
     assert call["cwd"] == run_dir
     assert (run_dir / "kag_config.yaml").exists()
     assert sync_calls == [("31", "Kag123456789012")]
+
+
+def test_validate_required_schema_detects_missing_chunk_content_and_vector_metadata() -> None:
+    issues = frameworks_mod._validate_required_schema(
+        {
+            "types": [
+                {"type_name": "Chunk", "properties": [{"name": "id", "index_type": None}, {"name": "name", "index_type": None}]},
+                {"type_name": "Person", "spg_type": "Entity", "properties": [{"name": "id", "index_type": None}, {"name": "name", "index_type": "TEXT"}]},
+            ]
+        }
+    )
+    assert "missing schema property Chunk.content" in issues
+    assert "missing vector index metadata for Entity.name" in issues
+
+
+def test_validate_required_schema_accepts_official_entity_desc_vector() -> None:
+    issues = frameworks_mod._validate_required_schema(
+        {
+            "types": [
+                {
+                    "type_name": "Chunk",
+                    "properties": [
+                        {"name": "id", "index_type": None},
+                        {"name": "name", "index_type": None},
+                        {"name": "content", "index_type": "TEXT_AND_VECTOR"},
+                    ],
+                },
+                {
+                    "type_name": "Person",
+                    "spg_type": "Entity",
+                    "properties": [
+                        {"name": "id", "index_type": None},
+                        {"name": "name", "index_type": None},
+                        {"name": "desc", "index_type": "TEXT_AND_VECTOR"},
+                    ],
+                },
+            ]
+        }
+    )
+    assert issues == []
+
+
+def test_schema_diff_tracks_direct_rest_vs_official_schema() -> None:
+    diff = frameworks_mod._schema_diff(
+        {"types": [{"type_name": "Chunk", "properties": [{"name": "id", "type": "Text", "index_type": None}], "relations": []}]},
+        {"types": [{"type_name": "Chunk", "properties": [{"name": "id", "type": "Text", "index_type": None}, {"name": "content", "type": "Text", "index_type": "TEXT_AND_VECTOR"}], "relations": []}]},
+    )
+    assert diff["added_types"] == []
+    assert diff["changed_types"][0]["type_name"] == "Chunk"
+    assert diff["changed_types"][0]["added_properties"] == ["content"]
+
+
+def test_kag_build_fails_before_subprocess_when_schema_invalid(tmp_path: Path, monkeypatch) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("data", encoding="utf-8")
+    run_dir = tmp_path / "run"
+    (run_dir / "build").mkdir(parents=True)
+    monkeypatch.setattr(frameworks_mod, "_normalize_kag_namespace", lambda _run_dir: "Kag123456789012")
+    monkeypatch.setattr(
+        adapter,
+        "_create_supported_project",
+        lambda run_dir, namespace, bootstrap_config_text, config_path: (
+            {"id": "31", "namespace": namespace},
+            {"official_cli_schema": {"types": [{"type_name": "Chunk", "properties": [{"name": "id", "index_type": None}]}, {"type_name": "Entity", "properties": [{"name": "id", "index_type": None}]}]}},
+        ),
+    )
+    monkeypatch.setattr(adapter, "_sync_project_config", lambda project_id, namespace, config_text: None)
+    called = {"run_command": False}
+
+    def fake_run_command(*args, **kwargs):
+        called["run_command"] = True
+        return type("Proc", (), {"returncode": 0})()
+
+    monkeypatch.setattr(frameworks_mod, "run_command", fake_run_command)
+    metrics, graph = adapter.build(source_path, run_dir)
+    assert metrics.build_status == "failed"
+    assert "missing schema property Chunk.name" in str(metrics.build_error)
+    assert called["run_command"] is False
+    assert graph == {}
 
 
 def test_required_vector_indexes_online_filters_namespace() -> None:
@@ -1065,11 +1161,13 @@ def test_registry_record_retriever_result(monkeypatch, tmp_path: Path) -> None:
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q006")
-    output = type("Output", (), {"chunks": [1], "graphs": [], "err_msg": ""})()
+    graph = type("Graph", (), {"get_all_spo": lambda self: ["A-r-B"]})()
+    output = type("Output", (), {"chunks": [1], "graphs": [graph], "err_msg": ""})()
     kag_registry._record_retriever_result("rc_open_spg", output)
     diag = json.loads((tmp_path / "query" / "_bench_diag" / "q006.json").read_text(encoding="utf-8"))
     assert diag["retriever_results"]["rc_open_spg"]["status"] == "ok"
     assert diag["retriever_results"]["rc_open_spg"]["chunks_count"] == 1
+    assert diag["retriever_results"]["rc_open_spg"]["graph_spo_count"] == 1
 
 
 def test_run_ragas_placeholder_when_no_answers(tmp_path: Path) -> None:
