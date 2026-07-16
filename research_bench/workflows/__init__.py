@@ -1,11 +1,9 @@
-from .check_workflow import check_environment, format_checks
-from .run_workflow import execute_run, rerun_query_stage, rerun_ragas_stage, verify_run
+"""Workflow namespace package.
 
-__all__ = [
-    "check_environment",
-    "execute_run",
-    "format_checks",
-    "rerun_query_stage",
-    "rerun_ragas_stage",
-    "verify_run",
-]
+Import public entrypoints from submodules such as:
+
+- ``research_bench.workflows.check_workflow``
+- ``research_bench.workflows.run_workflow``
+"""
+
+__all__: list[str] = []

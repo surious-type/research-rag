@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import os
 import shutil
 import subprocess
@@ -8,7 +9,7 @@ from pathlib import Path
 import requests
 
 from research_bench.adapters.kag import get_kag_neo4j_config
-from research_bench.data import RESULTS_DIR, load_questions, load_source_info, questions_sha256
+from research_bench.data import RESULTS_DIR, ROOT, load_questions, load_source_info, questions_sha256
 from research_bench.models import CheckResult, FRAMEWORKS
 from research_bench.shared.io import ensure_dir
 
@@ -121,11 +122,11 @@ def _check_frameworks() -> list[CheckResult]:
     results = []
     for name in FRAMEWORKS:
         if name == "msgraphrag":
-            exists = (Path(".venv/bin/graphrag")).exists()
+            exists = bool(importlib.util.find_spec("graphrag")) or bool(shutil.which("graphrag"))
         elif name == "lightrag":
-            exists = (Path(".venv/lib/python3.12/site-packages/lightrag")).exists()
+            exists = bool(importlib.util.find_spec("lightrag"))
         else:
-            exists = (Path("frameworks/kag")).exists()
+            exists = (ROOT / "frameworks" / "kag").exists()
         results.append(CheckResult(name, "PASS" if exists else "FAIL", "available" if exists else "missing"))
     return results
 

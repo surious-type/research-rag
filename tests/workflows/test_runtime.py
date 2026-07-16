@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import sys
+import types
 from pathlib import Path
 
 import research_bench.cli as cli_mod
@@ -309,6 +310,20 @@ def test_check_helpers(monkeypatch) -> None:
     )
     results = workflow_mod._check_llm() + workflow_mod._check_embeddings() + workflow_mod._check_docker()
     assert any(row.name == "llm model" and row.status == "PASS" for row in results)
+
+
+def test_check_frameworks_uses_current_python_environment(monkeypatch) -> None:
+    def fake_find_spec(name: str):
+        if name in {"graphrag", "lightrag"}:
+            return types.SimpleNamespace(name=name)
+        return None
+
+    monkeypatch.setattr(workflow_mod.checks_mod.importlib.util, "find_spec", fake_find_spec)
+    monkeypatch.setattr(workflow_mod.checks_mod.shutil, "which", lambda name: None)
+    monkeypatch.setattr(workflow_mod.checks_mod, "FRAMEWORKS", ("msgraphrag", "lightrag", "kag"))
+    monkeypatch.setattr(workflow_mod.checks_mod, "ROOT", Path("/tmp/repo"))
+    rows = workflow_mod._check_frameworks()
+    assert [row.status for row in rows] == ["PASS", "PASS", "FAIL"]
 
 
 def test_check_kag_neo4j(monkeypatch) -> None:
