@@ -1589,9 +1589,6 @@ def _normalize_kag_context(trace: Any) -> list[ContextItem]:
 
 
 def get_adapter(name: str):
-    mapping = {
-        "msgraphrag": MsGraphRAGAdapter(),
-        "lightrag": LightRAGAdapter(),
-        "kag": KAGAdapter(),
-    }
-    return mapping[name]
+    from .adapters.registry import get_adapter as resolve_adapter
+
+    return resolve_adapter(name)

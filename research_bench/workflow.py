@@ -34,7 +34,7 @@ from .data import (
     load_source_info,
     questions_sha256,
 )
-from .frameworks import get_adapter
+from .adapters.registry import get_adapter
 from .models import CheckResult, FRAMEWORKS
 from .ragas_eval import prepare_ragas_rows, save_ragas_outputs, save_ragas_placeholder
 from .utils import (
