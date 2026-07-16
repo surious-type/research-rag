@@ -1,4 +1,4 @@
-from .shared.io import (
+from .io import (
     atomic_write_json,
     atomic_write_jsonl,
     atomic_write_text,
@@ -8,9 +8,9 @@ from .shared.io import (
     load_json,
     write_csv,
 )
-from .shared.paths import sha256_file, utc_run_id
-from .shared.subprocess import run_command
-from .shared.text import aggregate_numeric, latency_summary, percentile, safe_float, word_count
+from .paths import sha256_file, utc_run_id
+from .subprocess import run_command
+from .text import aggregate_numeric, latency_summary, percentile, safe_float, word_count
 
 __all__ = [
     "aggregate_numeric",
