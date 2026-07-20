@@ -13,6 +13,7 @@ The workflow uses one shared corpus in [data/corpus/source.txt](/home/surious-ty
 - [experiment.py](/home/surious-type/projects/research-rag/experiment.py): main CLI entrypoint
 - [research_bench](/home/surious-type/projects/research-rag/research_bench): benchmark implementation
 - [tests](/home/surious-type/projects/research-rag/tests): unit tests for local workflow code
+- [frameworks/kag](/home/surious-type/projects/research-rag/frameworks/kag): vendored external KAG source tree kept as a separate nested git checkout
 - [docs/project_map.md](/home/surious-type/projects/research-rag/docs/project_map.md): high-level codebase map
 - [docs/architecture.md](/home/surious-type/projects/research-rag/docs/architecture.md): architecture summary
 - [docs/workflow.md](/home/surious-type/projects/research-rag/docs/workflow.md): benchmark run lifecycle
@@ -42,6 +43,41 @@ If you are new to the repository, read in this order:
 
 ## Environment check
 
+Runtime model selection is now driven by `.env` in the project root. If `.env` is absent, the benchmark falls back to the current local defaults.
+Use [.env.example](/home/surious-type/projects/research-rag/.env.example) as the starting template for a new local setup.
+
+Supported variables:
+
+```bash
+OPENAI_BASE_URL=http://127.0.0.1:8080/v1
+OPENAI_EMBEDDING_BASE_URL=http://127.0.0.1:8010/v1
+OPENAI_API_KEY=local
+OPENAI_MODEL=/models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+OPENAI_EMBEDDING_MODEL=multilingual-e5-large
+```
+
+Examples:
+
+Local default-compatible setup:
+
+```bash
+OPENAI_BASE_URL=http://127.0.0.1:8080/v1
+OPENAI_EMBEDDING_BASE_URL=http://127.0.0.1:8010/v1
+OPENAI_API_KEY=local
+OPENAI_MODEL=/models/Qwen3.5-35B-A3B-Q4_K_M.gguf
+OPENAI_EMBEDDING_MODEL=multilingual-e5-large
+```
+
+OpenAI API setup:
+
+```bash
+OPENAI_BASE_URL=https://api.openai.com/v1
+OPENAI_EMBEDDING_BASE_URL=https://api.openai.com/v1
+OPENAI_API_KEY=your-openai-key
+OPENAI_MODEL=gpt-5-nano
+OPENAI_EMBEDDING_MODEL=text-embedding-3-small
+```
+
 In this shell, use `.venv/bin/python` instead of `python`, because the plain `python` alias is not installed.
 
 Run:
@@ -54,8 +90,8 @@ The check command validates:
 
 - `source.txt`
 - `questions.jsonl`
-- LLM endpoint `http://127.0.0.1:8080/v1`
-- embedding endpoint `http://127.0.0.1:8010/v1`
+- configured LLM endpoint and model from `.env`
+- configured embedding endpoint and model from `.env`
 - installed framework assets
 - Docker and running containers
 - Neo4j visibility for KAG
@@ -92,6 +128,7 @@ Run:
 ```
 
 Smoke results are stored under `results/_smoke/` and are excluded from the final comparison report.
+It is safe to periodically clean older smoke runs and keep only the latest one per framework.
 
 ## Full runs
 
@@ -121,10 +158,7 @@ If a collision happens, a numeric suffix is appended automatically.
 
 Pinned support packages live in [requirements-ragas.txt](/home/surious-type/projects/research-rag/requirements-ragas.txt).
 
-The workflow uses local endpoints only:
-
-- LLM: `http://127.0.0.1:8080/v1`
-- embeddings: `http://127.0.0.1:8010/v1`
+RAGAS uses the same runtime configuration as the benchmark adapters and `check`. Changing `.env` is enough to switch the LLM provider and embedding model for RAGAS as well.
 
 Per-run command:
 
@@ -159,6 +193,10 @@ The report command selects the latest successful non-smoke run for each framewor
 - `reports/ragas_by_question_type.csv`
 - `reports/per_question_comparison.csv`
 - `reports/summary.md`
+
+## Vendored frameworks
+
+`frameworks/kag` is stored in this repository as a vendored external framework source tree and currently exists as its own nested git checkout. The benchmark uses it locally, but `research_bench` code should treat it as upstream framework code rather than internal application code.
 
 ## Result structure
 

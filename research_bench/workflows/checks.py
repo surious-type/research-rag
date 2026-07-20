@@ -11,6 +11,7 @@ import requests
 from research_bench.adapters.kag import get_kag_neo4j_config
 from research_bench.data import RESULTS_DIR, ROOT, load_questions, load_source_info, questions_sha256
 from research_bench.models import CheckResult, FRAMEWORKS
+from research_bench.runtime_config import DEFAULT_TEMPERATURE, load_model_runtime_config
 from research_bench.shared.io import ensure_dir
 
 
@@ -78,20 +79,21 @@ def _ensure_source_txt() -> Path:
 
 def _check_llm() -> list[CheckResult]:
     results = []
+    config = load_model_runtime_config()
+    base_url = config.base_url.rstrip("/")
     try:
-        models = requests.get("http://127.0.0.1:8080/v1/models", timeout=30)
+        models = requests.get(f"{base_url}/models", timeout=30, headers=config.auth_headers)
         models.raise_for_status()
-        payload = models.json()
-        model_id = payload["data"][0]["id"]
         results.append(CheckResult("llm endpoint", "PASS", "reachable"))
-        results.append(CheckResult("llm model", "PASS", model_id))
+        results.append(CheckResult("llm model", "PASS", config.model))
         probe = requests.post(
-            "http://127.0.0.1:8080/v1/chat/completions",
+            f"{base_url}/chat/completions",
             timeout=60,
+            headers=config.auth_headers,
             json={
-                "model": model_id,
-                "temperature": 0,
+                "model": config.model,
                 "messages": [{"role": "user", "content": "Ответь словом ГОТОВО"}],
+                "temperature": DEFAULT_TEMPERATURE,
             },
         )
         probe.raise_for_status()
@@ -103,11 +105,14 @@ def _check_llm() -> list[CheckResult]:
 
 def _check_embeddings() -> list[CheckResult]:
     results = []
+    config = load_model_runtime_config()
+    base_url = config.embedding_base_url.rstrip("/")
     try:
         probe = requests.post(
-            "http://127.0.0.1:8010/v1/embeddings",
+            f"{base_url}/embeddings",
             timeout=60,
-            json={"model": "multilingual-e5-large", "input": ["probe"]},
+            headers=config.auth_headers,
+            json={"model": config.embedding_model, "input": ["probe"]},
         )
         probe.raise_for_status()
         data = probe.json()["data"][0]["embedding"]

@@ -1,12 +1,26 @@
 from __future__ import annotations
 
 import json
+import os
+import sys
 import types
+from pathlib import Path
 from typing import Any
 
 
-def test_registry_normalizes_json_string_task_arguments() -> None:
+def _import_kag_registry():
+    kag_root = Path(__file__).resolve().parents[2] / "frameworks" / "kag"
+    kag_root_str = str(kag_root)
+    if kag_root_str not in sys.path:
+        sys.path.insert(0, kag_root_str)
+    os.environ.setdefault("KAG_PROJECT_HOST_ADDR", "http://127.0.0.1:8887")
     import research_bench._kag_registry as kag_registry
+
+    return kag_registry
+
+
+def test_registry_normalizes_json_string_task_arguments() -> None:
+    kag_registry = _import_kag_registry()
 
     args, normalized, error = kag_registry._normalize_task_arguments('{"query":"Q","logic_form_node":{"type":"x"}}')
     assert normalized is True
@@ -15,7 +29,7 @@ def test_registry_normalizes_json_string_task_arguments() -> None:
 
 
 def test_registry_rejects_invalid_string_task_arguments() -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     args, normalized, error = kag_registry._normalize_task_arguments("not-json")
     assert normalized is False
@@ -24,7 +38,7 @@ def test_registry_rejects_invalid_string_task_arguments() -> None:
 
 
 def test_registry_normalize_ner_item_and_diag_helpers(tmp_path, monkeypatch) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q001")
@@ -39,7 +53,7 @@ def test_registry_normalize_ner_item_and_diag_helpers(tmp_path, monkeypatch) -> 
 
 
 def test_registry_chunk_title_from_node() -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     assert kag_registry._chunk_title_from_node({"title": "Atlas"}, "chunk-1") == "Atlas"
     assert kag_registry._chunk_title_from_node({"document_name": "doc.txt"}, "chunk-1") == "doc.txt"
@@ -47,7 +61,7 @@ def test_registry_chunk_title_from_node() -> None:
 
 
 def test_registry_compatibility_ner_invoke_normalizes_strings(monkeypatch) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setattr(kag_registry.Ner, "_parse_ner_list", lambda self, query: ["Atlas", {"name": "Orion-128", "category": "Works"}])
     ner = object.__new__(kag_registry.BenchmarkCompatibilityNer)
@@ -56,7 +70,7 @@ def test_registry_compatibility_ner_invoke_normalizes_strings(monkeypatch) -> No
 
 
 def test_registry_compatibility_kg_fr_invoke_handles_invalid_arguments(monkeypatch, tmp_path) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q001")
@@ -71,7 +85,7 @@ def test_registry_compatibility_kg_fr_invoke_handles_invalid_arguments(monkeypat
 
 
 def test_registry_compatibility_kg_fr_invoke_normalizes_json_and_calls_super(monkeypatch, tmp_path) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q002")
@@ -93,7 +107,7 @@ def test_registry_compatibility_kg_fr_invoke_normalizes_json_and_calls_super(mon
 
 
 def test_registry_compatibility_kg_fr_invoke_logs_traceback_on_exception(monkeypatch, tmp_path) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q003")
@@ -116,7 +130,7 @@ def test_registry_compatibility_kg_fr_invoke_logs_traceback_on_exception(monkeyp
 
 
 def test_registry_benchmark_ppr_retriever_handles_missing_name_and_none_results(monkeypatch, tmp_path) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q004")
@@ -145,7 +159,7 @@ def test_registry_benchmark_ppr_retriever_handles_missing_name_and_none_results(
 
 
 def test_registry_benchmark_ppr_retriever_uses_chunk_id_as_title(monkeypatch, tmp_path) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q005")
@@ -161,7 +175,7 @@ def test_registry_benchmark_ppr_retriever_uses_chunk_id_as_title(monkeypatch, tm
 
 
 def test_registry_record_retriever_result(monkeypatch, tmp_path) -> None:
-    import research_bench._kag_registry as kag_registry
+    kag_registry = _import_kag_registry()
 
     monkeypatch.setenv("KAG_BENCH_QUERY_DIR", str(tmp_path / "query"))
     monkeypatch.setenv("KAG_BENCH_QUESTION_ID", "q006")
@@ -172,3 +186,66 @@ def test_registry_record_retriever_result(monkeypatch, tmp_path) -> None:
     assert diag["retriever_results"]["rc_open_spg"]["status"] == "ok"
     assert diag["retriever_results"]["rc_open_spg"]["chunks_count"] == 1
     assert diag["retriever_results"]["rc_open_spg"]["graph_spo_count"] == 1
+
+
+def test_registry_sanitizes_openai_extra_body_for_official_openai() -> None:
+    kag_registry = _import_kag_registry()
+
+    sanitized = kag_registry._sanitize_openai_extra_body(
+        "https://api.openai.com/v1",
+        {"chat_template_kwargs": {"enable_thinking": False}, "foo": "bar"},
+    )
+    assert sanitized == {"foo": "bar"}
+
+
+def test_registry_preserves_openai_extra_body_for_local_compatible_servers() -> None:
+    kag_registry = _import_kag_registry()
+
+    original = {"chat_template_kwargs": {"enable_thinking": False}, "foo": "bar"}
+    sanitized = kag_registry._sanitize_openai_extra_body(
+        "http://127.0.0.1:8080/v1",
+        original,
+    )
+    assert sanitized == original
+
+
+def test_registry_uses_max_completion_tokens_for_official_openai() -> None:
+    kag_registry = _import_kag_registry()
+
+    request_kwargs = kag_registry._sanitize_openai_request_kwargs(
+        "https://api.openai.com/v1",
+        {"model": "gpt-5-nano", "max_tokens": 512, "temperature": 1.0},
+    )
+    assert request_kwargs["max_completion_tokens"] == 512
+    assert "max_tokens" not in request_kwargs
+
+
+def test_registry_keeps_max_tokens_for_local_compatible_servers() -> None:
+    kag_registry = _import_kag_registry()
+
+    request_kwargs = kag_registry._sanitize_openai_request_kwargs(
+        "http://127.0.0.1:8080/v1",
+        {"model": "local-model", "max_tokens": 512, "temperature": 1.0},
+    )
+    assert request_kwargs["max_tokens"] == 512
+    assert "max_completion_tokens" not in request_kwargs
+
+
+def test_registry_normalizes_temperature_for_official_openai() -> None:
+    kag_registry = _import_kag_registry()
+
+    request_kwargs = kag_registry._sanitize_openai_request_kwargs(
+        "https://api.openai.com/v1",
+        {"model": "gpt-5-nano", "temperature": 0.7},
+    )
+    assert request_kwargs["temperature"] == 0
+
+
+def test_registry_preserves_temperature_for_local_compatible_servers() -> None:
+    kag_registry = _import_kag_registry()
+
+    request_kwargs = kag_registry._sanitize_openai_request_kwargs(
+        "http://127.0.0.1:8080/v1",
+        {"model": "local-model", "temperature": 0.7},
+    )
+    assert request_kwargs["temperature"] == 0.7

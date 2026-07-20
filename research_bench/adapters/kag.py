@@ -19,6 +19,12 @@ import yaml
 from research_bench.data import ROOT
 from research_bench.metrics import normalize_graph_metrics
 from research_bench.models import BuildMetrics, ContextItem, QueryAnswer
+from research_bench.runtime_config import (
+    DEFAULT_OPENAI_BASE_URL,
+    DEFAULT_OPENAI_EMBEDDING_BASE_URL,
+    load_model_runtime_config,
+    resolve_embedding_dimension,
+)
 from research_bench.shared.io import atomic_write_json, atomic_write_text, ensure_dir, load_json
 from research_bench.shared.subprocess import run_command
 
@@ -85,17 +91,37 @@ def _normalize_kag_namespace(run_dir: Path) -> str:
     return namespace[:16]
 
 
-def _rewrite_kag_server_config(value: Any) -> Any:
+def _kag_runtime_base_url(base_url: str, *, embedding: bool) -> str:
+    if embedding and base_url == DEFAULT_OPENAI_EMBEDDING_BASE_URL:
+        return "http://127.0.0.1:8010/v1"
+    if not embedding and base_url == DEFAULT_OPENAI_BASE_URL:
+        return "http://127.0.0.1:8080/v1"
+    return base_url
+
+
+def _rewrite_kag_server_config(value: Any, *, path: tuple[str, ...] = ()) -> Any:
+    runtime = load_model_runtime_config()
+    embedding_dimension = resolve_embedding_dimension(runtime)
     if isinstance(value, dict):
-        updated = {key: _rewrite_kag_server_config(item) for key, item in value.items()}
+        updated = {key: _rewrite_kag_server_config(item, path=(*path, key)) for key, item in value.items()}
         if updated.get("type") == "openai":
-            if updated.get("base_url") == "http://127.0.0.1:8080/v1":
-                updated["base_url"] = "http://host.docker.internal:8080/v1"
-            elif updated.get("base_url") == "http://127.0.0.1:8010/v1":
-                updated["base_url"] = "http://multilingual-e5-server/v1"
+            is_embedding = (
+                path[-1] in {"vectorize_model", "vectorizer"}
+                or "vector_dimensions" in updated
+                or updated.get("base_url") == DEFAULT_OPENAI_EMBEDDING_BASE_URL
+            )
+            updated["api_key"] = runtime.api_key
+            if is_embedding:
+                updated["base_url"] = _kag_runtime_base_url(runtime.embedding_base_url, embedding=True)
+                updated["model"] = runtime.embedding_model
+                if "vector_dimensions" in updated or path[-1] in {"vectorize_model", "vectorizer"}:
+                    updated["vector_dimensions"] = embedding_dimension
+            else:
+                updated["base_url"] = _kag_runtime_base_url(runtime.base_url, embedding=False)
+                updated["model"] = runtime.model
         return updated
     if isinstance(value, list):
-        return [_rewrite_kag_server_config(item) for item in value]
+        return [_rewrite_kag_server_config(item, path=path) for item in value]
     return value
 
 
@@ -115,10 +141,8 @@ def _pushd(path: Path):
 
 @contextmanager
 def _without_proxy_for_kag_local_hosts():
-    saved_values = {key: os.environ.get(key) for key in (*KAG_PROXY_ENV_KEYS, "NO_PROXY", "no_proxy")}
+    saved_values = {key: os.environ.get(key) for key in ("NO_PROXY", "no_proxy")}
     try:
-        for key in KAG_PROXY_ENV_KEYS:
-            os.environ.pop(key, None)
         no_proxy_hosts = ["127.0.0.1", "localhost", "::1", "host.docker.internal", "172.17.0.1"]
         for key in ("NO_PROXY", "no_proxy"):
             current = saved_values.get(key) or ""
@@ -824,15 +848,16 @@ class KAGAdapter:
                 last_error = {"method": "knext.search.client.SearchClient.search_text", "query": term, "error": str(exc)}
         return last_error
 
-    def _vectorize_probe_query(self, query: str) -> list[float]:
+    def _vectorize_probe_query(self, query: str, *, config_path: Path | None = None) -> list[float]:
         _ensure_kag_imports()
         from kag.interface import VectorizeModelABC
 
-        config = yaml.safe_load((ROOT / "configs" / "kag" / "graph_config.template.yaml").read_text(encoding="utf-8"))
+        effective_config_path = config_path or (ROOT / "configs" / "kag" / "graph_config.template.yaml")
+        config = yaml.safe_load(effective_config_path.read_text(encoding="utf-8"))
         model = VectorizeModelABC.from_config(config["vectorize_model"])
         return list(model.vectorize(query))
 
-    def _build_vector_search_probes(self, project_id: str, source_path: Path, namespace: str) -> list[dict[str, Any]]:
+    def _build_vector_search_probes(self, project_id: str, source_path: Path, namespace: str, *, config_path: Path | None = None) -> list[dict[str, Any]]:
         _ensure_kag_imports()
         from kag.common.config import LogicFormConfiguration
         from kag.interface.solver.model.schema_utils import SchemaUtils
@@ -853,10 +878,14 @@ class KAGAdapter:
         for spec in probe_specs:
             probe = dict(spec)
             try:
+                if config_path is None:
+                    query_vector = self._vectorize_probe_query(str(spec["query"]))
+                else:
+                    query_vector = self._vectorize_probe_query(str(spec["query"]), config_path=config_path)
                 rows = client.search_vector(
                     label=str(spec["label"]),
                     property_key=str(spec["property_key"]),
-                    query_vector=self._vectorize_probe_query(str(spec["query"])),
+                    query_vector=query_vector,
                     topk=3,
                     ef_search=21,
                 )
@@ -893,7 +922,12 @@ class KAGAdapter:
             atomic_write_json(run_dir / "build" / "neo4j_vector_indexes.json", {"indexes": vector_rows})
             fulltext_index = self._index_rows_by_name(fulltext_rows).get("_default_text_index")
         probe = self._probe_kag_search_api(str(project_info["id"]), source_path)
-        vector_probes = self._build_vector_search_probes(str(project_info["id"]), source_path, namespace)
+        vector_probes = self._build_vector_search_probes(
+            str(project_info["id"]),
+            source_path,
+            namespace,
+            config_path=(run_dir / "generated_kag_config.yaml") if run_dir is not None else None,
+        )
         atomic_write_json(run_dir / "build" / "neo4j_search_probe.json", probe)
         atomic_write_json(run_dir / "build" / "vector_search_probes.json", {"probes": vector_probes})
         return {
@@ -916,15 +950,15 @@ class KAGAdapter:
     def build(self, source_path: Path, run_dir: Path) -> tuple[BuildMetrics, dict[str, Any]]:
         config_template = (ROOT / "configs" / "kag" / "graph_config.template.yaml").read_text(encoding="utf-8")
         namespace = _normalize_kag_namespace(run_dir)
-        config_text = (
+        bootstrap_config_text = (
             config_template.replace("__PROJECT_NAMESPACE__", namespace)
             .replace("__PROJECT_ID__", "0")
             .replace("__CKPT_DIR__", str(run_dir / "ckpt"))
             .replace("__KAG_REGISTER_PATH__", _kag_register_path())
         )
         config_path = run_dir / "generated_kag_config.yaml"
-        atomic_write_text(config_path, config_text)
-        project_info, comparison = self._create_supported_project(run_dir, namespace, config_text, config_path)
+        atomic_write_text(config_path, bootstrap_config_text)
+        project_info, comparison = self._create_supported_project(run_dir, namespace, bootstrap_config_text, config_path)
         os.environ["KAG_PROJECT_ID"] = str(project_info["id"])
         os.environ["KAG_PROJECT_NAMESPACE"] = project_info["namespace"]
         os.environ["KAG_PROJECT_HOST_ADDR"] = KAG_LOCAL_HOST_ADDR
@@ -934,12 +968,13 @@ class KAGAdapter:
             .replace("__CKPT_DIR__", str(run_dir / "ckpt"))
             .replace("__KAG_REGISTER_PATH__", _kag_register_path())
         )
-        server_config = build_kag_server_project_config(config_text)
+        runtime_config = build_kag_server_project_config(config_text)
+        generated_config_text = yaml.safe_dump(runtime_config, sort_keys=False, allow_unicode=True)
         atomic_write_json(run_dir / "project.json", project_info)
-        atomic_write_text(config_path, config_text)
+        atomic_write_text(config_path, generated_config_text)
         atomic_write_text(run_dir / "kag_config.yaml", config_text)
-        atomic_write_json(run_dir / "server_project_config.json", server_config)
-        atomic_write_json(run_dir / "runtime_project_config.json", yaml.safe_load(config_text))
+        atomic_write_json(run_dir / "server_project_config.json", runtime_config)
+        atomic_write_json(run_dir / "runtime_project_config.json", runtime_config)
         self._sync_project_config(str(project_info["id"]), project_info["namespace"], config_text)
         schema_before_build = self._write_schema_artifacts(run_dir, str(project_info["id"]), comparison)
         schema_issues = _validate_required_schema(schema_before_build)
@@ -950,8 +985,8 @@ class KAGAdapter:
                 "project_id": str(project_info["id"]),
                 "namespace": project_info["namespace"],
                 "selected_pipeline": KAG_SELECTED_PIPELINE,
-                "server_vectorize_model_base_url": server_config.get("vectorize_model", {}).get("base_url"),
-                "runtime_vectorize_model_base_url": yaml.safe_load(config_text).get("vectorize_model", {}).get("base_url"),
+                "server_vectorize_model_base_url": runtime_config.get("vectorize_model", {}).get("base_url"),
+                "runtime_vectorize_model_base_url": runtime_config.get("vectorize_model", {}).get("base_url"),
             }
             atomic_write_json(manifest_path, manifest)
         if schema_issues:

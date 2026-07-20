@@ -54,7 +54,14 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "test":
         process = subprocess.run(
-            [str(Path(".venv/bin/python")), "-m", "pytest", "--cov=research_bench", "--cov-report=term-missing", "--cov-fail-under=80"],
+            [
+                str(Path(".venv/bin/python")),
+                "-m",
+                "pytest",
+                "--cov=research_bench",
+                "--cov-report=term-missing",
+                "--cov-fail-under=80",
+            ],
             check=False,
         )
         return process.returncode
@@ -85,7 +92,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "query":
         run_dir = rerun_query_stage(args.run_id)
         answers_path = run_dir / "query" / "answers.jsonl"
-        payload = [json.loads(line) for line in answers_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        payload = [
+            json.loads(line)
+            for line in answers_path.read_text(encoding="utf-8").splitlines()
+            if line.strip()
+        ]
         print(json.dumps(payload, ensure_ascii=False, indent=2))
         return 0
 

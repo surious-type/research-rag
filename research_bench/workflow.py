@@ -63,7 +63,9 @@ def find_run_dir(run_id: str, smoke: bool | None = None) -> tuple[Path, bool]:
     elif smoke is False:
         candidates.append((RESULTS_DIR / run_id, False))
     else:
-        candidates.extend(((RESULTS_DIR / run_id, False), (RESULTS_DIR / "_smoke" / run_id, True)))
+        candidates.extend(
+            ((RESULTS_DIR / run_id, False), (RESULTS_DIR / "_smoke" / run_id, True))
+        )
     for path, detected_smoke in candidates:
         if path.exists():
             return path, detected_smoke
@@ -138,7 +140,9 @@ def _resolve_run_inputs(smoke: bool) -> tuple[Path, list[dict[str, Any]]]:
     )
 
 
-def _build_manifest(run_id: str, framework: str, smoke: bool, source_path: Path) -> dict[str, Any]:
+def _build_manifest(
+    run_id: str, framework: str, smoke: bool, source_path: Path
+) -> dict[str, Any]:
     return run_stages_mod.build_manifest(
         run_id=run_id,
         framework=framework,
@@ -151,7 +155,9 @@ def _build_manifest(run_id: str, framework: str, smoke: bool, source_path: Path)
     )
 
 
-def _write_build_artifacts(run_dir: Path, build_metrics: Any, graph_metrics: dict[str, Any]) -> None:
+def _write_build_artifacts(
+    run_dir: Path, build_metrics: Any, graph_metrics: dict[str, Any]
+) -> None:
     run_stages_mod.write_build_artifacts(
         run_dir,
         build_metrics,
@@ -160,7 +166,9 @@ def _write_build_artifacts(run_dir: Path, build_metrics: Any, graph_metrics: dic
     )
 
 
-def _run_build_stage(adapter: Any, source_path: Path, run_dir: Path) -> tuple[Any, dict[str, Any]]:
+def _run_build_stage(
+    adapter: Any, source_path: Path, run_dir: Path
+) -> tuple[Any, dict[str, Any]]:
     return run_stages_mod.run_build_stage(
         adapter,
         source_path,
@@ -197,7 +205,9 @@ def _run_query_stage(
     )
 
 
-def _finalize_run(run_id: str, run_dir: Path, smoke: bool, answers: list[dict[str, Any]]) -> None:
+def _finalize_run(
+    run_id: str, run_dir: Path, smoke: bool, answers: list[dict[str, Any]]
+) -> None:
     run_stages_mod.finalize_run(
         run_id,
         run_dir,
@@ -246,7 +256,9 @@ def rerun_ragas_stage(run_id: str, limit: int | None = None) -> Path:
     )
 
 
-def _run_ragas(run_dir: Path, answers: list[dict[str, Any]], limit: int | None = None) -> None:
+def _run_ragas(
+    run_dir: Path, answers: list[dict[str, Any]], limit: int | None = None
+) -> None:
     ragas_mod.save_ragas_outputs = save_ragas_outputs
     ragas_mod.save_ragas_placeholder = save_ragas_placeholder
     ragas_mod.prepare_ragas_rows = prepare_ragas_rows
@@ -258,6 +270,7 @@ def _run_ragas(run_dir: Path, answers: list[dict[str, Any]], limit: int | None =
         save_ragas_outputs_fn=save_ragas_outputs,
         save_ragas_placeholder_fn=save_ragas_placeholder,
         safe_float_fn=safe_float,
+        evaluate_prepared_row_fn=ragas_mod._evaluate_prepared_ragas_row,
     )
 
 

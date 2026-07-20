@@ -25,7 +25,14 @@ def percentile(values: Sequence[float], q: float) -> float | None:
 
 
 def aggregate_numeric(values: Sequence[float | int | None]) -> dict[str, float | int | None]:
-    clean = [float(value) for value in values if value is not None]
+    clean = []
+    for value in values:
+        if value is None:
+            continue
+        numeric = float(value)
+        if not math.isfinite(numeric):
+            continue
+        clean.append(numeric)
     if not clean:
         return {"mean": None, "median": None, "standard_deviation": None, "valid_count": 0, "failed_count": len(values)}
     return {
@@ -66,6 +73,7 @@ def safe_float(value: Any) -> float | None:
     try:
         if value is None or value == "":
             return None
-        return float(value)
+        numeric = float(value)
+        return numeric if math.isfinite(numeric) else None
     except (TypeError, ValueError):
         return None

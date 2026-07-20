@@ -6,15 +6,22 @@ import traceback
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any
+from urllib.parse import urlparse
 
+from kag.builder.component.extractor.knowledge_unit_extractor import KnowledgeUnitSchemaFreeExtractor
+from kag.builder.component.extractor.schema_free_extractor import SchemaFreeExtractor
+from kag.common.llm.openai_client import OpenAIClient
 from kag.common.tools.algorithm_tool.chunk_retriever.ppr_chunk_retriever import PprChunkRetriever
 from kag.common.tools.algorithm_tool.chunk_retriever.rc_retriever import RCRetrieverOnOpenSPG
 from kag.common.tools.algorithm_tool.graph_retriever.kg_cs_retriever import KgConstrainRetrieverWithOpenSPGRetriever
 from kag.common.tools.algorithm_tool.graph_retriever.kg_fr_retriever import KgFreeRetrieverWithOpenSPGRetriever
 from kag.common.tools.algorithm_tool.ner import Ner
-from kag.interface import ChunkData, RetrieverABC, RetrieverOutput, ToolABC
+from kag.interface import ChunkData, ExtractorABC, RetrieverABC, RetrieverOutput, ToolABC
+from kag.interface.solver.reporter_abc import do_report
 from kag.interface.solver.base_model import SPOEntity
+from kag.interface.common.llm_client import LLMClient
 from knext.schema.client import CHUNK_TYPE
+from openai import NOT_GIVEN
 
 
 def _query_dir() -> Path | None:
@@ -108,6 +115,72 @@ def _sanitize_chunk_properties(properties: dict[str, Any]) -> dict[str, Any]:
     return sanitized
 
 
+def _is_official_openai_base_url(base_url: str) -> bool:
+    normalized = str(base_url or "").strip()
+    if not normalized:
+        return False
+    parsed = urlparse(normalized)
+    host = (parsed.netloc or parsed.path).lower()
+    return host in {"api.openai.com", "api.openai.com:443"}
+
+
+def _sanitize_openai_extra_body(base_url: str, extra_body: Any) -> dict[str, Any]:
+    if not isinstance(extra_body, dict):
+        return {}
+    if not _is_official_openai_base_url(base_url):
+        return dict(extra_body)
+    sanitized = dict(extra_body)
+    sanitized.pop("chat_template_kwargs", None)
+    return sanitized
+
+
+def _sanitize_openai_request_kwargs(base_url: str, request_kwargs: dict[str, Any]) -> dict[str, Any]:
+    sanitized = dict(request_kwargs)
+    if not _is_official_openai_base_url(base_url):
+        return sanitized
+    if "max_tokens" in sanitized:
+        value = sanitized.pop("max_tokens")
+        if value is not NOT_GIVEN:
+            sanitized["max_completion_tokens"] = value
+    if "temperature" in sanitized and sanitized["temperature"] not in (NOT_GIVEN, 0, 0.0):
+        sanitized["temperature"] = 0
+    return sanitized
+
+
+def _normalize_builder_ner_result(ner_result: Any) -> list[dict[str, Any]]:
+    if ner_result is None:
+        return []
+    if isinstance(ner_result, list):
+        output: list[dict[str, Any]] = []
+        for item in ner_result:
+            normalized_item, _ = _normalize_ner_item(item)
+            if normalized_item:
+                output.append(normalized_item)
+        return output
+    normalized_item, _ = _normalize_ner_item(ner_result)
+    return [normalized_item] if normalized_item else []
+
+
+def _normalize_core_entities_map(core_entities_raw: Any) -> dict[str, str]:
+    if isinstance(core_entities_raw, dict):
+        normalized: dict[str, str] = {}
+        for entity_name, entity_type in core_entities_raw.items():
+            name = str(entity_name or "").strip()
+            if not name:
+                continue
+            normalized[name] = str(entity_type or "Others").strip() or "Others"
+        return normalized
+    if isinstance(core_entities_raw, str):
+        normalized = {}
+        for item in core_entities_raw.split(","):
+            name = str(item or "").strip()
+            if not name:
+                continue
+            normalized[name] = "Others"
+        return normalized
+    return {}
+
+
 def _chunk_title_from_node(node_dict: dict[str, Any], chunk_id: str) -> str:
     for key in ("name", "title", "document_name"):
         value = str(node_dict.get(key) or "").strip()
@@ -140,6 +213,143 @@ def _record_retriever_result(name: str, output: RetrieverOutput) -> None:
     _merge_diag({"retriever_results": retriever_results})
 
 
+@LLMClient.register("maas")
+@LLMClient.register("openai")
+@LLMClient.register("vllm")
+class BenchmarkCompatibilityOpenAIClient(OpenAIClient):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.extra_body = _sanitize_openai_extra_body(self.base_url, self.extra_body)
+
+    def _request_kwargs(self, *, messages, tools):
+        return _sanitize_openai_request_kwargs(
+            self.base_url,
+            {
+                "model": self.model,
+                "messages": messages,
+                "stream": self.stream,
+                "temperature": self.temperature,
+                "timeout": self.timeout,
+                "tools": tools,
+                "max_tokens": self.max_tokens if self.max_tokens > 0 else NOT_GIVEN,
+                "stop": self.stop,
+                "seed": self.seed,
+                "top_p": self.top_p,
+                "extra_body": self.extra_body,
+            },
+        )
+
+    def __call__(self, prompt: str = "", image_url: str = None, **kwargs):
+        tools = kwargs.get("tools", NOT_GIVEN)
+        messages = kwargs.get("messages", None)
+        token_meter = LLMClient.get_token_meter()
+
+        if messages is None:
+            if image_url:
+                messages = [
+                    {"role": "system", "content": "you are a helpful assistant"},
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {"type": "image_url", "image_url": {"url": image_url}},
+                        ],
+                    },
+                ]
+            else:
+                messages = [
+                    {"role": "system", "content": "you are a helpful assistant"},
+                    {"role": "user", "content": prompt},
+                ]
+        response = self.client.chat.completions.create(**self._request_kwargs(messages=messages, tools=tools))
+        usages = []
+        if not self.stream:
+            rsp = response.choices[0].message.content
+            tool_calls = response.choices[0].message.tool_calls
+            usages.append(response.usage)
+        else:
+            rsp = ""
+            tool_calls = None
+            for chunk in response:
+                if not chunk.choices:
+                    continue
+                delta_content = getattr(chunk.choices[0].delta, "content", None)
+                if delta_content is not None:
+                    rsp += delta_content
+                    do_report(rsp, "RUNNING", **kwargs)
+                usages.append(chunk.usage)
+
+        if token_meter and len(usages) > 0 and usages[-1]:
+            try:
+                usage = usages[-1]
+                token_meter.update(
+                    usage.completion_tokens,
+                    usage.prompt_tokens,
+                    usage.total_tokens,
+                )
+            except Exception:
+                pass
+
+        do_report(rsp, "FINISH", **kwargs)
+        if tools and tool_calls:
+            return response.choices[0].message
+        return rsp
+
+    async def acall(self, prompt: str = "", image_url: str = None, **kwargs):
+        tools = kwargs.get("tools", NOT_GIVEN)
+        messages = kwargs.get("messages", None)
+        token_meter = LLMClient.get_token_meter()
+        if messages is None:
+            if image_url:
+                messages = [
+                    {"role": "system", "content": "you are a helpful assistant"},
+                    {
+                        "role": "user",
+                        "content": [
+                            {"type": "text", "text": prompt},
+                            {"type": "image_url", "image_url": {"url": image_url}},
+                        ],
+                    },
+                ]
+            else:
+                messages = [
+                    {"role": "system", "content": "you are a helpful assistant"},
+                    {"role": "user", "content": prompt},
+                ]
+        response = await self.aclient.chat.completions.create(**self._request_kwargs(messages=messages, tools=tools))
+        usages = []
+        if not self.stream:
+            rsp = response.choices[0].message.content
+            tool_calls = response.choices[0].message.tool_calls
+            usages.append(response.usage)
+        else:
+            rsp = ""
+            tool_calls = None
+            async for chunk in response:
+                if not chunk.choices:
+                    continue
+                delta_content = getattr(chunk.choices[0].delta, "content", None)
+                if delta_content is not None:
+                    rsp += delta_content
+                do_report(rsp, "RUNNING", **kwargs)
+                usages.append(chunk.usage)
+        if token_meter and len(usages) > 0 and usages[-1]:
+            try:
+                usage = usages[-1]
+                token_meter.update(
+                    usage.completion_tokens,
+                    usage.prompt_tokens,
+                    usage.total_tokens,
+                )
+            except Exception:
+                pass
+
+        do_report(rsp, "FINISH", **kwargs)
+        if tools and tool_calls:
+            return response.choices[0].message
+        return rsp
+
+
 @ToolABC.register("ner")
 class BenchmarkCompatibilityNer(Ner):
     def invoke(self, query, **kwargs) -> list[SPOEntity]:
@@ -164,6 +374,107 @@ class BenchmarkCompatibilityNer(Ner):
         if diagnostics:
             _merge_diag({"kg_fr_error": "; ".join(diagnostics)})
         return res
+
+
+@ExtractorABC.register("schema_free")
+@ExtractorABC.register("schema_free_extractor")
+class BenchmarkCompatibilitySchemaFreeExtractor(SchemaFreeExtractor):
+    def _named_entity_recognition_process(self, passage, ner_result):
+        if self.external_graph:
+            extra_ner_result = self.external_graph.ner(passage)
+        else:
+            extra_ner_result = []
+        output = []
+        dedup = set()
+        for item in extra_ner_result:
+            name = item.name
+            label = item.label
+            spg_type = self.schema.get(label)
+            if spg_type is None:
+                label = "Others"
+                item.label = label
+            description = item.properties.get("desc", "")
+            semantic_type = item.properties.get("semanticType", label)
+            if name not in dedup:
+                dedup.add(name)
+                output.append(
+                    {
+                        "name": name,
+                        "type": semantic_type,
+                        "category": label,
+                        "description": description,
+                    }
+                )
+        for item in _normalize_builder_ner_result(ner_result):
+            name = item.get("name", None)
+            if name and name not in dedup:
+                dedup.add(name)
+                output.append(item)
+        return output
+
+
+@ExtractorABC.register("knowledge_unit_extractor")
+class BenchmarkCompatibilityKnowledgeUnitExtractor(KnowledgeUnitSchemaFreeExtractor):
+    def assemble_knowledge_unit(self, sub_graph, source_entities, input_knowledge_units, triples):
+        knowledge_unit_nodes = []
+        knowledge_units = dict(input_knowledge_units)
+
+        def triple_to_knowledge_unit(triple):
+            ret = {}
+            name = " ".join(triple)
+            ret["content"] = name
+            ret["knowledgetype"] = "triple"
+            ret["core_entities"] = ",".join(triple)
+            return name, ret
+
+        for tri in triples:
+            knowledge_unit_name, knowledge_unit_value = triple_to_knowledge_unit(tri)
+            if knowledge_unit_name not in knowledge_units:
+                knowledge_units[knowledge_unit_name] = knowledge_unit_value
+
+        for knowledge_name, knowledge_value in knowledge_units.items():
+            if knowledge_value["knowledgetype"] == "triple":
+                knowledge_id = knowledge_name
+            else:
+                from kag.common.utils import generate_hash_id
+
+                knowledge_id = generate_hash_id(f"{knowledge_name}_{knowledge_value['content'].strip()[:100]}")
+            self.assemble_sub_graph_with_spg_properties(
+                sub_graph,
+                knowledge_id,
+                knowledge_name,
+                "KnowledgeUnit",
+                knowledge_value,
+            )
+            sub_graph.add_node(
+                knowledge_id,
+                knowledge_name,
+                "KnowledgeUnit",
+                knowledge_value,
+            )
+            knowledge_unit_nodes.append({"name": knowledge_id, "category": "KnowledgeUnit"})
+            core_entities = _normalize_core_entities_map(knowledge_value.get("core_entities", ""))
+
+            for core_entity, ent_type in core_entities.items():
+                if core_entity == "":
+                    continue
+                found_in_source_entity = None
+                for source_entity in source_entities:
+                    if core_entity == source_entity.get("name", ""):
+                        found_in_source_entity = source_entity
+                        break
+                ent_type = self.get_stand_schema(ent_type)
+                if found_in_source_entity is None:
+                    found_in_source_entity = {"name": core_entity, "category": ent_type}
+                    sub_graph.add_node(core_entity, core_entity, ent_type, {})
+                sub_graph.add_edge(
+                    found_in_source_entity.get("name"),
+                    found_in_source_entity.get("category"),
+                    "source",
+                    knowledge_id,
+                    "KnowledgeUnit",
+                )
+        return knowledge_unit_nodes
 
 
 @RetrieverABC.register("benchmark_ppr_chunk_retriever")
@@ -304,3 +615,27 @@ class BenchmarkCompatibilityRcRetriever(RCRetrieverOnOpenSPG):
         output = super().invoke(task, **kwargs)
         _record_retriever_result("rc_open_spg", output)
         return output
+
+
+# The benchmark contains document-grounded questions only.
+# Disable KAG's chatbot self-cognition route, which is not part of RAG
+# evaluation and is unreliable with reasoning-model responses.
+from kag.interface import PromptABC as _BenchmarkPromptABC
+from kag.solver.prompt.self_cognition import (
+    SelfCognitionPrompt as _UpstreamSelfCognitionPrompt,
+)
+
+
+@_BenchmarkPromptABC.register("default_self_cognition")
+class BenchmarkNoSelfCognitionPrompt(_UpstreamSelfCognitionPrompt):
+    def parse_response(self, response: str, **kwargs):
+        _merge_diag(
+            {
+                "self_cognition_raw_response": str(response),
+                "self_cognition_result": False,
+                "self_cognition_policy": (
+                    "disabled_for_document_qa_benchmark"
+                ),
+            }
+        )
+        return False

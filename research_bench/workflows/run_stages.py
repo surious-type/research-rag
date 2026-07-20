@@ -7,19 +7,34 @@ from typing import Any
 from research_bench.diagnostics.logging import log_stage_event
 
 
-def create_run_dir(*, results_dir: Path, framework: str, smoke: bool, ensure_dir_fn, utc_run_id_fn) -> tuple[str, Path]:
+def create_run_dir(
+    *, results_dir: Path, framework: str, smoke: bool, ensure_dir_fn, utc_run_id_fn
+) -> tuple[str, Path]:
     root = results_dir / "_smoke" if smoke else results_dir
     ensure_dir_fn(root)
-    run_id = utc_run_id_fn(framework, existing=[item.name for item in root.iterdir() if item.is_dir()])
+    run_id = utc_run_id_fn(
+        framework, existing=[item.name for item in root.iterdir() if item.is_dir()]
+    )
     run_dir = root / run_id
     for part in ("build", "query", "ragas"):
         ensure_dir_fn(run_dir / part)
     return run_id, run_dir
 
 
-def resolve_run_inputs(*, smoke: bool, smoke_source_path: Path, ensure_source_txt_fn, load_smoke_questions_fn, load_questions_fn) -> tuple[Path, list[dict[str, Any]]]:
+def resolve_run_inputs(
+    *,
+    smoke: bool,
+    smoke_source_path: Path,
+    ensure_source_txt_fn,
+    load_smoke_questions_fn,
+    load_questions_fn,
+) -> tuple[Path, list[dict[str, Any]]]:
     source_path = smoke_source_path if smoke else ensure_source_txt_fn()
-    question_rows = load_smoke_questions_fn() if smoke else [row.payload for row in load_questions_fn()]
+    question_rows = (
+        load_smoke_questions_fn()
+        if smoke
+        else [row.payload for row in load_questions_fn()]
+    )
     return source_path, question_rows
 
 
@@ -40,35 +55,72 @@ def build_manifest(
         "smoke": smoke,
         "source": load_source_info_fn(source_path).to_dict(),
         "questions_path": str(questions_path),
-        "questions_sha256": sha256_file_fn(questions_path if not smoke else smoke_questions_path),
+        "questions_sha256": sha256_file_fn(
+            questions_path if not smoke else smoke_questions_path
+        ),
     }
 
 
-def write_build_artifacts(run_dir: Path, build_metrics: Any, graph_metrics: dict[str, Any], *, atomic_write_json_fn) -> None:
+def write_build_artifacts(
+    run_dir: Path,
+    build_metrics: Any,
+    graph_metrics: dict[str, Any],
+    *,
+    atomic_write_json_fn,
+) -> None:
     atomic_write_json_fn(run_dir / "build" / "metrics.json", build_metrics.to_dict())
     atomic_write_json_fn(run_dir / "build" / "graph_metrics.json", graph_metrics)
 
 
-def run_build_stage(adapter: Any, source_path: Path, run_dir: Path, *, write_build_artifacts_fn, atomic_write_json_fn) -> tuple[Any, dict[str, Any]]:
+def run_build_stage(
+    adapter: Any,
+    source_path: Path,
+    run_dir: Path,
+    *,
+    write_build_artifacts_fn,
+    atomic_write_json_fn,
+) -> tuple[Any, dict[str, Any]]:
     build_metrics, graph_metrics = adapter.build(source_path, run_dir)
     write_build_artifacts_fn(run_dir, build_metrics, graph_metrics)
     if build_metrics.build_status != "success":
-        atomic_write_json_fn(run_dir / "verification.json", {"status": "FAIL", "failed_stage": "build"})
+        atomic_write_json_fn(
+            run_dir / "verification.json", {"status": "FAIL", "failed_stage": "build"}
+        )
         raise RuntimeError(build_metrics.build_error or "build failed")
     return build_metrics, graph_metrics
 
 
-def write_query_artifacts(run_dir: Path, answers: list[dict[str, Any]], *, atomic_write_json_fn, atomic_write_jsonl_fn, latency_summary_fn, safe_float_fn) -> None:
+def write_query_artifacts(
+    run_dir: Path,
+    answers: list[dict[str, Any]],
+    *,
+    atomic_write_json_fn,
+    atomic_write_jsonl_fn,
+    latency_summary_fn,
+    safe_float_fn,
+) -> None:
     atomic_write_jsonl_fn(run_dir / "query" / "answers.jsonl", answers)
     atomic_write_json_fn(
         run_dir / "query" / "metrics.json",
-        latency_summary_fn([safe_float_fn(row.get("latency_seconds")) for row in answers]),
+        latency_summary_fn(
+            [safe_float_fn(row.get("latency_seconds")) for row in answers]
+        ),
     )
 
 
-def run_query_stage(adapter: Any, run_id: str, run_dir: Path, question_rows: list[dict[str, Any]], *, write_query_artifacts_fn, atomic_write_json_fn) -> list[dict[str, Any]]:
+def run_query_stage(
+    adapter: Any,
+    run_id: str,
+    run_dir: Path,
+    question_rows: list[dict[str, Any]],
+    *,
+    write_query_artifacts_fn,
+    atomic_write_json_fn,
+) -> list[dict[str, Any]]:
     try:
-        answers = [answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)]
+        answers = [
+            answer.to_dict() for answer in adapter.query(run_id, run_dir, question_rows)
+        ]
     except Exception as exc:
         atomic_write_json_fn(
             run_dir / "verification.json",
@@ -79,7 +131,16 @@ def run_query_stage(adapter: Any, run_id: str, run_dir: Path, question_rows: lis
     return answers
 
 
-def finalize_run(run_id: str, run_dir: Path, smoke: bool, answers: list[dict[str, Any]], *, run_ragas_fn, verify_run_fn, atomic_write_json_fn) -> None:
+def finalize_run(
+    run_id: str,
+    run_dir: Path,
+    smoke: bool,
+    answers: list[dict[str, Any]],
+    *,
+    run_ragas_fn,
+    verify_run_fn,
+    atomic_write_json_fn,
+) -> None:
     framework = _read_framework_name(run_dir)
     log_stage_event(
         run_dir,
@@ -226,7 +287,15 @@ def execute_run(
     return run_id, run_dir
 
 
-def rerun_query_stage(run_id: str, *, find_run_dir_fn, load_json_fn, get_adapter_fn, resolve_run_inputs_fn, run_query_stage_fn) -> Path:
+def rerun_query_stage(
+    run_id: str,
+    *,
+    find_run_dir_fn,
+    load_json_fn,
+    get_adapter_fn,
+    resolve_run_inputs_fn,
+    run_query_stage_fn,
+) -> Path:
     run_dir, smoke = find_run_dir_fn(run_id)
     manifest = load_json_fn(run_dir / "manifest.json")
     adapter = get_adapter_fn(manifest["framework"])
@@ -254,10 +323,18 @@ def rerun_query_stage(run_id: str, *, find_run_dir_fn, load_json_fn, get_adapter
     return run_dir
 
 
-def rerun_ragas_stage(run_id: str, *, limit: int | None, find_run_dir_fn, run_ragas_fn) -> Path:
+def rerun_ragas_stage(
+    run_id: str, *, limit: int | None, find_run_dir_fn, run_ragas_fn
+) -> Path:
     run_dir, _ = find_run_dir_fn(run_id)
     framework = _read_framework_name(run_dir)
-    answers = [json.loads(line) for line in (run_dir / "query" / "answers.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    answers = [
+        json.loads(line)
+        for line in (run_dir / "query" / "answers.jsonl")
+        .read_text(encoding="utf-8")
+        .splitlines()
+        if line.strip()
+    ]
     log_stage_event(
         run_dir,
         event="stage_started",

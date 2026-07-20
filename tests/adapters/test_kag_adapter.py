@@ -233,6 +233,58 @@ def test_build_vector_search_probes_fail_on_exception(monkeypatch, tmp_path: Pat
     assert all(probe["status"] == "FAIL" for probe in probes)
 
 
+def test_build_vector_search_probes_use_generated_run_config(monkeypatch, tmp_path: Path) -> None:
+    adapter = frameworks_mod.KAGAdapter()
+    source_path = tmp_path / "source.txt"
+    source_path.write_text("Орион-128\n", encoding="utf-8")
+    config_path = tmp_path / "generated_kag_config.yaml"
+    config_path.write_text(
+        """
+vectorize_model:
+  type: openai
+  base_url: https://api.openai.com/v1
+  model: text-embedding-3-small
+  vector_dimensions: 1536
+""",
+        encoding="utf-8",
+    )
+    captured: dict[str, object] = {}
+
+    class FakeSearchClient:
+        def __init__(self, host_addr=None, project_id=None):
+            return None
+
+        def search_vector(self, label, property_key, query_vector, topk=3, ef_search=21):
+            return [{"score": 0.9}]
+
+    class FakeVectorModel:
+        def vectorize(self, query):
+            return [0.1, 0.2, 0.3]
+
+    def fake_from_config(config):
+        captured["vectorize_model_config"] = config
+        return FakeVectorModel()
+
+    monkeypatch.setitem(sys.modules, "knext.search.client", types.SimpleNamespace(SearchClient=FakeSearchClient))
+    monkeypatch.setitem(sys.modules, "knext.schema.client", types.SimpleNamespace(CHUNK_TYPE="Chunk"))
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.interface.solver.model.schema_utils",
+        types.SimpleNamespace(SchemaUtils=lambda config: types.SimpleNamespace(get_label_within_prefix=lambda label: "Kag123.Chunk")),
+    )
+    monkeypatch.setitem(sys.modules, "kag.common.config", types.SimpleNamespace(LogicFormConfiguration=lambda payload: payload))
+    monkeypatch.setitem(
+        sys.modules,
+        "kag.interface",
+        types.SimpleNamespace(VectorizeModelABC=types.SimpleNamespace(from_config=fake_from_config)),
+    )
+
+    probes = adapter._build_vector_search_probes("36", source_path, "Kag123", config_path=config_path)
+    assert len(probes) == 2
+    assert captured["vectorize_model_config"]["model"] == "text-embedding-3-small"
+    assert captured["vectorize_model_config"]["vector_dimensions"] == 1536
+
+
 def test_provision_default_text_index_uses_namespace_labels_only(tmp_path: Path, monkeypatch) -> None:
     adapter = frameworks_mod.KAGAdapter()
     run_dir = tmp_path / "run"
@@ -299,3 +351,43 @@ vectorize_model:
     assert calls[1]["id"] == "42"
     assert calls[1]["namespace"] == "Kag420000000000"
     assert calls[1]["config"]["project"]["id"] == "42"
+
+
+def test_kag_local_hosts_context_preserves_proxy_and_extends_no_proxy(monkeypatch) -> None:
+    monkeypatch.setenv("HTTP_PROXY", "http://127.0.0.1:1081")
+    monkeypatch.setenv("HTTPS_PROXY", "http://127.0.0.1:1081")
+    monkeypatch.setenv("ALL_PROXY", "socks5://127.0.0.1:1080")
+    monkeypatch.setenv("NO_PROXY", "example.com")
+    monkeypatch.setenv("no_proxy", "internal.local")
+
+    with frameworks_mod.kag_mod._without_proxy_for_kag_local_hosts():
+        assert frameworks_mod.kag_mod.os.environ["HTTP_PROXY"] == "http://127.0.0.1:1081"
+        assert frameworks_mod.kag_mod.os.environ["HTTPS_PROXY"] == "http://127.0.0.1:1081"
+        assert frameworks_mod.kag_mod.os.environ["ALL_PROXY"] == "socks5://127.0.0.1:1080"
+
+        no_proxy = frameworks_mod.kag_mod.os.environ["NO_PROXY"].split(",")
+        no_proxy_lower = frameworks_mod.kag_mod.os.environ["no_proxy"].split(",")
+        for host in ("127.0.0.1", "localhost", "::1", "host.docker.internal", "172.17.0.1"):
+            assert host in no_proxy
+            assert host in no_proxy_lower
+        assert "example.com" in no_proxy
+        assert "internal.local" in no_proxy_lower
+
+    assert frameworks_mod.kag_mod.os.environ["HTTP_PROXY"] == "http://127.0.0.1:1081"
+    assert frameworks_mod.kag_mod.os.environ["HTTPS_PROXY"] == "http://127.0.0.1:1081"
+    assert frameworks_mod.kag_mod.os.environ["ALL_PROXY"] == "socks5://127.0.0.1:1080"
+    assert frameworks_mod.kag_mod.os.environ["NO_PROXY"] == "example.com"
+    assert frameworks_mod.kag_mod.os.environ["no_proxy"] == "internal.local"
+
+
+
+def test_kag_runtime_default_llm_url_uses_loopback() -> None:
+    kag_mod = frameworks_mod.kag_mod
+
+    assert (
+        kag_mod._kag_runtime_base_url(
+            kag_mod.DEFAULT_OPENAI_BASE_URL,
+            embedding=False,
+        )
+        == "http://127.0.0.1:8080/v1"
+    )

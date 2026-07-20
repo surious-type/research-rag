@@ -7,6 +7,7 @@ from pathlib import Path
 
 import research_bench.cli as cli_mod
 import research_bench.reporting as reporting_mod
+import research_bench.runtime_config as runtime_config_mod
 import research_bench.workflow as workflow_mod
 from research_bench.utils import atomic_write_json, atomic_write_jsonl
 
@@ -312,6 +313,55 @@ def test_check_helpers(monkeypatch) -> None:
     assert any(row.name == "llm model" and row.status == "PASS" for row in results)
 
 
+def test_check_helpers_use_runtime_model_config(monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    class DummyResponse:
+        def __init__(self, payload):
+            self._payload = payload
+
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self):
+            return self._payload
+
+    runtime = runtime_config_mod.ModelRuntimeConfig(
+        base_url="https://api.openai.com/v1",
+        embedding_base_url="https://api.openai.com/v1",
+        api_key="test-key",
+        model="gpt-5-nano",
+        embedding_model="text-embedding-3-small",
+        embedding_dimension=1536,
+    )
+
+    monkeypatch.setattr(workflow_mod.checks_mod, "load_model_runtime_config", lambda: runtime)
+
+    def fake_get(url, **kwargs):
+        captured["models_url"] = url
+        captured["models_headers"] = kwargs.get("headers")
+        return DummyResponse({"data": [{"id": "gpt-5-nano"}]})
+
+    def fake_post(url, **kwargs):
+        captured.setdefault("post_calls", []).append({"url": url, "json": kwargs.get("json"), "headers": kwargs.get("headers")})
+        if url.endswith("/chat/completions"):
+            return DummyResponse({"choices": [{"message": {"content": "ГОТОВО"}}]})
+        return DummyResponse({"data": [{"embedding": [0.0] * 1536}]})
+
+    monkeypatch.setattr(workflow_mod.requests, "get", fake_get)
+    monkeypatch.setattr(workflow_mod.requests, "post", fake_post)
+
+    results = workflow_mod._check_llm() + workflow_mod._check_embeddings()
+    assert any(row.name == "llm model" and row.details == "gpt-5-nano" for row in results)
+    assert any(row.name == "embedding dimension" and row.details == "1536" for row in results)
+    assert captured["models_url"] == "https://api.openai.com/v1/models"
+    assert captured["post_calls"][0]["url"] == "https://api.openai.com/v1/chat/completions"
+    assert captured["post_calls"][0]["json"]["model"] == "gpt-5-nano"
+    assert captured["post_calls"][0]["json"]["temperature"] == 0.0
+    assert captured["post_calls"][1]["url"] == "https://api.openai.com/v1/embeddings"
+    assert captured["post_calls"][1]["json"]["model"] == "text-embedding-3-small"
+
+
 def test_check_frameworks_uses_current_python_environment(monkeypatch) -> None:
     def fake_find_spec(name: str):
         if name in {"graphrag", "lightrag"}:
@@ -396,6 +446,399 @@ def test_run_ragas_excludes_degraded_failed_and_contextless_answers(tmp_path: Pa
         "q2": "failed answer is excluded from ragas",
         "q3": "contextless answer is excluded from ragas",
     }
+
+
+def test_run_ragas_uses_runtime_model_config(tmp_path: Path, monkeypatch) -> None:
+    captured: dict[str, object] = {}
+
+    class DummyDataset:
+        @staticmethod
+        def from_list(rows):
+            captured["dataset_rows"] = rows
+            return rows
+
+    class DummyChatOpenAI:
+        def __init__(self, **kwargs):
+            captured["chat_kwargs"] = kwargs
+            self.temperature = kwargs.get("temperature")
+            self.n = kwargs.get("n")
+
+        async def agenerate_prompt(self, prompts, stop=None, callbacks=None):
+            captured["agenerate_temperature"] = self.temperature
+
+            class DummyResult:
+                generations = [[object()]]
+
+            return DummyResult()
+
+        def generate_prompt(self, prompts, n=1, stop=None, callbacks=None):
+            captured["generate_temperature"] = self.temperature
+
+            class DummyResult:
+                generations = [[object()]]
+
+            return DummyResult()
+
+    class DummyOpenAIEmbeddings:
+        def __init__(self, **kwargs):
+            captured["embedding_kwargs"] = kwargs
+
+    class DummyLLMWrapper:
+        def __init__(self, llm):
+            captured["wrapped_llm"] = llm
+            self.langchain_llm = llm
+            self.multiple_completion_supported = False
+
+        def get_temperature(self, n=1):
+            return 1e-8
+
+    class DummyEmbeddingsWrapper:
+        def __init__(self, embeddings):
+            captured["wrapped_embeddings"] = embeddings
+
+    class DummyFrame:
+        def to_dict(self, orient="records"):
+            return [
+                {
+                    "faithfulness": 0.5,
+                    "answer_relevancy": 0.5,
+                    "context_precision": 0.5,
+                    "context_recall": 0.5,
+                }
+            ]
+
+    class DummyEvalResult:
+        def to_pandas(self):
+            return DummyFrame()
+
+    class DummyRunConfig:
+        def __init__(self, **kwargs):
+            self.timeout = kwargs.get("timeout")
+            self.max_retries = kwargs.get("max_retries")
+            self.max_wait = kwargs.get("max_wait")
+            self.max_workers = kwargs.get("max_workers")
+            self.log_tenacity = kwargs.get("log_tenacity")
+            self.seed = kwargs.get("seed")
+
+    runtime = runtime_config_mod.ModelRuntimeConfig(
+        base_url="https://api.openai.com/v1",
+        embedding_base_url="https://api.openai.com/v1",
+        api_key="test-key",
+        model="gpt-5-nano",
+        embedding_model="text-embedding-3-small",
+        embedding_dimension=1536,
+    )
+
+    monkeypatch.setattr(workflow_mod.ragas_mod, "load_model_runtime_config", lambda: runtime)
+    monkeypatch.setitem(sys.modules, "datasets", types.SimpleNamespace(Dataset=DummyDataset))
+    monkeypatch.setitem(sys.modules, "langchain_openai", types.SimpleNamespace(ChatOpenAI=DummyChatOpenAI, OpenAIEmbeddings=DummyOpenAIEmbeddings))
+    def fake_evaluate(*args, **kwargs):
+        captured["run_config"] = kwargs.get("run_config")
+        return DummyEvalResult()
+
+    monkeypatch.setitem(sys.modules, "ragas", types.SimpleNamespace(evaluate=fake_evaluate))
+    monkeypatch.setitem(sys.modules, "ragas.embeddings", types.SimpleNamespace(LangchainEmbeddingsWrapper=DummyEmbeddingsWrapper))
+    monkeypatch.setitem(sys.modules, "ragas.llms", types.SimpleNamespace(LangchainLLMWrapper=DummyLLMWrapper))
+    monkeypatch.setitem(
+        sys.modules,
+        "ragas.metrics",
+        types.SimpleNamespace(
+            answer_relevancy="answer_relevancy",
+            context_precision="context_precision",
+            context_recall="context_recall",
+            faithfulness="faithfulness",
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "ragas.run_config",
+        types.SimpleNamespace(RunConfig=DummyRunConfig),
+    )
+
+    saved: dict[str, object] = {}
+
+    workflow_mod.ragas_mod._run_ragas_stage(
+        tmp_path / "run",
+        [{"question_id": "q1", "status": "success", "answer": "A", "contexts": [{"text": "ctx"}]}],
+        limit=None,
+        prepare_ragas_rows_fn=lambda rows: [{"question": "Q", "answer": "A", "contexts": ["ctx"], "ground_truth": "A"}],
+        save_ragas_outputs_fn=lambda base_dir, rows, answer_rows=None: saved.update({"base_dir": base_dir, "rows": rows, "answer_rows": answer_rows}),
+        save_ragas_placeholder_fn=lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("placeholder should not be used")),
+        safe_float_fn=lambda value: value,
+        evaluate_prepared_row_fn=lambda prepared_row, runtime_payload: workflow_mod.ragas_mod._evaluate_prepared_ragas_row_direct(
+            prepared_row,
+            runtime_payload=runtime_payload,
+        ),
+    )
+
+    assert captured["chat_kwargs"]["base_url"] == "https://api.openai.com/v1"
+    assert captured["chat_kwargs"]["api_key"] == "test-key"
+    assert captured["chat_kwargs"]["model"] == "gpt-5-nano"
+    assert captured["chat_kwargs"]["temperature"] == 0.0
+    assert captured["chat_kwargs"]["timeout"] == workflow_mod.ragas_mod.RAGAS_REQUEST_TIMEOUT_SECONDS
+    assert captured["embedding_kwargs"]["base_url"] == "https://api.openai.com/v1"
+    assert captured["embedding_kwargs"]["api_key"] == "test-key"
+    assert captured["embedding_kwargs"]["model"] == "text-embedding-3-small"
+    assert captured["embedding_kwargs"]["timeout"] == workflow_mod.ragas_mod.RAGAS_REQUEST_TIMEOUT_SECONDS
+    assert captured["run_config"].timeout is None
+    assert saved["rows"][0]["question_id"] == "q1"
+
+
+def test_patch_ragas_temperature_handling_forces_default_temperature() -> None:
+    captured: dict[str, object] = {}
+
+    class DummyLLM:
+        def __init__(self):
+            self.temperature = None
+
+        def generate_prompt(self, prompts, n=1, stop=None, callbacks=None):
+            captured["temperature"] = self.temperature
+
+            class DummyResult:
+                generations = [[object()]]
+
+            return DummyResult()
+
+    class DummyWrapper:
+        def __init__(self):
+            self.langchain_llm = DummyLLM()
+            self.multiple_completion_supported = True
+
+    wrapper = workflow_mod.ragas_mod._patch_ragas_temperature_handling(
+        DummyWrapper(),
+        default_temperature=0.0,
+    )
+    wrapper.generate_text("prompt", temperature=1e-8)
+    assert captured["temperature"] == 0.0
+
+
+def test_run_ragas_saves_partial_scores_when_one_evaluation_fails(tmp_path: Path, monkeypatch) -> None:
+    saved_snapshots: list[list[dict[str, object]]] = []
+    evaluate_calls: list[list[dict[str, object]]] = []
+
+    class DummyDataset:
+        @staticmethod
+        def from_list(rows):
+            return rows
+
+    class DummyChatOpenAI:
+        def __init__(self, **kwargs):
+            self.temperature = kwargs.get("temperature")
+
+        def generate_prompt(self, prompts, n=1, stop=None, callbacks=None):
+            class DummyResult:
+                generations = [[object()]]
+
+            return DummyResult()
+
+    class DummyOpenAIEmbeddings:
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
+
+    class DummyLLMWrapper:
+        def __init__(self, llm):
+            self.langchain_llm = llm
+            self.multiple_completion_supported = False
+
+    class DummyEmbeddingsWrapper:
+        def __init__(self, embeddings):
+            self.embeddings = embeddings
+
+    class DummyFrame:
+        def __init__(self, rows):
+            self._rows = rows
+
+        def to_dict(self, orient="records"):
+            return self._rows
+
+    class DummyEvalResult:
+        def __init__(self, rows):
+            self._rows = rows
+
+        def to_pandas(self):
+            return DummyFrame(self._rows)
+
+    class DummyRunConfig:
+        def __init__(self, **kwargs):
+            self.timeout = kwargs.get("timeout")
+
+    def fake_evaluate(dataset, **kwargs):
+        evaluate_calls.append(dataset)
+        question_id = dataset[0]["question_id"]
+        if question_id == "q2":
+            raise TimeoutError("ragas timeout")
+        return DummyEvalResult(
+            [
+                {
+                    "faithfulness": 0.8,
+                    "answer_relevancy": 0.7,
+                    "context_precision": 0.6,
+                    "context_recall": 0.5,
+                }
+            ]
+        )
+
+    monkeypatch.setitem(sys.modules, "datasets", types.SimpleNamespace(Dataset=DummyDataset))
+    monkeypatch.setitem(sys.modules, "langchain_openai", types.SimpleNamespace(ChatOpenAI=DummyChatOpenAI, OpenAIEmbeddings=DummyOpenAIEmbeddings))
+    monkeypatch.setitem(sys.modules, "ragas", types.SimpleNamespace(evaluate=fake_evaluate))
+    monkeypatch.setitem(sys.modules, "ragas.embeddings", types.SimpleNamespace(LangchainEmbeddingsWrapper=DummyEmbeddingsWrapper))
+    monkeypatch.setitem(sys.modules, "ragas.llms", types.SimpleNamespace(LangchainLLMWrapper=DummyLLMWrapper))
+    monkeypatch.setitem(
+        sys.modules,
+        "ragas.metrics",
+        types.SimpleNamespace(
+            answer_relevancy="answer_relevancy",
+            context_precision="context_precision",
+            context_recall="context_recall",
+            faithfulness="faithfulness",
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "ragas.run_config",
+        types.SimpleNamespace(RunConfig=DummyRunConfig),
+    )
+
+    answers = [
+        {"question_id": "q1", "status": "success", "question": "Q1", "reference_answer": "A1", "answer": "A1", "contexts": [{"text": "ctx1"}]},
+        {"question_id": "q2", "status": "success", "question": "Q2", "reference_answer": "A2", "answer": "A2", "contexts": [{"text": "ctx2"}]},
+    ]
+
+    workflow_mod.ragas_mod._run_ragas_stage(
+        tmp_path / "run",
+        answers,
+        limit=None,
+        prepare_ragas_rows_fn=lambda rows: [
+            {
+                "question_id": row["question_id"],
+                "user_input": row["question"],
+                "response": row["answer"],
+                "reference": row["reference_answer"],
+                "retrieved_contexts": [ctx["text"] for ctx in row["contexts"]],
+            }
+            for row in rows
+        ],
+        save_ragas_outputs_fn=lambda base_dir, rows, answer_rows=None: saved_snapshots.append([dict(row) for row in rows]),
+        save_ragas_placeholder_fn=lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("placeholder should not be used")),
+        safe_float_fn=lambda value: value,
+        evaluate_prepared_row_fn=lambda prepared_row, runtime_payload: workflow_mod.ragas_mod._evaluate_prepared_ragas_row_direct(
+            prepared_row,
+            runtime_payload=runtime_payload,
+        ),
+    )
+
+    assert [dataset[0]["question_id"] for dataset in evaluate_calls] == ["q1", "q2"]
+    assert len(saved_snapshots) >= 2
+    final_rows = {row["question_id"]: row for row in saved_snapshots[-1]}
+    assert final_rows["q1"]["faithfulness"] == 0.8
+    assert final_rows["q1"]["error"] is None
+    assert final_rows["q2"]["faithfulness"] is None
+    assert "ragas timeout" in str(final_rows["q2"]["error"])
+
+
+def test_run_ragas_marks_all_null_metric_row_as_error(tmp_path: Path, monkeypatch) -> None:
+    class DummyDataset:
+        @staticmethod
+        def from_list(rows):
+            return rows
+
+    class DummyChatOpenAI:
+        def __init__(self, **kwargs):
+            self.temperature = kwargs.get("temperature")
+
+        def generate_prompt(self, prompts, n=1, stop=None, callbacks=None):
+            class DummyResult:
+                generations = [[object()]]
+
+            return DummyResult()
+
+    class DummyOpenAIEmbeddings:
+        def __init__(self, **kwargs):
+            self.kwargs = kwargs
+
+    class DummyLLMWrapper:
+        def __init__(self, llm):
+            self.langchain_llm = llm
+            self.multiple_completion_supported = False
+
+    class DummyEmbeddingsWrapper:
+        def __init__(self, embeddings):
+            self.embeddings = embeddings
+
+    class DummyFrame:
+        def to_dict(self, orient="records"):
+            return [
+                {
+                    "faithfulness": None,
+                    "answer_relevancy": None,
+                    "context_precision": None,
+                    "context_recall": None,
+                }
+            ]
+
+    class DummyEvalResult:
+        def to_pandas(self):
+            return DummyFrame()
+
+    class DummyRunConfig:
+        def __init__(self, **kwargs):
+            self.timeout = kwargs.get("timeout")
+
+    monkeypatch.setitem(sys.modules, "datasets", types.SimpleNamespace(Dataset=DummyDataset))
+    monkeypatch.setitem(sys.modules, "langchain_openai", types.SimpleNamespace(ChatOpenAI=DummyChatOpenAI, OpenAIEmbeddings=DummyOpenAIEmbeddings))
+    monkeypatch.setitem(sys.modules, "ragas", types.SimpleNamespace(evaluate=lambda *args, **kwargs: DummyEvalResult()))
+    monkeypatch.setitem(sys.modules, "ragas.embeddings", types.SimpleNamespace(LangchainEmbeddingsWrapper=DummyEmbeddingsWrapper))
+    monkeypatch.setitem(sys.modules, "ragas.llms", types.SimpleNamespace(LangchainLLMWrapper=DummyLLMWrapper))
+    monkeypatch.setitem(
+        sys.modules,
+        "ragas.metrics",
+        types.SimpleNamespace(
+            answer_relevancy="answer_relevancy",
+            context_precision="context_precision",
+            context_recall="context_recall",
+            faithfulness="faithfulness",
+        ),
+    )
+    monkeypatch.setitem(
+        sys.modules,
+        "ragas.run_config",
+        types.SimpleNamespace(RunConfig=DummyRunConfig),
+    )
+
+    saved: dict[str, object] = {}
+    answers = [
+        {"question_id": "q1", "status": "success", "question": "Q1", "reference_answer": "A1", "answer": "A1", "contexts": [{"text": "ctx1"}]},
+    ]
+
+    workflow_mod.ragas_mod._run_ragas_stage(
+        tmp_path / "run",
+        answers,
+        limit=None,
+        prepare_ragas_rows_fn=lambda rows: [
+            {
+                "question_id": row["question_id"],
+                "user_input": row["question"],
+                "response": row["answer"],
+                "reference": row["reference_answer"],
+                "retrieved_contexts": [ctx["text"] for ctx in row["contexts"]],
+            }
+            for row in rows
+        ],
+        save_ragas_outputs_fn=lambda base_dir, rows, answer_rows=None: saved.update({"rows": rows}),
+        save_ragas_placeholder_fn=lambda *args, **kwargs: (_ for _ in ()).throw(AssertionError("placeholder should not be used")),
+        safe_float_fn=lambda value: value,
+        evaluate_prepared_row_fn=lambda prepared_row, runtime_payload: workflow_mod.ragas_mod._evaluate_prepared_ragas_row_direct(
+            prepared_row,
+            runtime_payload=runtime_payload,
+        ),
+    )
+
+    row = saved["rows"][0]
+    assert row["faithfulness"] is None
+    assert row["answer_relevancy"] is None
+    assert row["context_precision"] is None
+    assert row["context_recall"] is None
+    assert "no metric values" in str(row["error"])
 
 
 def test_execute_run_stops_before_query_when_build_failed(tmp_path: Path, monkeypatch) -> None:
